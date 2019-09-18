@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Welcome</title>
+		<meta charset=“utf-8”>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
+	</head>
+	<body>
+		<!-- <canvas id="c" width="683" height="666"></canvas> -->
+		<div id="header">
+			<span id="time"></span>
+			<br style="line-height: 10px">
+			<span id="date"></span>
+		</div>
+		<div class="row">
+			<div class="column" id="left">
+				<a href="https://www.reddit.com/new/">
+					<span class="button">
+						<i class="fab fa-reddit"></i> Reddit
+					</span>
+				</a>
+				<br>
+				<a href="https://www.youtube.com/?gl=CA">
+					<span class="button">
+						<i class="fab fa-youtube"></i> Youtube
+					</span>
+				</a>
+				<br>
+				<a href="https://www.twitch.tv/">
+					<span class="button">
+						<i class="fab fa-twitch"></i> Twitch
+					</span>
+				</a>
+				<br>
+				<a href="http://the404.nl/">
+					<span class="button">
+						<i class="texticon">404</i> the404.nl
+					</span>
+				</a>
+				<br>
+				<a href="https://github.com/the404devs">
+					<span class="button">
+						<i class="fab fa-github"></i> GitHub
+					</span>
+				</a>
+				<br>
+				<a href="https://mail.google.com/mail/u/0/#inbox">
+					<span class="button">
+						<i class="far fa-envelope"></i> Gmail
+					</span>
+				</a>
+				<br>
+				<a href="https://courses.ryerson.ca/d2l/home">
+					<span class="button">
+						<img src="img/r.png" class="imageicon"> Ryerson
+					</span>
+				</a>
+			</div>
+			<div class="column" id="right">
+				<div class="weather-container" id="stouffville">
+					<canvas id="weathericon-sto"></canvas>
+					<span class="alert-button" id="sto-alerts" onclick="showModal('#alertModalSto')">!</span>
+					<span id="temperature"></span>
+					<span><b>Stouffville</b></span>
+					<span id="conditions"></span>
+					<span id="feels-like"></span>
+					<span id="high"></span>
+					<span id="wind"></span>
+				</div>
+				<div class="weather-container" id="toronto">
+					<canvas id="weathericon-tor"></canvas>
+					<span class="alert-button" id="tor-alerts" onclick="showModal('#alertModalTor')">!</span>
+					<span id="temperature"></span>
+					<span><b>Toronto</b></span>
+					<span id="conditions"></span>
+					<span id="feels-like"></span>
+					<span id="high"></span>
+					<span id="wind"></span>
+				</div>
+				<br>
+				<div id="todo-container">
+					<div id="loader"></div>
+				</div>
+				<span id="plus" onclick="showModal('#eventModal')">+</span>
+			</div>
+		</div>
+		<div class="modal" id="alertModalSto" onclick="hideModal()">
+			<div class="modal-content">
+				<div class="modal-header">
+					Alerts for Stouffville
+				</div>
+				<div class="modal-body" id="alert-body-sto">
+					
+				</div>
+				<div class="modal-footer">
+					
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="alertModalTor" onclick="hideModal()">
+			<div class="modal-content">
+				<div class="modal-header">
+					Alerts for Toronto
+				</div>
+				<div class="modal-body" id="alert-body-tor">
+					
+				</div>
+				<div class="modal-footer">
+					
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="eventModal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span>Add Event</span>
+					<span id="close" onclick="hideModal()">×</span>
+				</div>
+				<div class="modal-body">
+					<label>Name: </label>
+					<input type="text" id="eventName" required>
+					<br>
+					<label>Date: </label>
+					<input type="date" id="eventDate" required>
+					<br>
+					<label>Time: </label>
+					<input type="time" id="eventTime" required>
+					<br>
+					<label>Description: </label>
+					<br>
+					<textarea id="eventBody" rows="5" cols="18"></textarea>
+				</div>
+				<div class="modal-footer">
+					<span class="button" onclick="writeToFire()">
+						<i class="fa fa-plus"></i> Add Event
+					</span>
+				</div>
+			</div>			
+		</div>
+		<div id="xkcd-zone">
+			<h2 id="x-title"></h2>
+			<div class="button x-button" onclick="setnum(-1)"><span>←</span></div>
+			<div style="display: inline-block; width: 80px">
+				<input id="x-num"></label>
+				<span id="x-rand" onclick="random()">Random</span>
+			</div>
+			<div class="button x-button" onclick="setnum(1)"><span>→</span></div>
+			<br>
+			<img id="x-img">
+
+		</div>
+		<!-- <div id="footer"></div> -->
+		<!-- <canvas id="xkcd" width="100%" height="100%"></canvas> -->
+		<script>
+			var d = new Date();
+			document.getElementById("time").innerHTML = d.toLocaleTimeString();
+			document.getElementById("date").innerHTML = d.toLocaleDateString();
+			var time = setInterval(timer, 1000);
+			function timer() {
+				d = new Date();
+				document.getElementById("time").innerHTML = d.toLocaleTimeString();
+				document.getElementById("date").innerHTML = d.toLocaleDateString();
+			}
+		</script>
+		<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+		<!-- <script src="js/bg.js"></script> -->
+		<script src="js/event.js"></script>
+		<script src="js/filter.js"></script>
+		<script src="js/weather.js"></script>
+		<script src="js/firebase.js"></script>
+		<script src="js/xkcd.js"></script>
+		
+
+	</body>
+</html>
