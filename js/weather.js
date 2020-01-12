@@ -27,7 +27,7 @@ $(function(){
       }
     }
 		$('#stouffville #high').html("<b>H/L: </b>"+data.daily.data[0].temperatureHigh.toFixed(1)+"°C/"+data.daily.data[0].temperatureLow.toFixed(1)+"°C");
-		$('#stouffville #wind').html("<b>Wind: </b>"+data.currently.windSpeed+"km/h "+getDirection(data.currently.windBearing));
+		$('#stouffville #wind').html("<b>Wind: </b>"+data.currently.windSpeed+"km/h <b class='arrow'>"+getDirection(data.currently.windBearing))+"</b>";
 	});
 	$.getJSON(torURL, function(data) {
 		var icons = new Skycons({"color": $('.button').css('color')});
@@ -51,7 +51,7 @@ $(function(){
       }
     }
 		$('#toronto #high').html("<b>H/L: </b>"+data.daily.data[0].temperatureHigh.toFixed(1)+"°C/"+data.daily.data[0].temperatureLow.toFixed(1)+"°C");
-		$('#toronto #wind').html("<b>Wind: </b>"+data.currently.windSpeed+"km/h "+getDirection(data.currently.windBearing));
+		$('#toronto #wind').html("<b>Wind: </b>"+data.currently.windSpeed+"km/h <b class='arrow'>"+getDirection(data.currently.windBearing))+"</b>";
 	});
 });
 
