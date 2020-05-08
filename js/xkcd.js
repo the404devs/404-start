@@ -1,18 +1,17 @@
-var baseURL = "http://dynamic.xkcd.com/api-0/jsonp/comic/",
+var baseURL = "https://dynamic.xkcd.com/api-0/jsonp/comic/",
     hinum, script, details = {},
     head = document.getElementsByTagName('head')[0];
 
-function dataloaded(obj){details = obj; fill_page(); }
+function dataloaded(obj) { details = obj;
+    fill_page(); }
 
 function ById(id) { return document.getElementById(id); }
 
 //Return an error message if n is not a valid comic number.
-function valid_num(n)
-{
+function valid_num(n) {
     var msg = '';
 
-    switch(true)
-    {
+    switch (true) {
         //The empty string is valid - it's the current comic.
         case (n == ''):
             break;
@@ -36,12 +35,10 @@ function valid_num(n)
     return msg;
 }
 
-function build_script(n)
-{
+function build_script(n) {
     var msg = valid_num(n);
-   
-    if (msg)
-    {
+
+    if (msg) {
         console.log(msg);
         n--;
         return;
@@ -59,9 +56,9 @@ function pad(n) {
     return (n < 10) ? ("0" + n) : n;
 }
 
-function fill_page()
-{
-    var t, num = details.num, url = "http://xkcd.com/" + num;
+function fill_page() {
+    var t, num = details.num,
+        url = "http://xkcd.com/" + num;
     console.log(num);
     console.log(details);
 
@@ -75,7 +72,7 @@ function fill_page()
     t.title = details.alt;
     // document.getElementById("date").innerHTML = details.day + "/" + details.month + "/" + details.year;
 
-    
+
 
     // document.getElementById("mouseover").innerHTML = details.alt;
     // document.getElementById("transcript").innerHTML = format_transcript(details.transcript);
@@ -98,15 +95,14 @@ function fill_page()
 
 function adjustImage(iArray) {
     var imageData = iArray.data;
-    for (var i = 0; i < imageData.length; i+= 4) {
-        imageData[i+3] = 0;
+    for (var i = 0; i < imageData.length; i += 4) {
+        imageData[i + 3] = 0;
     }
 
-    return iArray;            
+    return iArray;
 }
 
-function format_transcript(s)
-{
+function format_transcript(s) {
     //Fix < and >
     s = s.replace(/</g, '&lt;')
     s = s.replace(/>/g, '&gt;')
@@ -123,8 +119,7 @@ function format_transcript(s)
     return s;
 }
 
-function setnum(delta)
-{
+function setnum(delta) {
     var num = document.getElementById("x-num");
 
     if (num.value)
@@ -132,15 +127,13 @@ function setnum(delta)
     build_script(num.value);
 }
 
-function goto()
-{
+function goto() {
     var num = document.getElementById("x-num");
 
     build_script(num.value);
 }
 
-function random()
-{
+function random() {
     var n, num = document.getElementById("x-num");
 
     do n = Math.floor(1 + Math.random() * hinum);
@@ -149,7 +142,7 @@ function random()
     build_script(num.value);
 }
 
-document.getElementById("x-num").addEventListener("keyup", function(e){
+document.getElementById("x-num").addEventListener("keyup", function(e) {
     if (event.keyCode === 13) {
         event.preventDefault();
         goto();
@@ -157,7 +150,7 @@ document.getElementById("x-num").addEventListener("keyup", function(e){
 });
 
 build_script('');
-window.scroll(0,0);
+window.scroll(0, 0);
 // var canvas = document.getElementById("xkcd");
 // var ctx = canvas.getContext("2d");
 // var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
