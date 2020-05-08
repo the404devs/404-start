@@ -2,7 +2,7 @@
 A custom homepage, for me.
 Depends on Pywal, so make sure you have that installed. Better yet, install my fork of it.
 
-## setup
+## Setup
 
 `css/style.css`: Line 1: adjust the path to match wherever `pywal` stores it's css colours on your system. This is usually `/home/<username>/.cache/wal/colors.css`
 
