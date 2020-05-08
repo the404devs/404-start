@@ -13,3 +13,7 @@ Depends on Pywal, so make sure you have that installed. Better yet, install my f
 
 
 A sample colour file is provided at `css/sample-colors.css`
+
+## Example
+
+[https://the404devs.github.io/404-start/](https://the404devs.github.io/404-start/)
