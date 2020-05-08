@@ -121,7 +121,8 @@ i {
     width: 170px;
     transition: all 0.25s;
     cursor: pointer;
-    font-family: "Raleway";
+    font-family: "Gilroy";
+    font-weight: bold;
     height: 40px;
     padding: 10px;
     margin-top: -1px;
@@ -133,7 +134,8 @@ i {
 }
 
 #header {
-    font-family: Camaraderie;
+    font-family: Gilroy;
+    font-weight: bold;
     color: var(--color4);
     text-align: center;
     width: 100%;
@@ -165,14 +167,15 @@ i {
 }
 
 #date {
-    font-family: Raleway;
+    /* font-family: Raleway; */
+    font-weight: lighter;
     font-size: 1.5em;
     margin-top: 5px;
     line-height: 1.5em;
 }
 
-#weathericon-sto,
-#weathericon-tor {
+#weathericon-1,
+#weathericon-2 {
     width: inherit;
     border-bottom: 1px solid;
     padding-top: 5px;
@@ -184,7 +187,12 @@ i {
     text-align: left;
     font-size: 22px;
     padding: 0 5px 0px 5px;
-    font-family: Raleway Medium;
+    font-family: Gilroy;
+    font-weight: bold;
+}
+
+#temperature {
+    margin-top: -2px
 }
 
 .weather-container {
@@ -196,17 +204,18 @@ i {
     color: var(--foreground);
     width: 170px;
     text-align: left;
-    min-height: 181px;
-    max-height: 181px;
+    min-height: 182px;
+    max-height: 182px;
     overflow: hidden;
     transition: 0.1s ease all;
+    margin-top: -1px;
     margin-left: -1px;
     font-family: Roboto;
     font-size: 15px;
 }
 
 .weather-container:hover {
-    min-height: 242px;
+    min-height: 243px;
 }
 
 .weather-container:hover~.gap {
@@ -220,8 +229,12 @@ i {
     width: 95%;
 }
 
+.weathername {
+    font-weight: bold;
+}
+
 #conditions {
-    height: 32px;
+    height: 35px;
     display: table-cell;
     vertical-align: middle;
 }
@@ -275,10 +288,9 @@ i {
     background-color: var(--color2);
 }
 
-#close,
-.delete {
+#close {
     margin-top: -16px;
-    margin-left: 142px;
+    margin-left: 149px;
     font-size: initial;
 }
 
@@ -333,7 +345,8 @@ i {
     font-weight: bold;
     background-color: var(--background);
     color: var(--foreground);
-    font-family: Raleway;
+    font-family: Gilroy;
+    font-weight: bold;
 }
 
 .modal-body {
@@ -352,15 +365,15 @@ i {
     text-align: right;
 }
 
-#alertModalSto .modal-content,
-#alertModalTor .modal-content {
+#alertModal1 .modal-content,
+#alertModal2 .modal-content {
     width: 600px;
     overflow-y: scroll;
     height: 70%;
 }
 
-#alertModalSto .modal-body,
-#alertModalTor .modal-body {
+#alertModal1 .modal-body,
+#alertModal2 .modal-body {
     margin-left: 20px;
     width: 90%;
 }
@@ -456,14 +469,17 @@ input::-webkit-datetime-edit-minute-field:focus {
 .delete {
     position: relative;
     right: calc(-55% + 1px);
-    top: -92px;
+    top: -93px;
+    margin-top: -16px;
+    margin-left: 142px
 }
 
 #xkcd-zone {
     text-align: center;
     height: calc(100% - 121px);
     transition: 0.5s filter ease;
-    font-family: Raleway;
+    font-family: Gilroy;
+    /* font-weight: bold; */
 }
 
 #x-img {
@@ -483,7 +499,7 @@ input::-webkit-datetime-edit-minute-field:focus {
     color: var(--color4);
     /*padding-top: 15px;*/
     padding-bottom: 3px;
-    font-weight: normal;
+    font-weight: bold;
     margin-bottom: 0;
 }
 
@@ -497,7 +513,7 @@ input::-webkit-datetime-edit-minute-field:focus {
 
 .x-button span {
     /*color:red;*/
-    transform: translate(-35px, 2px);
+    transform: translate(-28px, 3px);
     position: absolute;
 }
 
@@ -526,7 +542,8 @@ input::-webkit-datetime-edit-minute-field:focus {
     transform: translateY(-1px);
     transition: 0.25s all;
     cursor: pointer;
-    background-color: var(--background)
+    background-color: var(--background);
+    font-family: Roboto;
 }
 
 #x-rand:hover {
