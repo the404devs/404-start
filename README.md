@@ -20,7 +20,7 @@ I'm currently working on a Chrome extension that will make this start page your 
 In `js/config.js`, change the `ExtPath` variable to the path of `index.html`. This path is where the extension redirects the browser upon the creation of a new tab.
 
 To enable the extension, perform the following steps:
-- Head over to [Chrome's extension settings page](chrome://extensions).
+- Head over to Chrome's extension settings page (chrome://extensions).
 - Enable "Developer Mode" with the toggle in the top-right corner.
 - Hit the "Load Unpacked" button that appears.
 - Choose the base directory of the homepage (the one containing `index.html`).
