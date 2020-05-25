@@ -5,19 +5,19 @@ $(function() {
     
     DarkSky was also bought out by Apple recently, so their api will stop working come 2021.
     Hopefully a suitable alternative appears before then.*/
-    var URL1 = "https://api.darksky.net/forecast/85ee59f33b71d050c766551ca2d2f139/43.9713,-79.2468?callback=?&units=ca";
-    var URL2 = "https://api.darksky.net/forecast/85ee59f33b71d050c766551ca2d2f139/43.654,-79.3872?callback=?&units=ca";
-    //Set the names of your locations here. Match name1 with URL1, and so on.
-    var name1 = "Stouffville";
-    var name2 = "Toronto";
+    // var URL1 = "https://api.darksky.net/forecast/85ee59f33b71d050c766551ca2d2f139/43.9713,-79.2468?callback=?&units=ca";
+    // var URL2 = "https://api.darksky.net/forecast/85ee59f33b71d050c766551ca2d2f139/43.654,-79.3872?callback=?&units=ca";
+    // //Set the names of your locations here. Match name1 with URL1, and so on.
+    // var name1 = "Stouffville";
+    // var name2 = "Toronto";
 
     //openweather api ac44343b90759cfe705813ff3a614fa5 85ee59f33b71d050c766551ca2d2f139 http://api.openweathermap.org/data/2.5/weather?q=Stouffville&appid=ac44343b90759cfe705813ff3a614fa5
 
     //Set names
-    $("#weathername-1").html(name1);
-    $("#weathername-2").html(name2);
+    $("#weathername-1").html(config.WeatherName1);
+    $("#weathername-2").html(config.WeatherName2);
 
-    $.getJSON(URL1, function(data) {
+    $.getJSON(config.WeatherURL1, function(data) {
         var icons = new Skycons({ "color": $('.button').css('color') });
         icons.set('weathericon-1', data.currently.icon);
         icons.play();
@@ -40,7 +40,7 @@ $(function() {
         $('#weather-1 #high').html("<b>H/L: </b>" + data.daily.data[0].temperatureHigh.toFixed(1) + "°C/" + data.daily.data[0].temperatureLow.toFixed(1) + "°C");
         $('#weather-1 #wind').html("<b>Wind: </b>" + data.currently.windSpeed + "km/h <b class='arrow'>" + getDirection(data.currently.windBearing)) + "</b>";
     });
-    $.getJSON(URL2, function(data) {
+    $.getJSON(config.WeatherURL2, function(data) {
         var icons = new Skycons({ "color": $('.button').css('color') });
         icons.set('weathericon-2', data.currently.icon);
         icons.play();

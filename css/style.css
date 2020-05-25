@@ -1,8 +1,7 @@
 @import url('sample-colors.css');
-@import url('file:///home/the404/.cache/wal/colors.css');
 
-/* Importing samples first, 
-that way if there's no wal colors present we fall back to the sample file*/
+/* We import the sample colours here, these are our fallback 
+if no pywal colours exist.*/
 
 
 /**{border-color: black!important;}*/

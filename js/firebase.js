@@ -1,17 +1,4 @@
-// Initialize Firebase
-/* CHANGE THE INFO HERE TO MATCH YOUR OWN DATABASE
-	Otherwise, you'll be seeing my own to-do list. */
-var config = {
-    apiKey: "AIzaSyBP6KLfzsYrYfMb66aQKjPaupm_JJT2uHI",
-    authDomain: "homepage-events.firebaseapp.com",
-    databaseURL: "https://homepage-events.firebaseio.com",
-    projectId: "homepage-events",
-    storageBucket: "",
-    messagingSenderId: "111058101137"
-};
-
-
-firebase.initializeApp(config);
+firebase.initializeApp(fire_config);
 $(function() {
     readFromFire();
     $('.delete').click(deleteEvent);

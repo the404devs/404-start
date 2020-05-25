@@ -2,8 +2,10 @@ var baseURL = "https://dynamic.xkcd.com/api-0/jsonp/comic/",
     hinum, script, details = {},
     head = document.getElementsByTagName('head')[0];
 
-function dataloaded(obj) { details = obj;
-    fill_page(); }
+function dataloaded(obj) {
+    details = obj;
+    fill_page();
+}
 
 function ById(id) { return document.getElementById(id); }
 
@@ -59,8 +61,8 @@ function pad(n) {
 function fill_page() {
     var t, num = details.num,
         url = "http://xkcd.com/" + num;
-    console.log(num);
-    console.log(details);
+    // console.log(num);
+    // console.log(details);
 
     document.getElementById("x-title").innerHTML = details.title + " - " + pad(details.month) + "/" + pad(details.day) + "/" + details.year;
     document.getElementById("x-num").innerHTML = num;
