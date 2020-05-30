@@ -1,9 +1,5 @@
 $(function() {
-    /* Adjust these two urls to suit the location of your choice
-    Easiest way is to just adjust the coordinates in the urls (43.9713,-79.2468), etc
-    darksky.net
-    
-    DarkSky was also bought out by Apple recently, so their api will stop working come 2021.
+    /* DarkSky was bought out by Apple recently, so their api will stop working come 2021.
     Hopefully a suitable alternative appears before then.*/
     // var URL1 = "https://api.darksky.net/forecast/85ee59f33b71d050c766551ca2d2f139/43.9713,-79.2468?callback=?&units=ca";
     // var URL2 = "https://api.darksky.net/forecast/85ee59f33b71d050c766551ca2d2f139/43.654,-79.3872?callback=?&units=ca";

@@ -12,7 +12,7 @@ For `WeatherURL1` and `WeatherURL2`, adjust the coordinates in these URLs to mat
 Change `WeatherName1` and  `WeatherName2` to whatever name you want to display for the two forecasts. You'd probably want it to just be the name of the city/town, but you could do something like "Home" and "Work" instead.
 `WeatherName1` goes with `WeatherURL1`, as you'd expect.
 
-`fire-config`: Configure Firebase settings here. Create your own database at [Firebase](firebase.google.com), and adjust all the values here to match your own database. Otherwise, you'll be seeing my own to-do list, and I doubt you care for that.
+`fire-config`: Configure Firebase settings here. Create your own database at [Firebase](https://firebase.google.com/), and adjust all the values here to match your own database. Otherwise, you'll be seeing my own to-do list, and I doubt you care for that.
 
 ## Experimental New Tab Page (Chrome Extension)
 I'm currently working on a Chrome extension that will make this start page your new tab page as well. This feature is still experimental. You've been warned.
