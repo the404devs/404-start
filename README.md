@@ -31,7 +31,7 @@ To enable the extension, perform the following steps:
 [https://the404devs.github.io/404-start/](https://the404devs.github.io/404-start/)
 
 ## Changelog
-### *0.1.6 (06/02/20)*
+### *0.1.6 (06/03/20)*
 ----------------------
 - Added missing changelog to README.
 - Rewrote CSS to make it easier to navigate.
