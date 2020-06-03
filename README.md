@@ -29,3 +29,61 @@ To enable the extension, perform the following steps:
 ## Example
 
 [https://the404devs.github.io/404-start/](https://the404devs.github.io/404-start/)
+
+## Changelog
+### *0.1.6 (06/02/20)*
+----------------------
+- Added missing changelog to README.
+- Rewrote CSS to make it easier to navigate.
+- Added fonts, since there's no way to guarantee they're installed on the user's system.
+- Changed page title from 'Welcome' to '404-Start' for consistency.
+
+### *0.1.5 (05/25/20)*
+----------------------
+- Configuration process greatly simplified.
+    - All config now done within `config.js`, instead of across multiple files.
+    - README changed accordingly.
+- Added experimental Chrome extension that will make 404-Start the new tab page.
+    - See setup process in README
+- Created local copies of external JS, improving load times as we no longer need to fetch JS from other sites.
+
+
+### *0.1.4 (05/08/20)*
+----------------------
+- Customizability changes.
+    - Removed hardcoded values, streamlining customization
+    - Added setup instructions to README
+- Added sample colours. These are used as a fallback if no `pywal` colours exist.
+- Minor fix to XKCD fetching.
+- Plenty of little things from the past few months.
+
+### *0.1.3 (10/05/19)*
+----------------------
+- Removed redundant files.
+- CSS changes.
+
+### *0.1.2 (09/18/19)*
+----------------------
+- Project moved to Github
+- Minor tweaks.
+
+### *0.1.1 (07/26/19)*
+---------------------
+- Added modal to display weather warnings, etc.
+- Added XKCD viewer at the bottom, displaying the latest webcomic from xkcd.com
+
+### *0.1.0 (03/26/19)*
+---------------------
+- Added todo list functionality using Firebase.
+- Weather display CSS tweaked.
+
+### *0.0.1 (03/18/19)*
+---------------------
+- Initial version
+- Added weather display using DarkSky API and Skycons.
+
+
+
+
+
+

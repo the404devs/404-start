@@ -4,12 +4,35 @@
 if no pywal colours exist.*/
 
 
-/**{border-color: black!important;}*/
+/* FONT DECLARATIONS */
 
-:root {
-    /* --background: #1c1f26; */
-    /* --background-darker: #3b4252; */
+@font-face {
+    font-family: "Gilroy";
+    src: url("Gilroy-ExtraBold.otf");
 }
+
+@font-face {
+    font-family: "Gilroy Light";
+    src: url("Gilroy-Light.otf");
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Inconsolata";
+    src: url("Inconsolata-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Camaraderie";
+    src: url("Camaraderie.otf");
+}
+
+
+/* GENERAL CSS */
 
 html {
     transition: 1s filter ease;
@@ -21,25 +44,8 @@ a {
     text-decoration: none;
 }
 
-#c {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: black;
-    background: black no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    filter: blur(5px);
-    z-index: -1;
-}
-
 body {
     background: var(--background);
-    /* background: #404040; */
     width: 100%;
     height: 100%;
     margin: 0;
@@ -61,7 +67,6 @@ body {
     -ms-flex: 1;
     flex: 1;
     padding: 10px;
-    font-family: Inconsolata;
     text-shadow: none;
 }
 
@@ -88,6 +93,28 @@ body {
     }
 }
 
+
+/* FANCY ANIMATED BACKGROUND - UNUSED */
+
+#c {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    background: black no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: blur(5px);
+    z-index: -1;
+}
+
+
+/* ICONS */
+
 i {
     font-size: 40px;
     vertical-align: middle;
@@ -113,6 +140,9 @@ i {
     visibility: hidden;
 }
 
+
+/* BUTTONS */
+
 .button {
     border-color: var(--foreground);
     border-width: 1px;
@@ -137,13 +167,15 @@ i {
     background-color: var(--color2);
 }
 
+
+/* HEADER */
+
 #header {
     font-family: Gilroy;
     font-weight: bold;
     color: var(--color4);
     text-align: center;
     width: 100%;
-    /*font-size: 5em;*/
     transition: 0.5s filter ease;
     border-bottom: 1px solid var(--foreground);
     position: fixed;
@@ -151,16 +183,6 @@ i {
     backdrop-filter: blur(10px);
     z-index: 100;
     text-shadow: 1px 2px 3px black, -1px 2px 3px black;
-}
-
-#footer {
-    background-color: var(--background);
-    position: fixed;
-    bottom: 0;
-    height: 104px;
-    width: 100%;
-    border-top: 1px solid var(--foreground);
-    z-index: 100;
 }
 
 #time {
@@ -171,12 +193,14 @@ i {
 }
 
 #date {
-    /* font-family: Raleway; */
-    font-weight: lighter;
+    font-family: "Gilroy Light";
     font-size: 1.5em;
     margin-top: 5px;
     line-height: 1.5em;
 }
+
+
+/* WEATHER BOXES */
 
 #weathericon-1,
 #weathericon-2 {
@@ -186,12 +210,11 @@ i {
     padding-bottom: 5px;
 }
 
-#temperature,
-.eventHead {
+#temperature {
     text-align: left;
     font-size: 22px;
     padding: 0 5px 0px 5px;
-    font-family: Gilroy;
+    font-family: "Gilroy";
     font-weight: bold;
 }
 
@@ -214,7 +237,7 @@ i {
     transition: 0.1s ease all;
     margin-top: -1px;
     margin-left: -1px;
-    font-family: Roboto;
+    font-family: "Roboto";
     font-size: 15px;
 }
 
@@ -243,11 +266,20 @@ i {
     vertical-align: middle;
 }
 
+.arrow {
+    font-size: 16px;
+    font-weight: normal;
+    font-family: "Inconsolata";
+}
+
+
+/* TODO LIST */
+
 #todo-container {
     border-color: var(--foreground);
     border-width: 1px;
     border-style: solid;
-    font-family: Roboto;
+    font-family: "Roboto";
     background-color: var(--background);
     height: 182px;
     width: 341px;
@@ -259,11 +291,27 @@ i {
     overflow-y: scroll;
 }
 
+.eventHead {
+    text-align: left;
+    font-size: 22px;
+    padding: 0 5px 0px 5px;
+    font-family: "Gilroy";
+    font-weight: bold;
+}
+
+#eventDate,
+#eventTime {
+    width: auto;
+}
+
 ::-webkit-scrollbar {
     width: 0;
     visibility: hidden!important;
     display: none!important;
 }
+
+
+/* TINY BUTTONS */
 
 #plus,
 #close,
@@ -280,7 +328,7 @@ i {
     width: 16px!important;
     height: 16px!important;
     transition: 0.25s all;
-    font-family: Inconsolata;
+    font-family: "Inconsolata";
     margin-top: 409px;
     background-color: var(--background);
 }
@@ -303,8 +351,19 @@ i {
     margin-top: -5px;
     font-size: 14px;
     margin-left: 153px;
-    font-family: Roboto;
+    font-family: "Roboto";
 }
+
+.delete {
+    position: relative;
+    right: calc(-55% + 1px);
+    top: -93px;
+    margin-top: -16px;
+    margin-left: 142px
+}
+
+
+/* MODAL DIALOGS */
 
 .modal {
     display: none;
@@ -318,7 +377,6 @@ i {
     left: 0;
     top: 0;
     text-align: -webkit-center;
-    font-family: Inconsolata;
     width: 100%;
     /* Full width */
     height: 100%;
@@ -327,9 +385,6 @@ i {
     /* Enable scroll if needed */
     filter: blur(5px);
 }
-
-
-/* Modal Content */
 
 .modal-content {
     position: relative;
@@ -349,12 +404,12 @@ i {
     font-weight: bold;
     background-color: var(--background);
     color: var(--foreground);
-    font-family: Gilroy;
+    font-family: "Gilroy";
     font-weight: bold;
 }
 
 .modal-body {
-    font-family: Roboto;
+    font-family: "Roboto";
     margin: 0% 10% 0% 10%;
     padding: 15px 0;
     color: var(--foreground);
@@ -368,6 +423,9 @@ i {
     color: var(--foreground);
     text-align: right;
 }
+
+
+/* WEATHER ALERT MODALS */
 
 #alertModal1 .modal-content,
 #alertModal2 .modal-content {
@@ -391,6 +449,9 @@ i {
     width: 80%;
 }
 
+
+/* TODO LIST MODAL */
+
 label {
     width: 75px!important;
 }
@@ -410,12 +471,7 @@ textarea {
     background-color: var(--background);
     border: 1px solid var(--foreground);
     color: var(--foreground);
-    font-family: Roboto;
-}
-
-#eventDate,
-#eventTime {
-    width: auto;
+    font-family: "Roboto";
 }
 
 input::-webkit-inner-spin-button,
@@ -433,6 +489,9 @@ input::-webkit-datetime-edit-hour-field:focus,
 input::-webkit-datetime-edit-minute-field:focus {
     background-color: var(--color4);
 }
+
+
+/* LOADING ANIMATION FOR TODO LIST */
 
 #loader {
     position: absolute;
@@ -470,20 +529,14 @@ input::-webkit-datetime-edit-minute-field:focus {
     }
 }
 
-.delete {
-    position: relative;
-    right: calc(-55% + 1px);
-    top: -93px;
-    margin-top: -16px;
-    margin-left: 142px
-}
+
+/* XKCD STUFF */
 
 #xkcd-zone {
     text-align: center;
     height: calc(100% - 121px);
     transition: 0.5s filter ease;
-    font-family: Gilroy;
-    /* font-weight: bold; */
+    font-family: "Gilroy";
 }
 
 #x-img {
@@ -491,7 +544,6 @@ input::-webkit-datetime-edit-minute-field:focus {
     border: 1px solid;
     padding: 2px;
     margin-top: 10px;
-    /*max-height: 400px;*/
     max-width: -webkit-fill-available;
 }
 
@@ -501,7 +553,6 @@ input::-webkit-datetime-edit-minute-field:focus {
 
 #x-title {
     color: var(--color4);
-    /*padding-top: 15px;*/
     padding-bottom: 3px;
     font-weight: bold;
     margin-bottom: 0;
@@ -516,7 +567,6 @@ input::-webkit-datetime-edit-minute-field:focus {
 }
 
 .x-button span {
-    /*color:red;*/
     transform: translate(-28px, 3px);
     position: absolute;
 }
@@ -527,7 +577,6 @@ input::-webkit-datetime-edit-minute-field:focus {
     display: inline-block;
     width: 80px;
     height: 28px;
-    /*margin-bottom: 0;*/
     transform: translateY(3px);
     text-align: center;
     transition: 0.25s;
@@ -539,7 +588,6 @@ input::-webkit-datetime-edit-minute-field:focus {
     border: 1px solid;
     width: 80px;
     font-size: 18px;
-    /*margin-top:0;*/
     line-height: 30px;
     display: block;
     height: 29px;
@@ -547,21 +595,9 @@ input::-webkit-datetime-edit-minute-field:focus {
     transition: 0.25s all;
     cursor: pointer;
     background-color: var(--background);
-    font-family: Roboto;
+    font-family: "Roboto";
 }
 
 #x-rand:hover {
     background-color: var(--color2);
-}
-
-
-/*#xkcd{
-  width: 100%;
-  height: 100%;
-}*/
-
-.arrow {
-    font-size: 16px;
-    font-weight: normal;
-    font-family: "Inconsolata";
 }
