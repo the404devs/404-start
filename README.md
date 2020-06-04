@@ -37,6 +37,7 @@ To enable the extension, perform the following steps:
 - Rewrote CSS to make it easier to navigate.
 - Added fonts, since there's no way to guarantee they're installed on the user's system.
 - Changed page title from 'Welcome' to '404-Start' for consistency.
+- Added a tentative icon for this project.
 
 ### *0.1.5 (05/25/20)*
 ----------------------
