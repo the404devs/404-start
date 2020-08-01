@@ -27,8 +27,7 @@ To enable the extension, perform the following steps:
 - Success! It should be working now.
 
 ## Example
-
-[https://the404devs.github.io/404-start/](https://the404devs.github.io/404-start/)
+https://start.the404.nl
 
 ## Changelog
 ### *0.1.6 (06/03/20)*
