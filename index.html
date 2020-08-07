@@ -5,7 +5,6 @@
     <title>404-Start</title>
     <meta charset=“utf-8”>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
     <script src="js/font-awesome.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/skycons.js"></script>
@@ -154,20 +153,16 @@
         <div class="button x-button" onclick="setnum(1)"><span>→</span></div>
         <br>
         <img id="x-img">
-
     </div>
-    <!-- <div id="footer"></div> -->
-    <!-- <canvas id="xkcd" width="100%" height="100%"></canvas> -->
+
     <script>
-        var d = new Date();
-        document.getElementById("time").innerHTML = d.toLocaleTimeString();
-        document.getElementById("date").innerHTML = d.toLocaleDateString();
+        timer();
         var time = setInterval(timer, 1000);
 
         function timer() {
             d = new Date();
             document.getElementById("time").innerHTML = d.toLocaleTimeString();
-            document.getElementById("date").innerHTML = d.toLocaleDateString();
+            document.getElementById("date").innerHTML = ('0' + (d.getMonth() + 1)).slice(-2) + "/" + ('0' + d.getDate()).slice(-2) + "/" + (d.getFullYear() + "").slice(-2);
         }
     </script>
     <script src="js/firebase.min.js"></script>

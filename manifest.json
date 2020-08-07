@@ -7,5 +7,5 @@
     "name": "404-Start",
     "offline_enabled": true,
     "permissions": ["storage"],
-    "version": "0.1.5"
+    "version": "0.1.7"
 }
