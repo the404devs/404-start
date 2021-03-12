@@ -53,6 +53,15 @@ body {
     transition: 1s filter ease;
 }
 
+h3 {
+    margin-top: 0;
+    text-decoration: underline;
+}
+
+p {
+    margin-top: 0;
+}
+
 .row {
     display: -webkit-flex;
     display: flex;
@@ -115,12 +124,20 @@ body {
 
 /* ICONS */
 
-i {
+.button i {
     font-size: 40px;
     vertical-align: middle;
     padding-bottom: 2px;
     text-align: center;
     width: 50px;
+}
+
+.small-button i {
+    font-size: 20px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+    text-align: center;
+    width: 25px;
 }
 
 .texticon {
@@ -162,7 +179,27 @@ i {
     margin-top: -1px;
 }
 
+.small-button {
+    border-color: var(--foreground);
+    border-width: 1px;
+    border-style: solid;
+    display: inline-block;
+    background-color: var(--background);
+    color: var(--foreground);
+    text-align: left;
+    font-size: 16px;
+    width: 100px;
+    transition: all 0.25s;
+    cursor: pointer;
+    font-family: "Gilroy";
+    font-weight: bold;
+    height: 20px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
 .button:hover,
+.small-button:hover,
 #x-num:hover {
     background-color: var(--color2);
 }
@@ -316,7 +353,8 @@ i {
 #plus,
 #close,
 .delete,
-.alert-button {
+.alert-button,
+.config-button {
     position: absolute;
     border-color: var(--foreground);
     border-width: 1px;
@@ -342,7 +380,7 @@ i {
 
 #close {
     margin-top: -16px;
-    margin-left: 149px;
+    margin-left: 299px;
     font-size: initial;
 }
 
@@ -352,6 +390,24 @@ i {
     font-size: 14px;
     margin-left: 153px;
     font-family: "Roboto";
+}
+
+.config-button {
+    position: absolute;
+    /* margin-top: -5px; */
+    font-size: 14px;
+    /* margin-left: 153px; */
+    font-family: "Roboto";
+    text-shadow: none;
+    border: none;
+    transition: 0.25s all;
+    top: -400px;
+    right: 10px;
+    background-color: transparent;
+}
+
+.config-button:hover {
+    transform: rotate(45deg);
 }
 
 .delete {
@@ -384,6 +440,7 @@ i {
     overflow: hidden;
     /* Enable scroll if needed */
     filter: blur(5px);
+    transition: 0.5s filter;
 }
 
 .modal-content {
@@ -392,7 +449,7 @@ i {
     padding: 0;
     border: 1px solid var(--foreground);
     overflow: auto;
-    width: 350px;
+    width: 500px;
     transition: all 0.5s;
     overflow-x: hidden;
     text-align: left;
@@ -406,6 +463,7 @@ i {
     color: var(--foreground);
     font-family: "Gilroy";
     font-weight: bold;
+    border-bottom: 1px solid;
 }
 
 .modal-body {
@@ -422,6 +480,7 @@ i {
     background-color: var(--background);
     color: var(--foreground);
     text-align: right;
+    border-top: 1px solid;
 }
 
 
@@ -450,24 +509,91 @@ i {
 }
 
 
-/* TODO LIST MODAL */
+/* MODAL COMPONENTS */
 
-label {
-    width: 75px!important;
+.section-head {
+    font-family: "Gilroy";
+    font-size: 20px;
+    text-decoration: underline;
+    line-height: 40px;
 }
 
-input {
+#user-email {
+    font-weight: bold;
+}
+
+#version-info {
+    width: 172px;
+    padding: 10px;
+    left: 0;
+    height: 40px;
+    text-align: center;
+    position: absolute;
+    color: var(--foreground);
+}
+
+.link-group {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+
+label {
+    width: 90px!important;
+    display: inline-block;
+    clear: left;
+    font-size: 14px;
+    margin-right: 20px;
+    text-align: right;
+}
+
+select {
+    margin-left: -4px;
+    width: 182px;
+}
+
+#config-window input {
+    width: 176px;
+}
+
+#config-window hr {
+    border: none;
+    border-top: 1px solid var(--foreground);
+    height: 0;
+}
+
+#login-window .modal-content,
+#register-window .modal-content {
+    width: 350px
+}
+
+#login-window input,
+#register-window input {
+    width: 150px
+}
+
+#login-window label,
+#register-window label {
+    width: 80px!important
+}
+
+input,
+select {
     margin-bottom: 5px;
+    display: inline-block;
+    max-width: 300px;
 }
 
 textarea {
-    margin-left: 54px;
-    margin-top: 5px;
+    margin-left: 114px;
+    margin-top: -18px;
     resize: none;
 }
 
 input,
-textarea {
+textarea,
+select {
     background-color: var(--background);
     border: 1px solid var(--foreground);
     color: var(--foreground);
@@ -537,6 +663,7 @@ input::-webkit-datetime-edit-minute-field:focus {
     height: calc(100% - 121px);
     transition: 0.5s filter ease;
     font-family: "Gilroy";
+    display: none;
 }
 
 #x-img {

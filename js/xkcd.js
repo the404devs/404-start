@@ -153,6 +153,7 @@ document.getElementById("x-num").addEventListener("keyup", function(e) {
 
 build_script('');
 window.scroll(0, 0);
+
 // var canvas = document.getElementById("xkcd");
 // var ctx = canvas.getContext("2d");
 // var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
