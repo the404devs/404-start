@@ -20,6 +20,20 @@ To enable the extension, perform the following steps:
 - Choose the base directory of the homepage (the one containing `index.html`).
 - Success! It should be working now.
 
+## About Icons
+You can now configure the links on the page, as well as the icons that go alongside them.
+Since there is no documentation in the page on how to configure the icons, I'll do it here for now until I come up with a better solution.
+
+You may either use an icon from [FontAwesome](https://fontawesome.com/icons/), and set the icon HTML to the provided snippet you'll find on FontAwesome, for example: 
+
+`<i class="fab fa-google"></i>`
+
+Alternatively, you can use your own image, and put in an HTML snippet like this: 
+
+`<img src="img/r.png" class="imageicon">`
+
+Change the `src` value to the path to your chosen image. Make sure you include the `imageicon` class, because that allows the page to filter the image to make it the correct colour. Custom image icons should be square in shape, and black with a transparent background. See the file `img/r.png` for an example.
+
 ## Example
 https://start.the404.nl
 
@@ -27,6 +41,7 @@ https://start.the404.nl
 
 ### *1.0.0 (03/12/2021)*
 ------------------------
+- After nearby 2 years, we've finally reached a full release!
 - Remove old Firebase events db
 - Added account-based Firestore db, stores all preferences and things per-user.
     - Since everything is now account-based, you can easily sync settings cross-device.
