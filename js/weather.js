@@ -5,8 +5,8 @@ function getWeather(city1, country1, city2, country2, units) {
     //TODO: turn switch into function
     //TODO: make someone post this on r/badcode
 
-    var WeatherURL1 = "http://api.openweathermap.org/data/2.5/weather?q=" + city1 + "," + country1 + "&appid=ac44343b90759cfe705813ff3a614fa5&units=" + units;
-    var WeatherURL2 = "http://api.openweathermap.org/data/2.5/weather?q=" + city2 + "," + country2 + "&appid=c974b8da946cbf11c238f30fff7cbbd9&units=" + units;
+    var WeatherURL1 = "https://api.openweathermap.org/data/2.5/weather?q=" + city1 + "," + country1 + "&appid=ac44343b90759cfe705813ff3a614fa5&units=" + units;
+    var WeatherURL2 = "https://api.openweathermap.org/data/2.5/weather?q=" + city2 + "," + country2 + "&appid=c974b8da946cbf11c238f30fff7cbbd9&units=" + units;
 
 
     var WeatherURL3;
@@ -32,7 +32,7 @@ function getWeather(city1, country1, city2, country2, units) {
         console.log("%cGetting weather for " + city1 + "...", "color:yellow;font-weight:bold;font-style:italic;");
         var long = data.coord.lon;
         var lat = data.coord.lat;
-        WeatherURL3 = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=ac44343b90759cfe705813ff3a614fa5&exclude=minutely,hourly&units=" + units;
+        WeatherURL3 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=ac44343b90759cfe705813ff3a614fa5&exclude=minutely,hourly&units=" + units;
         console.log(WeatherURL3);
     }).then(() => {
         $.getJSON(WeatherURL3, function(data) {
@@ -128,7 +128,7 @@ function getWeather(city1, country1, city2, country2, units) {
         console.log("%cGetting weather for " + city2 + "...", "color:yellow;font-weight:bold;font-style:italic;");
         var long = data.coord.lon;
         var lat = data.coord.lat;
-        WeatherURL4 = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
+        WeatherURL4 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
         console.log(WeatherURL4);
     }).then(() => {
         $.getJSON(WeatherURL4, function(data) {
