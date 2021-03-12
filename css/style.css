@@ -69,6 +69,7 @@ p {
     transition: 0.5s filter ease;
     border-bottom: 1px solid var(--foreground);
     padding-top: 100px;
+    width: 100%;
 }
 
 .column {
