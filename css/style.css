@@ -34,6 +34,10 @@ if no pywal colours exist.*/
 
 /* GENERAL CSS */
 
+* {
+    scrollbar-width: none;
+}
+
 html {
     transition: 1s filter ease;
     filter: blur(25px);
@@ -42,6 +46,7 @@ html {
 
 a {
     text-decoration: none;
+    font-family: "Gilroy";
 }
 
 body {
@@ -433,7 +438,7 @@ p {
     /* Location of the box */
     left: 0;
     top: 0;
-    text-align: -webkit-center;
+    text-align: center;
     width: 100%;
     /* Full width */
     height: 100%;
@@ -454,6 +459,7 @@ p {
     transition: all 0.5s;
     overflow-x: hidden;
     text-align: left;
+    display: inline-block;
 }
 
 .modal-header {

@@ -154,15 +154,6 @@ async function setConfig() {
     var country1 = $("#country-sel-1").val();
     var country2 = $("#country-sel-2").val();
     var units = $("#unit-selector").val();
-    await db.collection(uid).doc("Links").set({
-        Link1: [$("#link1-config").children("input")[0].value, $("#link1-config").children("input")[1].value, $("#link1-config").children("input")[2].value],
-        Link2: [$("#link2-config").children("input")[0].value, $("#link2-config").children("input")[1].value, $("#link2-config").children("input")[2].value],
-        Link3: [$("#link3-config").children("input")[0].value, $("#link3-config").children("input")[1].value, $("#link3-config").children("input")[2].value],
-        Link4: [$("#link4-config").children("input")[0].value, $("#link4-config").children("input")[1].value, $("#link4-config").children("input")[2].value],
-        Link5: [$("#link5-config").children("input")[0].value, $("#link5-config").children("input")[1].value, $("#link5-config").children("input")[2].value],
-        Link6: [$("#link6-config").children("input")[0].value, $("#link6-config").children("input")[1].value, $("#link6-config").children("input")[2].value],
-        Link7: [$("#link7-config").children("input")[0].value, $("#link7-config").children("input")[1].value, $("#link7-config").children("input")[2].value],
-    });
     await db.collection(uid).doc("Weather").set({
         Place1: [city1, country1],
         Place2: [city2, country2],
@@ -175,7 +166,15 @@ async function setConfig() {
         Colours: [$("#background-colour").val(), $("#foreground-colour").val(), $("#highlight-colour").val(), $("#header-colour").val()],
         XKCDinvert: $("#invert-toggle").prop("checked")
     });
-
+    await db.collection(uid).doc("Links").set({
+        Link1: [$("#link1-config").children("input")[0].value, $("#link1-config").children("input")[1].value, $("#link1-config").children("input")[2].value],
+        Link2: [$("#link2-config").children("input")[0].value, $("#link2-config").children("input")[1].value, $("#link2-config").children("input")[2].value],
+        Link3: [$("#link3-config").children("input")[0].value, $("#link3-config").children("input")[1].value, $("#link3-config").children("input")[2].value],
+        Link4: [$("#link4-config").children("input")[0].value, $("#link4-config").children("input")[1].value, $("#link4-config").children("input")[2].value],
+        Link5: [$("#link5-config").children("input")[0].value, $("#link5-config").children("input")[1].value, $("#link5-config").children("input")[2].value],
+        Link6: [$("#link6-config").children("input")[0].value, $("#link6-config").children("input")[1].value, $("#link6-config").children("input")[2].value],
+        Link7: [$("#link7-config").children("input")[0].value, $("#link7-config").children("input")[1].value, $("#link7-config").children("input")[2].value],
+    });
 
     getConfig();
     hideModal();

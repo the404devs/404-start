@@ -1,0 +1,11 @@
+{
+    "chrome_url_overrides": {
+        "newtab": "ext.html"
+    },
+    "description": "A custom new tab page. Sets start.the404.nl as the new tab page.",
+    "manifest_version": 2,
+    "name": "404-Start (Online mode)",
+    "offline_enabled": true,
+    "permissions": ["storage"],
+    "version": "1.0.1"
+}
