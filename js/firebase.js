@@ -102,10 +102,32 @@ async function getConfig() {
         docs.push({ id: doc.id, ...doc.data() })
     });
 
+    $("#xkcd-toggle").prop("checked", docs[1].XKCD);
+    $("#invert-toggle").prop("checked", docs[1].XKCDinvert);
+    $("#update-toggle").prop("checked", docs[1].Update);
+    $("#pywal-toggle").prop("checked", docs[1].Pywal);
+    if (docs[1].XKCD) { $("#xkcd-zone").show() } else { $("#xkcd-zone").hide() }
+    if (docs[1].XKCDinvert) { $("#x-img").css("filter", "invert(1)") } else { $("#x-img").css("filter", "invert(0)") }
+    if (docs[1].Update && LOCAL) {
+        console.log("%cChecking for update...", "color:yellow;font-weight:bold;font-style:italic;");
+        checkForUpdate(false);
+    }
+    if (docs[1].Pywal) {
+        console.log("%cApplying pywal colours...", "color:yellow;font-weight:bold;font-style:italic;");
+        $('head').append('<link rel="stylesheet" type="text/css" id="pywal-css" href=' + config.Pywal + '>');
+    } else {
+        console.log("%cApplying user colours...", "color:yellow;font-weight:bold;font-style:italic;");
+        $("#pywal-css").remove();
+        //Apply custom theme here.
+        applyUserColours(docs[1].Colours);
+    }
+    $("#background-colour").val(docs[1].Colours[0]);
+    $("#foreground-colour").val(docs[1].Colours[1]);
+    $("#highlight-colour").val(docs[1].Colours[2]);
+    $("#header-colour").val(docs[1].Colours[3]);
+
     console.log("%cAttempting to load user's preferred links...", "color:lightblue;font-weight:bold;font-style:italic;");
     loadLinks(docs[2]);
-
-    applyFilter();
 
     console.log("%cAttempting to load weather data...", "color:lightblue;font-weight:bold;font-style:italic;");
     var city1 = docs[3].Place1[0];
@@ -120,16 +142,7 @@ async function getConfig() {
     $("#country-sel-2").val(country2);
     $("#unit-selector").val(units);
     getWeather(city1, country1, city2, country2, units);
-
-    console.log("%cToggling XKCD...", "color:lightblue;font-weight:bold;font-style:italic;");
-    $("#xkcd-toggle").prop("checked", docs[1].XKCD);
-    $("#update-toggle").prop("checked", docs[1].Update);
-    if (docs[1].XKCD) { $("#xkcd-zone").show() } else { $("#xkcd-zone").hide() }
-    if (docs[1].Update && LOCAL) {
-        console.log("%cChecking for update...", "color:yellow;font-weight:bold;font-style:italic;");
-        checkForUpdate(false);
-    }
-
+    setTimeout(applyFilter, 500);
     readEvents();
 }
 
@@ -157,8 +170,12 @@ async function setConfig() {
     });
     await db.collection(uid).doc("General").update({
         XKCD: $("#xkcd-toggle").prop("checked"),
-        Update: $("#update-toggle").prop("checked")
+        Update: $("#update-toggle").prop("checked"),
+        Pywal: $("#pywal-toggle").prop("checked"),
+        Colours: [$("#background-colour").val(), $("#foreground-colour").val(), $("#highlight-colour").val(), $("#header-colour").val()],
+        XKCDinvert: $("#invert-toggle").prop("checked")
     });
+
 
     getConfig();
     hideModal();
@@ -344,7 +361,11 @@ async function setDefaults(uid, addr) {
     console.log(addr);
     await db.collection(uid).doc("General").set({
         XKCD: false,
-        email: addr
+        email: addr,
+        Update: false,
+        Pywal: false,
+        Colours: ["#14101a", "#b1bfba", "#8A746B", "#9F8675"],
+        XKCDinvert: false
     });
     await db.collection(uid).doc("Links").set({
         Link1: [links[0].text.trim(), links[0].href, links[0].firstElementChild.firstElementChild.outerHTML],
@@ -394,9 +415,9 @@ async function readEvents() {
         keylist.push(e);
     }
     keylist.sort();
-    console.log(keylist)
+    // console.log(keylist)
     for (let i = 0; i < keylist.length; i++) {
-        console.log(events[keylist[i]]);
+        // console.log(events[keylist[i]]);
         $('#todo-container').append(
             $('<span/>').attr('class', 'todo').append(
                 $('<span/>').attr('class', 'eventHead').html(events[keylist[i]][0])
@@ -427,3 +448,9 @@ var deleteEvent = async function(e) {
         readEvents();
     });
 }.bind(this);
+
+function applyUserColours(colours) {
+    $("#user-css").remove();
+    var sheet = "<style type='text/css' id='user-css'>:root{--background:" + colours[0] + "; --foreground:" + colours[1] + "; --color2: " + colours[2] + "; --color4:" + colours[3] + ";}</style>";
+    $('head').append(sheet);
+}

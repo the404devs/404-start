@@ -314,7 +314,3 @@ function applyFilter() {
         applyFilter();
     }
 }
-
-$(document).ready(() => {
-    applyFilter();
-});

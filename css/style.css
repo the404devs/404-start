@@ -668,7 +668,7 @@ input::-webkit-datetime-edit-minute-field:focus {
 }
 
 #x-img {
-    filter: invert(1);
+    /* filter: invert(1); */
     border: 1px solid;
     padding: 2px;
     margin-top: 10px;
@@ -676,7 +676,7 @@ input::-webkit-datetime-edit-minute-field:focus {
 }
 
 #x-img:active {
-    filter: none;
+    filter: none!important;
 }
 
 #x-title {

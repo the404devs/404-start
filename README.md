@@ -1,8 +1,12 @@
 # 404-Start
-A custom homepage, with **pywal** integration and decent customizability (more soon).
+A custom homepage, with [**pywal**](https://github.com/dylanaraps/pywal) integration and decent customizability (more soon).
 
 ## Setup (Normal)
 Just set https://start.the404.nl/ as your homepage in your browser.
+Things you miss out on:
+    - Automatic update checking
+        - This is fine, since the online version is *always* up to date.
+    - Pywal integration
 
 ## Setup (Advanced)
 This is the preferred method of using 404-Start if you want integration with **pywal**, since most modern browsers don't allow remote webpages to read local files, such as pywal's `colors.css`.
@@ -11,7 +15,7 @@ Head over to the [Releases page](https://github.com/the404devs/404-start/release
 
 Extract the .zip file to your preferred location, and open `index.html` in your browser. Once you set the URL of this page, you're all set!
 
-For pywal integration: in `js/config.js`, you'll need to change the `Pywal` value to the path to `colors.css` on your system, typically this is `~/.cache/wal/colors.css`.
+For pywal integration: in `js/config.js`, you'll need to change the `Pywal` value to the path to `colors.css` on your system, typically this is `~/.cache/wal/colors.css`. You'll need to check off 'Pywal colours' in 404-Start's settings menu to enable the feature.
 
 ## Account Creation
 Hit the cog icon in the top-right corner, and select *Register*. Insert an email and password and you're good to go!
@@ -21,7 +25,7 @@ Hit the cog icon in the top-right corner, and select *Register*. Insert an email
 
 I'm currently working on a Chrome extension that will make this start page your new tab page as well. This feature is still experimental. You've been warned.
 
-In `js/config.js`, change the `ExtPath` variable to the path of `index.html` (You can just copy the url when on the homepage). This path is where the extension redirects the browser upon the creation of a new tab.
+In `js/config.js`, change the `ExtPath` variable to the path of `index.html` (You can just copy the url when on the homepage, the 'file://' prefix is required). This path is where the extension redirects the browser upon the creation of a new tab.
 
 To enable the extension, perform the following steps:
 - Head over to Chrome's extension settings page **chrome://extensions**.
@@ -29,6 +33,8 @@ To enable the extension, perform the following steps:
 - Hit the "Load Unpacked" button that appears.
 - Choose the base directory of the homepage (the one containing `index.html`).
 - Success! It should be working now.
+
+- Once the extension is installed, you won't need to update it again, unless explicitly mentioned in the changelog.
 
 ## About Icons
 You can now configure the links on the page, as well as the icons that go alongside them.
@@ -46,6 +52,24 @@ Change the `src` value to the path to your chosen image. Make sure you include t
 
 
 ## Changelog
+
+### *1.0.1 (03/13/2021)*
+------------------------
+- 404-Start now (sort of) differentiates between online and local modes.
+    - Additional settings are shown in local mode.
+        - Toggle automatic update on/off
+        - Button for manual update check
+        - Toggle Pywal colours on/off (still need to set the path in `config.js`, for now)
+    - Automatic update check on page load. This will probably get annoying, so in the future I should probably make it once per session.
+- Added the ability to change UI colours.
+    - Background colour: used for the background of all components
+    - Foreground colour: used for text, borders, etc.
+    - Highlight colour: used for buttons when hovered over
+    - Header colour: used for the header with the time and date
+- There are only 4 colours for now, but more may come in the future.
+- Added ability to toggle inverting the colours of the XKCD comic, for dark themes.
+- Some styling changes.
+- Added more words to README setup instructions.
 
 ### *1.0.0 (03/12/2021)*
 ------------------------

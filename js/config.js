@@ -1,9 +1,10 @@
 var config = {
     "Pywal": "file:///home/the404/.cache/wal/colors.css",
     "ExtPath": "file:///home/the404/homepage/index.html",
-    "VER": "v1.0.0",
-    "DATE": "(03/12/2020)"
+    "VER": "v1.0.1",
+    "DATE": "(03/13/2020)"
 };
+// DON'T FORGET TO CHANGE THE VER FILE TOO
 
 var fire_config = {
     apiKey: "AIzaSyDoJQA9RDKMWEXi4fJv6AKkm3kGfOuM8KE",
@@ -17,5 +18,4 @@ var fire_config = {
 
 
 /* DO NOT MODIFY ANYTHING BEYOND THIS POINT */
-$('head').append('<link rel="stylesheet" type="text/css" href=' + config.Pywal + '>');
-$("#version-info").text(config.VER + " " + config.DATE);
+$("#version-info").text(config.VER + " " + config.DATE + " Owen Bowden");

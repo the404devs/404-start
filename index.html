@@ -8,7 +8,6 @@
     <script src="js/font-awesome.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/skycons.js"></script>
-    <script src="js/config.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
@@ -703,12 +702,27 @@
                     <br>
                     <label>XKCD comic: </label>
                     <input type="checkbox" id="xkcd-toggle">
+                    <br>
+                    <label>Invert XKCD: </label>
+                    <input type="checkbox" id="invert-toggle">
+                    <br>
+                    <span style="font-size:14px">This is good for dark themes.</span>
 
                     <hr>
 
                     <span class="section-head">Theme Settings</span>
                     <br>
-                    <label>Coming soon!</label>
+                    <label>Background</label>
+                    <input type="color" id="background-colour">
+                    <br>
+                    <label>Foreground</label>
+                    <input type="color" id="foreground-colour">
+                    <br>
+                    <label>Highlight</label>
+                    <input type="color" id="highlight-colour">
+                    <br>
+                    <label>Header</label>
+                    <input type="color" id="header-colour">
                     <div id="local-settings">
                         <hr>
                         <span class="section-head">Local Settings</span>
@@ -718,6 +732,12 @@
                         <span class="small-button" onclick="checkForUpdate(true)" style="width:120px">
                             <i class="fas fa-redo"></i> Check Now
                         </span>
+                        <br>
+                        <label>Pywal colours:</label>
+                        <input type="checkbox" id="pywal-toggle">
+                        <br>
+                        <span style="font-size:14px">This will override any custom colours you've set above.</span>
+                        <span style="font-size:14px">Remember to set your Pywal path in config.js.</span>
                         <br>
                     </div>
                 </div>
@@ -798,6 +818,7 @@
     <!-- <script src="js/bg.js"></script> -->
     <script src="js/xkcd.js"></script>
     <script src="js/modal.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/update.js"></script>
     <script src="js/filter.js"></script>
     <script src="js/weather.js"></script>
