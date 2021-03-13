@@ -1,17 +1,25 @@
 # 404-Start
-A custom homepage.
+A custom homepage, with **pywal** integration and decent customizability (more soon).
 
-## Setup
-Head over to the [Releases page](https://github.com/the404devs/404-start/releases) and download the latest version.
+## Setup (Normal)
+Just set https://start.the404.nl/ as your homepage in your browser.
+
+## Setup (Advanced)
+This is the preferred method of using 404-Start if you want integration with **pywal**, since most modern browsers don't allow remote webpages to read local files, such as pywal's `colors.css`.
+
+Head over to the [Releases page](https://github.com/the404devs/404-start/releases) and download the latest version (or just `git clone`).
 
 Extract the .zip file to your preferred location, and open `index.html` in your browser. Once you set the URL of this page, you're all set!
 
-For Google Chrome users, you can also use this page to override the default new tab page, see below.
+For pywal integration: in `js/config.js`, you'll need to change the `Pywal` value to the path to `colors.css` on your system, typically this is `~/.cache/wal/colors.css`.
+
+## Account Creation
+Hit the cog icon in the top-right corner, and select *Register*. Insert an email and password and you're good to go!
 
 ## Experimental New Tab Page (Chrome Extension)
 I'm currently working on a Chrome extension that will make this start page your new tab page as well. This feature is still experimental. You've been warned.
 
-In `js/config.js`, change the `ExtPath` variable to the path of `index.html`. This path is where the extension redirects the browser upon the creation of a new tab.
+In `js/config.js`, change the `ExtPath` variable to the path of `index.html` (You can just copy the url when on the homepage). This path is where the extension redirects the browser upon the creation of a new tab.
 
 To enable the extension, perform the following steps:
 - Head over to Chrome's extension settings page **chrome://extensions**.
