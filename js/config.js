@@ -1,6 +1,7 @@
 var config = {
     "Pywal": "file:///home/the404/.cache/wal/colors.css",
-    "ExtPath": "file:///home/the404/homepage/index.html"
+    "ExtPath": "file:///home/the404/homepage/index.html",
+    "VER": "v1.0.0"
 };
 
 var fire_config = {

@@ -144,7 +144,7 @@
                 <span>Configuration</span>
                 <span id="close" onclick="hideModal('#config-window')" style="margin-left:237px">×</span>
             </div>
-            <div class="modal-body" style="height:50vh; overflow:scroll">
+            <div class="modal-body" style="height:45vh; overflow:scroll">
                 <div id="settings-not-signed-in">
                     <span class="section-head">Account Settings</span>
                     <br>
@@ -709,10 +709,14 @@
                     <span class="section-head">Theme Settings</span>
                     <br>
                     <label>Coming soon!</label>
+                    <div id="local-settings">
+                        <hr>
+                        <span class="section-head">Local Settings</span>
+                        <br>
+                        <label>Update check:</label>
+                        <input type="checkbox" id="update-toggle">
+                    </div>
                 </div>
-
-
-
             </div>
             <div class="modal-footer" style="height: 61px;">
                 <a id="version-info" href="https://github.com/the404devs/404-start">v1.0.0 (03/12/2021) Owen Bowden</a>
@@ -790,6 +794,7 @@
     <!-- <script src="js/bg.js"></script> -->
     <script src="js/xkcd.js"></script>
     <script src="js/modal.js"></script>
+    <script src="js/update.js"></script>
     <script src="js/filter.js"></script>
     <script src="js/weather.js"></script>
     <script src="js/firebase.js"></script>

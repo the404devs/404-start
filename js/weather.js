@@ -5,9 +5,10 @@ function getWeather(city1, country1, city2, country2, units) {
     //TODO: turn switch into function
     //TODO: make someone post this on r/badcode
 
+
+    // in the event that this thing becomes popular and the api keys become overloaded, just make a bunch more and randomly select one
     var WeatherURL1 = "https://api.openweathermap.org/data/2.5/weather?q=" + city1 + "," + country1 + "&appid=ac44343b90759cfe705813ff3a614fa5&units=" + units;
     var WeatherURL2 = "https://api.openweathermap.org/data/2.5/weather?q=" + city2 + "," + country2 + "&appid=c974b8da946cbf11c238f30fff7cbbd9&units=" + units;
-
 
     var WeatherURL3;
     var WeatherURL4;

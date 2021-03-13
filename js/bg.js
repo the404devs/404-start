@@ -55,8 +55,8 @@ function init() {
 
 function getColor(x) {
     return foreCol;
-    // return 'hsl( hue, 0%, 50% )'.replace(
-    // 	'hue', x / w * 360 + frame
+    // return 'hsl( hue, 80%, 50% )'.replace(
+    //     'hue', x / w * 360 + frame
     // );
 }
 

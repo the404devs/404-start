@@ -123,11 +123,15 @@ async function getConfig() {
 
     console.log("%cToggling XKCD...", "color:lightblue;font-weight:bold;font-style:italic;");
     $("#xkcd-toggle").prop("checked", docs[1].XKCD);
+    $("#update-toggle").prop("checked", docs[1].Update);
     if (docs[1].XKCD) { $("#xkcd-zone").show() } else { $("#xkcd-zone").hide() }
+    if (docs[1].Update && LOCAL) {
+        console.log("%cChecking for update...", "color:yellow;font-weight:bold;font-style:italic;");
+        checkForUpdate();
+    }
 
     readEvents();
 }
-
 
 async function setConfig() {
     console.log("%cSaving user config...", "color:yellow;font-weight:bold;font-style:italic;");
@@ -151,14 +155,14 @@ async function setConfig() {
         Place2: [city2, country2],
         Units: units
     });
-    await db.collection(uid).doc("General").set({
-        XKCD: $("#xkcd-toggle").prop("checked")
+    await db.collection(uid).doc("General").update({
+        XKCD: $("#xkcd-toggle").prop("checked"),
+        Update: $("#update-toggle").prop("checked")
     });
 
     getConfig();
     hideModal();
 }
-
 
 function loadLinks(doc) {
     // This causes me physical pain
@@ -408,7 +412,6 @@ async function readEvents() {
         );
     }
 }
-
 
 var deleteEvent = async function(e) {
     console.log("%cDeleting an event...", "color:lightblue;font-weight:bold;font-style:italic;");
