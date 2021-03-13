@@ -17,6 +17,8 @@ For pywal integration: in `js/config.js`, you'll need to change the `Pywal` valu
 Hit the cog icon in the top-right corner, and select *Register*. Insert an email and password and you're good to go!
 
 ## Experimental New Tab Page (Chrome Extension)
+*Only supported when 404-Start is a local html file (advanced setup)*
+
 I'm currently working on a Chrome extension that will make this start page your new tab page as well. This feature is still experimental. You've been warned.
 
 In `js/config.js`, change the `ExtPath` variable to the path of `index.html` (You can just copy the url when on the homepage). This path is where the extension redirects the browser upon the creation of a new tab.
