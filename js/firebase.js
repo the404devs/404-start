@@ -334,12 +334,13 @@ function loadLinks(doc) {
     ));
 }
 
-async function setDefaults(uid, email) {
+async function setDefaults(uid, addr) {
     console.log("%cSetting default values for new user", "color:yellow;font-weight:bold;font-style:italic;");
     var links = $("#left").children("a");
+    console.log(addr);
     await db.collection(uid).doc("General").set({
         XKCD: false,
-        email: email
+        email: addr
     });
     await db.collection(uid).doc("Links").set({
         Link1: [links[0].text.trim(), links[0].href, links[0].firstElementChild.firstElementChild.outerHTML],
