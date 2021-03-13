@@ -24,7 +24,11 @@ firebase.auth().onAuthStateChanged(function(user) {
         $("#plus").hide();
         $("#config-save-button").hide();
     }
-    $('html').css('filter', 'none');
+
+    function unblur() {
+        $('html').css('filter', 'none');
+    }
+    setTimeout(unblur, 1500);
 });
 
 function createAccount() {
@@ -371,7 +375,6 @@ async function addEvent() {
     $('#eventBody').val("");
     hideModal();
     console.log("%cAdded event!...", "color:lightblue;font-weight:bold;font-style:italic;");
-
 }
 
 async function readEvents() {
