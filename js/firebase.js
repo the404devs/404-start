@@ -112,7 +112,7 @@ async function getConfig() {
         console.log("%cChecking for update...", "color:yellow;font-weight:bold;font-style:italic;");
         checkForUpdate(false);
     }
-    if (docs[1].Pywal) {
+    if (docs[1].Pywal && LOCAL) {
         console.log("%cApplying pywal colours...", "color:yellow;font-weight:bold;font-style:italic;");
         $('head').append('<link rel="stylesheet" type="text/css" id="pywal-css" href=' + config.Pywal + '>');
     } else {
