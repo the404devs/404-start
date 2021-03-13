@@ -4,9 +4,9 @@ A custom homepage, with [**pywal**](https://github.com/dylanaraps/pywal) integra
 ## Setup (Normal)
 Just set https://start.the404.nl/ as your homepage in your browser.
 Things you miss out on:
-    - Automatic update checking
-        - This is fine, since the online version is *always* up to date.
-    - Pywal integration
+  - Automatic update checking
+      - This is fine, since the online version is *always* up to date.
+  - Pywal integration
 
 ## Setup (Advanced)
 This is the preferred method of using 404-Start if you want integration with **pywal**, since most modern browsers don't allow remote webpages to read local files, such as pywal's `colors.css`.
