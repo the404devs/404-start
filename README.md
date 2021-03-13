@@ -44,8 +44,6 @@ Alternatively, you can use your own image, and put in an HTML snippet like this:
 
 Change the `src` value to the path to your chosen image. Make sure you include the `imageicon` class, because that allows the page to filter the image to make it the correct colour. Custom image icons should be square in shape, and black with a transparent background. See the file `img/r.png` for an example.
 
-## Example
-https://start.the404.nl
 
 ## Changelog
 
