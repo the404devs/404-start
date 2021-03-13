@@ -26,7 +26,7 @@ var getVersion = function(url, callback) {
     xhr.send();
 };
 
-function checkForUpdate() {
+function checkForUpdate(manual) {
     getVersion("https://start.the404.nl/VER", function(data) {
         var newestVer = parseInt(data.replace(/\D/g, ''));
         var currentVer = parseInt(config.VER.replace(/\D/g, ''));
@@ -35,6 +35,8 @@ function checkForUpdate() {
             if (confirm("There is an update available!\n\nLatest version: " + data + "Current version: " + config.VER + "\n\nPress OK to go to the Github page to get the update and see the changelog.\nYou can turn this message off in settings.")) {
                 location.href = "https://github.com/the404devs/404-start/releases";
             }
+        } else {
+            if (manual) { alert("404-Start is up to date!") }
         }
     });
 }

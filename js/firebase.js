@@ -127,7 +127,7 @@ async function getConfig() {
     if (docs[1].XKCD) { $("#xkcd-zone").show() } else { $("#xkcd-zone").hide() }
     if (docs[1].Update && LOCAL) {
         console.log("%cChecking for update...", "color:yellow;font-weight:bold;font-style:italic;");
-        checkForUpdate();
+        checkForUpdate(false);
     }
 
     readEvents();

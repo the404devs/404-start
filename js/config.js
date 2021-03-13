@@ -1,7 +1,8 @@
 var config = {
     "Pywal": "file:///home/the404/.cache/wal/colors.css",
     "ExtPath": "file:///home/the404/homepage/index.html",
-    "VER": "v1.0.0"
+    "VER": "v1.0.0",
+    "DATE": "(03/12/2020)"
 };
 
 var fire_config = {
@@ -17,3 +18,4 @@ var fire_config = {
 
 /* DO NOT MODIFY ANYTHING BEYOND THIS POINT */
 $('head').append('<link rel="stylesheet" type="text/css" href=' + config.Pywal + '>');
+$("#version-info").text(config.VER + " " + config.DATE);
