@@ -1,0 +1,3 @@
+**Basic users (Online mode):** Set your homepage to <https://start.the404.nl/> and create an account to start customizing it.
+**Advanced users (Local mode):** Download this release, or clone the repository. Set `index.html` as your homepage, and create an account.
+See [README.md](https://github.com/the404devs/404-start/blob/master/README.md) for further instructions, as well as how to set up an experimental Chrome extension to turn 404-Start into Chrome's new tab page.
