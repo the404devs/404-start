@@ -53,6 +53,16 @@ Change the `src` value to the path to your chosen image. Make sure you include t
 
 ## Changelog
 
+### *1.0.2 (03/18/2021)*
+------------------------
+- Fixed bug where missing fields in the account db would break everything and prevent the page from loading correctly.
+    - Missing fields are now given default values.
+- Fixed very poorly coded event deletion (Thanks 2019 me).
+- Login/Register forms now show error messages when something goes wrong, inputs are cleared when forms are closed.
+- Slight cleanup of `js/weather.js`, much more to come.
+- New icon, still not 100% happy with it.
+- Link settings made a bit more user-friendly, config for only 1 link is shown at a time, dropdown allows user to choose which one is shown.
+
 ### *1.0.1 (03/13/2021)*
 ------------------------
 - 404-Start now (sort of) differentiates between online and local modes.

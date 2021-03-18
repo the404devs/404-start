@@ -1,4 +1,6 @@
-function getWeather(city1, country1, city2, country2, units) {
+var icons = new Skycons({ "color": $('.button').css('color') });
+
+function getWeatherInfo(city1, country1, city2, country2, units) {
     //TODO: reimplement windy icon based on wind speed
     //TODO: add custom icons?
     //TODO: weather alerts
@@ -21,6 +23,7 @@ function getWeather(city1, country1, city2, country2, units) {
         windUnit = "mph";
         windScale = 1;
     }
+
     //Set names
     $("#weathername-1").text(city1);
     $("#weathername-2").text(city2);
@@ -37,66 +40,7 @@ function getWeather(city1, country1, city2, country2, units) {
         console.log(WeatherURL3);
     }).then(() => {
         $.getJSON(WeatherURL3, function(data) {
-            var icons = new Skycons({ "color": $('.button').css('color') });
-            switch (data.current.weather[0].icon) {
-                case "01d":
-                    icons.set('weathericon-1', Skycons.CLEAR_DAY);
-                    break;
-                case "01n":
-                    icons.set('weathericon-1', Skycons.CLEAR_NIGHT);
-                    break;
-                case "02d":
-                    icons.set('weathericon-1', Skycons.PARTLY_CLOUDY_DAY);
-                    break;
-                case "02n":
-                    icons.set('weathericon-1', Skycons.PARTLY_CLOUDY_NIGHT);
-                    break;
-                case "03d":
-                    icons.set('weathericon-1', Skycons.CLOUDY);
-                    break;
-                case "03n":
-                    icons.set('weathericon-1', Skycons.CLOUDY);
-                    break;
-                case "04d":
-                    icons.set('weathericon-1', Skycons.CLOUDY);
-                    break;
-                case "04n":
-                    icons.set('weathericon-1', Skycons.CLOUDY);
-                    break;
-                case "09d":
-                    icons.set('weathericon-1', Skycons.RAIN);
-                    break;
-                case "09n":
-                    icons.set('weathericon-1', Skycons.RAIN);
-                    break;
-                case "10d":
-                    icons.set('weathericon-1', Skycons.RAIN);
-                    break;
-                case "10n":
-                    icons.set('weathericon-1', Skycons.RAIN);
-                    break;
-                case "11d":
-                    icons.set('weathericon-1', Skycons.RAIN);
-                    break;
-                case "11n":
-                    icons.set('weathericon-1', Skycons.RAIN);
-                    break;
-                case "13d":
-                    icons.set('weathericon-1', Skycons.SNOW);
-                    break;
-                case "13n":
-                    icons.set('weathericon-1', Skycons.SNOW);
-                    break;
-                case "50d":
-                    icons.set('weathericon-1', Skycons.FOG);
-                    break;
-                case "50n":
-                    icons.set('weathericon-1', Skycons.FOG);
-                    break;
-
-                default:
-
-            }
+            setIcon(data.current.weather[0].icon, "weathericon-1");
             icons.play();
             $('#weather-1 #temperature').html(data.current.temp + tempUnit);
             $('#weather-1 #conditions').html(titleCase(data.current.weather[0].description));
@@ -114,10 +58,10 @@ function getWeather(city1, country1, city2, country2, units) {
                 data.alerts.forEach((alert) => {
                     var start = new Date(alert.start * 1000);
                     var end = new Date(alert.end * 1000);
-                    $("#alert-body-2").append($("<h3>").html(titleCase(alert.event) + " Warning"));
-                    $("#alert-body-2").append($("<p>").html("Issued: " + start.getFullYear() + "-" + ('0' + (start.getMonth() + 1)).slice(-2) + "-" + ('0' + start.getDate()).slice(-2) + " " + ('0' + start.getHours()).slice(-2) + ":" + ('0' + start.getMinutes()).slice(-2) + ":" + ('0' + start.getSeconds()).slice(-2)));
-                    $("#alert-body-2").append($("<p>").html("Ending: " + end.getFullYear() + "-" + ('0' + (end.getMonth() + 1)).slice(-2) + "-" + ('0' + end.getDate()).slice(-2) + " " + ('0' + end.getHours()).slice(-2) + ":" + ('0' + end.getMinutes()).slice(-2) + ":" + ('0' + end.getSeconds()).slice(-2)));
-                    $("#alert-body-2").append($("<p>").html(alert.description));
+                    $("#alert-body-1").append($("<h3>").html(titleCase(alert.event) + " Warning"));
+                    $("#alert-body-1").append($("<p>").html("Issued: " + start.getFullYear() + "-" + ('0' + (start.getMonth() + 1)).slice(-2) + "-" + ('0' + start.getDate()).slice(-2) + " " + ('0' + start.getHours()).slice(-2) + ":" + ('0' + start.getMinutes()).slice(-2) + ":" + ('0' + start.getSeconds()).slice(-2)));
+                    $("#alert-body-1").append($("<p>").html("Ending: " + end.getFullYear() + "-" + ('0' + (end.getMonth() + 1)).slice(-2) + "-" + ('0' + end.getDate()).slice(-2) + " " + ('0' + end.getHours()).slice(-2) + ":" + ('0' + end.getMinutes()).slice(-2) + ":" + ('0' + end.getSeconds()).slice(-2)));
+                    $("#alert-body-1").append($("<p>").html(alert.description));
                 });
             } else {
                 $("#alerts-1").hide();
@@ -133,66 +77,7 @@ function getWeather(city1, country1, city2, country2, units) {
         console.log(WeatherURL4);
     }).then(() => {
         $.getJSON(WeatherURL4, function(data) {
-            var icons = new Skycons({ "color": $('.button').css('color') });
-            switch (data.current.weather[0].icon) {
-                case "01d":
-                    icons.set('weathericon-2', Skycons.CLEAR_DAY);
-                    break;
-                case "01n":
-                    icons.set('weathericon-2', Skycons.CLEAR_NIGHT);
-                    break;
-                case "02d":
-                    icons.set('weathericon-2', Skycons.PARTLY_CLOUDY_DAY);
-                    break;
-                case "02n":
-                    icons.set('weathericon-2', Skycons.PARTLY_CLOUDY_NIGHT);
-                    break;
-                case "03d":
-                    icons.set('weathericon-2', Skycons.CLOUDY);
-                    break;
-                case "03n":
-                    icons.set('weathericon-2', Skycons.CLOUDY);
-                    break;
-                case "04d":
-                    icons.set('weathericon-2', Skycons.CLOUDY);
-                    break;
-                case "04n":
-                    icons.set('weathericon-2', Skycons.CLOUDY);
-                    break;
-                case "09d":
-                    icons.set('weathericon-2', Skycons.RAIN);
-                    break;
-                case "09n":
-                    icons.set('weathericon-2', Skycons.RAIN);
-                    break;
-                case "10d":
-                    icons.set('weathericon-2', Skycons.RAIN);
-                    break;
-                case "10n":
-                    icons.set('weathericon-2', Skycons.RAIN);
-                    break;
-                case "11d":
-                    icons.set('weathericon-2', Skycons.RAIN);
-                    break;
-                case "11n":
-                    icons.set('weathericon-2', Skycons.RAIN);
-                    break;
-                case "13d":
-                    icons.set('weathericon-2', Skycons.SNOW);
-                    break;
-                case "13n":
-                    icons.set('weathericon-2', Skycons.SNOW);
-                    break;
-                case "50d":
-                    icons.set('weathericon-2', Skycons.FOG);
-                    break;
-                case "50n":
-                    icons.set('weathericon-2', Skycons.FOG);
-                    break;
-
-                default:
-
-            }
+            setIcon(data.current.weather[0].icon, "weathericon-2");
             icons.play();
             $('#weather-2 #temperature').html(data.current.temp + tempUnit);
             $('#weather-2 #conditions').html(titleCase(data.current.weather[0].description));
@@ -270,4 +155,66 @@ function titleCase(str) {
         str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
     }
     return str.join(' ');
+}
+
+function setIcon(icon, id) {
+    switch (icon) {
+        case "01d":
+            icons.set(id, Skycons.CLEAR_DAY);
+            break;
+        case "01n":
+            icons.set(id, Skycons.CLEAR_NIGHT);
+            break;
+        case "02d":
+            icons.set(id, Skycons.PARTLY_CLOUDY_DAY);
+            break;
+        case "02n":
+            icons.set(id, Skycons.PARTLY_CLOUDY_NIGHT);
+            break;
+        case "03d":
+            icons.set(id, Skycons.CLOUDY);
+            break;
+        case "03n":
+            icons.set(id, Skycons.CLOUDY);
+            break;
+        case "04d":
+            icons.set(id, Skycons.CLOUDY);
+            break;
+        case "04n":
+            icons.set(id, Skycons.CLOUDY);
+            break;
+        case "09d":
+            icons.set(id, Skycons.RAIN);
+            break;
+        case "09n":
+            icons.set(id, Skycons.RAIN);
+            break;
+        case "10d":
+            icons.set(id, Skycons.RAIN);
+            break;
+        case "10n":
+            icons.set(id, Skycons.RAIN);
+            break;
+        case "11d":
+            icons.set(id, Skycons.RAIN);
+            break;
+        case "11n":
+            icons.set(id, Skycons.RAIN);
+            break;
+        case "13d":
+            icons.set(id, Skycons.SNOW);
+            break;
+        case "13n":
+            icons.set(id, Skycons.SNOW);
+            break;
+        case "50d":
+            icons.set(id, Skycons.FOG);
+            break;
+        case "50n":
+            icons.set(id, Skycons.FOG);
+            break;
+
+        default:
+
+    }
 }

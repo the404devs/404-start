@@ -8,6 +8,7 @@ firebase.firestore().enablePersistence({
 });
 var db = firebase.firestore();
 var deferAuthCheck = false;
+var uid = "";
 
 firebase.auth().onAuthStateChanged(function(user) {
     console.log("%cChecking for signed in user... ", "color:yellow;font-weight:bold;font-style:italic;");
@@ -20,7 +21,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         }
     } else {
         console.log("%cNo user is logged in. ", "color:lightblue;font-weight:bold;font-style:italic;");
-        getWeather("Toronto", "CA", "Montreal", "CA", "metric");
+        getWeatherInfo("Toronto", "CA", "Montreal", "CA", "metric");
         $("#plus").hide();
         $("#config-save-button").hide();
     }
@@ -39,12 +40,15 @@ function createAccount() {
     firebase.auth().createUserWithEmailAndPassword(email, pass)
         .then((userCredential) => {
             // Signed in 
-            var uid = firebase.auth().currentUser.uid;
+            uid = firebase.auth().currentUser.uid;
             setDefaults(uid, email).then(() => loginSuccess());
             console.log("%cSuccessfully created new user!", "color:green;font-weight:bold;font-style:italic;");
         })
         .catch((error) => {
             console.log("%c" + error.code + ": " + error.message, "color:red;font-weight:bold;font-style:italic;");
+            // $("#errmsg2").css("height", "30px");
+            $("#errmsg2").css("opacity", "1");
+            $("#errmsg2").text(error.message);
         });
 }
 
@@ -64,6 +68,9 @@ function login() {
             })
             .catch((error) => {
                 console.log("%c" + error.code + ": " + error.message, "color:red;font-weight:bold;font-style:italic;");
+                // $("#errmsg1").css("height", "30px");
+                $("#errmsg1").css("opacity", "1");
+                $("#errmsg1").text(error.message);
             }));
 }
 
@@ -75,7 +82,7 @@ function loginSuccess() {
     $("#user-email").html(firebase.auth().currentUser.email);
     $("#plus").show();
     $("#config-save-button").show();
-
+    uid = firebase.auth().currentUser.uid;
     console.log("%cAttempting to load user config...", "color:lightblue;font-weight:bold;font-style:italic;");
     getConfig();
 }
@@ -86,6 +93,7 @@ function logout() {
         $("#settings-not-signed-in").show();
         $("#settings-signed-in").hide();
         $("#user-email").html("");
+        uid = "";
         console.log("%cUser logged out.", "color:green;font-weight:bold;font-style:italic;");
         location.reload();
     }).catch((error) => {
@@ -93,62 +101,19 @@ function logout() {
     });
 }
 
-async function getConfig() {
-    var uid = firebase.auth().currentUser.uid;
-    var docs = [];
-    let userCollection = await db.collection(uid + "").get({ source: 'server' });
-
-    userCollection.forEach((doc) => {
-        docs.push({ id: doc.id, ...doc.data() })
-    });
-
-    $("#xkcd-toggle").prop("checked", docs[1].XKCD);
-    $("#invert-toggle").prop("checked", docs[1].XKCDinvert);
-    $("#update-toggle").prop("checked", docs[1].Update);
-    $("#pywal-toggle").prop("checked", docs[1].Pywal);
-    if (docs[1].XKCD) { $("#xkcd-zone").show() } else { $("#xkcd-zone").hide() }
-    if (docs[1].XKCDinvert) { $("#x-img").css("filter", "invert(1)") } else { $("#x-img").css("filter", "invert(0)") }
-    if (docs[1].Update && LOCAL) {
-        console.log("%cChecking for update...", "color:yellow;font-weight:bold;font-style:italic;");
-        checkForUpdate(false);
-    }
-    if (docs[1].Pywal && LOCAL) {
-        console.log("%cApplying pywal colours...", "color:yellow;font-weight:bold;font-style:italic;");
-        $('head').append('<link rel="stylesheet" type="text/css" id="pywal-css" href=' + config.Pywal + '>');
-    } else {
-        console.log("%cApplying user colours...", "color:yellow;font-weight:bold;font-style:italic;");
-        $("#pywal-css").remove();
-        //Apply custom theme here.
-        applyUserColours(docs[1].Colours);
-    }
-    $("#background-colour").val(docs[1].Colours[0]);
-    $("#foreground-colour").val(docs[1].Colours[1]);
-    $("#highlight-colour").val(docs[1].Colours[2]);
-    $("#header-colour").val(docs[1].Colours[3]);
-
+function getConfig() {
+    console.log("%cAttempting to load user's general config...", "color:lightblue;font-weight:bold;font-style:italic;");
+    loadGeneralConfig();
     console.log("%cAttempting to load user's preferred links...", "color:lightblue;font-weight:bold;font-style:italic;");
-    loadLinks(docs[2]);
-
+    loadLinks();
     console.log("%cAttempting to load weather data...", "color:lightblue;font-weight:bold;font-style:italic;");
-    var city1 = docs[3].Place1[0];
-    var city2 = docs[3].Place2[0];
-    var country1 = docs[3].Place1[1];
-    var country2 = docs[3].Place2[1];
-    var units = docs[3].Units;
-    $("#city-name-1").val(city1);
-    $("#city-name-2").val(city2);
-    $("#country-sel-1").val(country1);
-    $("#country-sel-2").val(country2);
-    $("#country-sel-2").val(country2);
-    $("#unit-selector").val(units);
-    getWeather(city1, country1, city2, country2, units);
-    setTimeout(applyFilter, 500);
+    loadWeather();
+    console.log("%cGetting todo list...", "color:lightblue;font-weight:bold;font-style:italic;");
     readEvents();
 }
 
 async function setConfig() {
     console.log("%cSaving user config...", "color:yellow;font-weight:bold;font-style:italic;");
-    var uid = firebase.auth().currentUser.uid;
     var city1 = $("#city-name-1").val();
     var city2 = $("#city-name-2").val();
     var country1 = $("#country-sel-1").val();
@@ -166,192 +131,159 @@ async function setConfig() {
         Colours: [$("#background-colour").val(), $("#foreground-colour").val(), $("#highlight-colour").val(), $("#header-colour").val()],
         XKCDinvert: $("#invert-toggle").prop("checked")
     });
+    //TODO: make this a for loop or something
     await db.collection(uid).doc("Links").set({
-        Link1: [$("#link1-config").children("input")[0].value, $("#link1-config").children("input")[1].value, $("#link1-config").children("input")[2].value],
-        Link2: [$("#link2-config").children("input")[0].value, $("#link2-config").children("input")[1].value, $("#link2-config").children("input")[2].value],
-        Link3: [$("#link3-config").children("input")[0].value, $("#link3-config").children("input")[1].value, $("#link3-config").children("input")[2].value],
-        Link4: [$("#link4-config").children("input")[0].value, $("#link4-config").children("input")[1].value, $("#link4-config").children("input")[2].value],
-        Link5: [$("#link5-config").children("input")[0].value, $("#link5-config").children("input")[1].value, $("#link5-config").children("input")[2].value],
-        Link6: [$("#link6-config").children("input")[0].value, $("#link6-config").children("input")[1].value, $("#link6-config").children("input")[2].value],
-        Link7: [$("#link7-config").children("input")[0].value, $("#link7-config").children("input")[1].value, $("#link7-config").children("input")[2].value],
+        Link1: [$("#link-config-1").children("input")[0].value, $("#link-config-1").children("input")[1].value, $("#link-config-1").children("input")[2].value],
+        Link2: [$("#link-config-2").children("input")[0].value, $("#link-config-2").children("input")[1].value, $("#link-config-2").children("input")[2].value],
+        Link3: [$("#link-config-3").children("input")[0].value, $("#link-config-3").children("input")[1].value, $("#link-config-3").children("input")[2].value],
+        Link4: [$("#link-config-4").children("input")[0].value, $("#link-config-4").children("input")[1].value, $("#link-config-4").children("input")[2].value],
+        Link5: [$("#link-config-5").children("input")[0].value, $("#link-config-5").children("input")[1].value, $("#link-config-5").children("input")[2].value],
+        Link6: [$("#link-config-6").children("input")[0].value, $("#link-config-6").children("input")[1].value, $("#link-config-6").children("input")[2].value],
+        Link7: [$("#link-config-7").children("input")[0].value, $("#link-config-7").children("input")[1].value, $("#link-config-7").children("input")[2].value],
     });
-
     getConfig();
     hideModal();
 }
 
-function loadLinks(doc) {
-    // This causes me physical pain
+async function loadLinks() {
     $("#left").empty();
-    $("#left").append(
-        $("<a>").attr("href", doc.Link1[1]).append(
-            $("<span>").addClass("button").html(doc.Link1[2] + " " + doc.Link1[0])
-        )
-    ).append($("<br>"));
-    $("#left").append(
-        $("<a>").attr("href", doc.Link2[1]).append(
-            $("<span>").addClass("button").html(doc.Link2[2] + " " + doc.Link2[0])
-        )
-    ).append($("<br>"));
-    $("#left").append(
-        $("<a>").attr("href", doc.Link3[1]).append(
-            $("<span>").addClass("button").html(doc.Link3[2] + " " + doc.Link3[0])
-        )
-    ).append($("<br>"));
-    $("#left").append(
-        $("<a>").attr("href", doc.Link4[1]).append(
-            $("<span>").addClass("button").html(doc.Link4[2] + " " + doc.Link4[0])
-        )
-    ).append($("<br>"));
-    $("#left").append(
-        $("<a>").attr("href", doc.Link5[1]).append(
-            $("<span>").addClass("button").html(doc.Link5[2] + " " + doc.Link5[0])
-        )
-    ).append($("<br>"));
-    $("#left").append(
-        $("<a>").attr("href", doc.Link6[1]).append(
-            $("<span>").addClass("button").html(doc.Link6[2] + " " + doc.Link6[0])
-        )
-    ).append($("<br>"));
-    $("#left").append(
-        $("<a>").attr("href", doc.Link7[1]).append(
-            $("<span>").addClass("button").html(doc.Link7[2] + " " + doc.Link7[0])
-        )
-    ).append($("<br>"));
-
     $("#link-settings").empty();
-    $("#link-settings").append($("<span>").text("Link 1:"));
-    $("#link-settings").append($("<div>").addClass("link-group").attr("id", "link1-config").append(
-        $("<label>").text("Name: ")
-    ).append(
-        $("<input>").val(doc.Link1[0])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Destination: ")
-    ).append(
-        $("<input>").val(doc.Link1[1])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Icon HTML: ")
-    ).append(
-        $("<input>").val(doc.Link1[2])
-    ));
+    var query = await db.collection(uid).doc("Links").get({ source: 'server' });
+    var keylist = [];
+    var regen = false;
+    var links = query.data();
+    for (l in links) {
+        keylist.push(l);
+    }
+    keylist.sort();
+    for (let i = 1; i < 8; i++) {
+        try {
+            $("#left").append(
+                $("<a>").attr("href", links["Link" + i][1]).append(
+                    $("<span>").addClass("button").html(links["Link" + i][2] + " " + links["Link" + i][0])
+                )
+            ).append($("<br>"));
+            $("#link-settings").append($("<div>").addClass("link-group").attr("id", "link-config-" + i).append(
+                $("<label>").text("Name: ")
+            ).append(
+                $("<input>").val(links["Link" + i][0])
+            ).append(
+                $("<br>")
+            ).append(
+                $("<label>").text("Destination: ")
+            ).append(
+                $("<input>").val(links["Link" + i][1])
+            ).append(
+                $("<br>")
+            ).append(
+                $("<label>").text("Icon HTML: ")
+            ).append(
+                $("<input>").val(links["Link" + i][2])
+            ));
+        } catch (error) {
+            console.log("%cMissing link " + i + ", defaulting to the404.", "color:red;font-weight:bold;font-style:italic;");
+            regen = true;
+            db.collection(uid).doc("Links").update({
+                ["Link" + i]: ["The404", "https://the404.nl/", "<i class='texticon'>404</i>"]
+            });
+        }
+    }
+    if (regen) { loadLinks() }
+    setTimeout(applyFilter, 500);
+    $("#link-config-1").css("display", "block");
+    $("#link-selector").val(1);
+}
 
-    $("#link-settings").append($("<span>").text("Link 2:"));
-    $("#link-settings").append($("<div>").addClass("link-group").attr("id", "link2-config").append(
-        $("<label>").text("Name: ")
-    ).append(
-        $("<input>").val(doc.Link2[0])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Destination: ")
-    ).append(
-        $("<input>").val(doc.Link2[1])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Icon HTML: ")
-    ).append(
-        $("<input>").val(doc.Link2[2])
-    ));
+async function loadGeneralConfig() {
+    var query = await db.collection(uid).doc("General").get({ source: 'server' });
+    var generalConfig = query.data();
+    var regen = false;
 
-    $("#link-settings").append($("<span>").text("Link 3:"));
-    $("#link-settings").append($("<div>").addClass("link-group").attr("id", "link3-config").append(
-        $("<label>").text("Name: ")
-    ).append(
-        $("<input>").val(doc.Link3[0])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Destination: ")
-    ).append(
-        $("<input>").val(doc.Link3[1])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Icon HTML: ")
-    ).append(
-        $("<input>").val(doc.Link3[2])
-    ));
+    if ("XKCD" in generalConfig) {
+        $("#xkcd-toggle").prop("checked", generalConfig.XKCD);
+        if (generalConfig.XKCD) { $("#xkcd-zone").show() } else { $("#xkcd-zone").hide() }
+    } else {
+        regen = true;
+        db.collection(uid).doc("General").update({
+            XKCD: false
+        });
+    }
 
-    $("#link-settings").append($("<span>").text("Link 4:"));
-    $("#link-settings").append($("<div>").addClass("link-group").attr("id", "link4-config").append(
-        $("<label>").text("Name: ")
-    ).append(
-        $("<input>").val(doc.Link4[0])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Destination: ")
-    ).append(
-        $("<input>").val(doc.Link4[1])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Icon HTML: ")
-    ).append(
-        $("<input>").val(doc.Link4[2])
-    ));
+    if ("XKCDinvert" in generalConfig) {
+        $("#invert-toggle").prop("checked", generalConfig.XKCDinvert);
+        if (generalConfig.XKCDinvert) { $("#x-img").css("filter", "invert(1)") } else { $("#x-img").css("filter", "invert(0)") }
+    } else {
+        regen = true;
+        db.collection(uid).doc("General").update({
+            XKCDinvert: false
+        });
+    }
 
-    $("#link-settings").append($("<span>").text("Link 5:"));
-    $("#link-settings").append($("<div>").addClass("link-group").attr("id", "link5-config").append(
-        $("<label>").text("Name: ")
-    ).append(
-        $("<input>").val(doc.Link5[0])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Destination: ")
-    ).append(
-        $("<input>").val(doc.Link5[1])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Icon HTML: ")
-    ).append(
-        $("<input>").val(doc.Link5[2])
-    ));
+    if ("Update" in generalConfig) {
+        $("#update-toggle").prop("checked", generalConfig.Update);
+        if (generalConfig.Update && LOCAL) {
+            console.log("%cChecking for update...", "color:yellow;font-weight:bold;font-style:italic;");
+            checkForUpdate(false);
+        }
+    } else {
+        regen = true;
+        db.collection(uid).doc("General").update({
+            Update: false
+        });
+    }
 
-    $("#link-settings").append($("<span>").text("Link 6:"));
-    $("#link-settings").append($("<div>").addClass("link-group").attr("id", "link6-config").append(
-        $("<label>").text("Name: ")
-    ).append(
-        $("<input>").val(doc.Link6[0])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Destination: ")
-    ).append(
-        $("<input>").val(doc.Link6[1])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Icon HTML: ")
-    ).append(
-        $("<input>").val(doc.Link6[2])
-    ));
+    if ("Pywal" in generalConfig && "Colours" in generalConfig) {
+        $("#pywal-toggle").prop("checked", generalConfig.Pywal);
+        if (generalConfig.Pywal && LOCAL) {
+            console.log("%cApplying pywal colours...", "color:yellow;font-weight:bold;font-style:italic;");
+            $('head').append('<link rel="stylesheet" type="text/css" id="pywal-css" href=' + config.Pywal + '>');
+        } else {
+            console.log("%cApplying user colours...", "color:yellow;font-weight:bold;font-style:italic;");
+            $("#pywal-css").remove();
+            //Apply custom theme here.
+            applyUserColours(generalConfig.Colours);
+        }
+        $("#background-colour").val(generalConfig.Colours[0]);
+        $("#foreground-colour").val(generalConfig.Colours[1]);
+        $("#highlight-colour").val(generalConfig.Colours[2]);
+        $("#header-colour").val(generalConfig.Colours[3]);
+    } else {
+        regen = true;
+        db.collection(uid).doc("General").update({
+            Update: false,
+            Colours: ["#14101a", "#b1bfba", "#8A746B", "#9F8675"]
+        });
+    }
 
-    $("#link-settings").append($("<span>").text("Link 7:"));
-    $("#link-settings").append($("<div>").addClass("link-group").attr("id", "link7-config").append(
-        $("<label>").text("Name: ")
-    ).append(
-        $("<input>").val(doc.Link7[0])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Destination: ")
-    ).append(
-        $("<input>").val(doc.Link7[1])
-    ).append(
-        $("<br>")
-    ).append(
-        $("<label>").text("Icon HTML: ")
-    ).append(
-        $("<input>").val(doc.Link7[2])
-    ));
+    if (regen) { loadGeneralConfig() }
+}
+
+async function loadWeather() {
+    var query = await db.collection(uid).doc("Weather").get({ source: 'server' });
+    var weatherConfig = query.data();
+    var regen = false;
+    if ("Place1" in weatherConfig && "Place2" in weatherConfig && "Units" in weatherConfig) {
+        var city1 = weatherConfig.Place1[0];
+        var city2 = weatherConfig.Place2[0];
+        var country1 = weatherConfig.Place1[1];
+        var country2 = weatherConfig.Place2[1];
+        var units = weatherConfig.Units;
+        $("#city-name-1").val(city1);
+        $("#city-name-2").val(city2);
+        $("#country-sel-1").val(country1);
+        $("#country-sel-2").val(country2);
+        $("#country-sel-2").val(country2);
+        $("#unit-selector").val(units);
+        getWeatherInfo(city1, country1, city2, country2, units);
+    } else {
+        regen = true;
+        db.collection(uid).doc("Weather").set({
+            Place1: ["Toronto", "CA"],
+            Place2: ["Montreal", "CA"],
+            Units: "metric"
+        });
+    }
+    if (regen) { loadWeather() }
 }
 
 async function setDefaults(uid, addr) {
@@ -384,14 +316,14 @@ async function setDefaults(uid, addr) {
 }
 
 async function addEvent() {
-    var uid = firebase.auth().currentUser.uid;
+    // var uid = firebase.auth().currentUser.uid;
 
     var title = $('#eventName').val();
     var date = $('#eventDate').val();
     var time = $('#eventTime').val();
     var desc = $('#eventBody').val();
     await db.collection(uid).doc("Events").update({
-        [date + time + title]: [title, date, time, desc]
+        [date + "-" + time + "-" + title]: [title, date, time, desc]
     });
     readEvents();
     $('#eventName').val("");
@@ -399,14 +331,12 @@ async function addEvent() {
     $('#eventTime').val("");
     $('#eventBody').val("");
     hideModal();
-    console.log("%cAdded event!...", "color:lightblue;font-weight:bold;font-style:italic;");
+    console.log("%cAdded event!", "color:lightblue;font-weight:bold;font-style:italic;");
 }
 
 async function readEvents() {
-    console.log("%cGetting todo list...", "color:lightblue;font-weight:bold;font-style:italic;");
-
     $("#todo-container").empty();
-    var uid = firebase.auth().currentUser.uid;
+    // var uid = firebase.auth().currentUser.uid;
     var query = await db.collection(uid).doc("Events").get({ source: 'server' });
     var keylist = [];
     var events = query.data();
@@ -417,8 +347,9 @@ async function readEvents() {
     // console.log(keylist)
     for (let i = 0; i < keylist.length; i++) {
         // console.log(events[keylist[i]]);
+        //div class event id
         $('#todo-container').append(
-            $('<span/>').attr('class', 'todo').append(
+            $('<span/>').attr("id", keylist[i]).attr('class', 'todo').append(
                 $('<span/>').attr('class', 'eventHead').html(events[keylist[i]][0])
             ).append(
                 $('<span/>').attr('class', 'eventDate').html(events[keylist[i]][1])
@@ -435,11 +366,7 @@ async function readEvents() {
 
 var deleteEvent = async function(e) {
     console.log("%cDeleting an event...", "color:lightblue;font-weight:bold;font-style:italic;");
-
-    var uid = firebase.auth().currentUser.uid;
-
-    var box = $(e.target);
-    var key = box.parent().find('.eventDate').html() + box.parent().find('.eventTime').html() + box.parent().find('.eventHead').html();
+    var key = $(e.target).parent().attr("id");
     console.log(key);
     await db.collection(uid).doc("Events").update({
         [key]: firebase.firestore.FieldValue.delete()
@@ -452,4 +379,10 @@ function applyUserColours(colours) {
     $("#user-css").remove();
     var sheet = "<style type='text/css' id='user-css'>:root{--background:" + colours[0] + "; --foreground:" + colours[1] + "; --color2: " + colours[2] + "; --color4:" + colours[3] + ";}</style>";
     $('head').append(sheet);
+}
+
+function showLinkGroup() {
+    var x = parseInt($("#link-selector").val());
+    $(".link-group").css("display", "none");
+    $("#link-config-" + x).css("display", "block");
 }

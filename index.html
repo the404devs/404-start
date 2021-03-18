@@ -2,12 +2,12 @@
 <html>
 
 <head>
+    <meta charset=“UTF-8”>
     <title>404-Start</title>
-    <meta charset=“utf-8”>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="js/font-awesome.js"></script>
-    <script src="js/jquery.min.js"></script>
     <script src="js/skycons.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/font-awesome.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
@@ -692,6 +692,17 @@
                     <hr>
 
                     <span class="section-head">Link Settings</span>
+                    <br>
+                    <label>Link: </label>
+                    <select id="link-selector" onchange="showLinkGroup()">
+                        <option value="1">Link 1</option>
+                        <option value="2">Link 2</option>
+                        <option value="3">Link 3</option>
+                        <option value="4">Link 4</option>
+                        <option value="5">Link 5</option>
+                        <option value="6">Link 6</option>
+                        <option value="7">Link 7</option>
+                    </select>
                     <div id="link-settings">
 
                     </div>
@@ -762,6 +773,8 @@
                 <br>
                 <label>Password: </label>
                 <input type="password" id="reg-pass" required>
+                <br>
+                <label id="errmsg2">bruh</label>
             </div>
             <div class="modal-footer">
                 <span class="button" onclick="createAccount()">
@@ -782,6 +795,8 @@
                 <br>
                 <label>Password: </label>
                 <input type="password" id="login-pass" required>
+                <br>
+                <label id="errmsg1">bruh</label>
             </div>
             <div class="modal-footer">
                 <span class="button" onclick="login()">
