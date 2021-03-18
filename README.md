@@ -62,6 +62,7 @@ Change the `src` value to the path to your chosen image. Make sure you include t
 - Slight cleanup of `js/weather.js`, much more to come.
 - New icon, still not 100% happy with it.
 - Link settings made a bit more user-friendly, config for only 1 link is shown at a time, dropdown allows user to choose which one is shown.
+- Firestore rules fixed, only logged-in users can read/write, and only to the collection that matches their UUID.
 
 ### *1.0.1 (03/13/2021)*
 ------------------------
