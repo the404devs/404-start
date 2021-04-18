@@ -13,7 +13,6 @@ A custom homepage, with [**pywal**](https://github.com/dylanaraps/pywal) integra
 
 [Changelog](#changelog)
 
-
 ![alt text](img/screen1.png "screenshot 1")
 
 ## Setup (Normal)
