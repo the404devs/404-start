@@ -1,6 +1,18 @@
 # 404-Start
 A custom homepage, with [**pywal**](https://github.com/dylanaraps/pywal) integration and decent customizability (more soon).
 
+[Setup (Normal)](#setup-normal)
+
+[Setup (Normal)](#setup-normal)
+
+[Account Creation](#account-creation)
+
+[Account Creation](#account-creation)
+
+[About Icons](#about-icons)
+
+[Changelog](#changelog)
+
 ![alt text](img/screen1.png "screenshot 1")
 
 ## Setup (Normal)
