@@ -3,15 +3,16 @@ A custom homepage, with [**pywal**](https://github.com/dylanaraps/pywal) integra
 
 [Setup (Normal)](#setup-normal)
 
-[Setup (Normal)](#setup-normal)
+[Setup (Advanced)](#setup-advanced)
 
 [Account Creation](#account-creation)
 
-[Account Creation](#account-creation)
+[Experimental New Tab Page (Chrome Extension)](#experimental-new-tab-page-chrome-extension)
 
 [About Icons](#about-icons)
 
 [Changelog](#changelog)
+
 
 ![alt text](img/screen1.png "screenshot 1")
 
