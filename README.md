@@ -1,6 +1,8 @@
 # 404-Start
 A custom homepage, with [**pywal**](https://github.com/dylanaraps/pywal) integration and decent customizability (more soon).
 
+![alt text](img/screen1.png "screenshot 1")
+
 ## Setup (Normal)
 Just set https://start.the404.nl/ as your homepage in your browser.
 Things you miss out on:
