@@ -1,8 +1,8 @@
 var config = {
-    "Pywal": "file:///home/the404/.cache/wal/colors.css",
     "ExtPath": "file:///home/the404/homepage/index.html",
-    "VER": "v1.0.2",
-    "DATE": "(03/18/2020)"
+    "VER": "v1.0.3",
+    "DATE": "(04/18/2020)",
+    "AUTHOR": "Owen Bowden"
 };
 // DON'T FORGET TO CHANGE THE VER FILE TOO
 
@@ -16,6 +16,4 @@ var fire_config = {
     measurementId: "G-R90R6DQ5HD"
 };
 
-
-/* DO NOT MODIFY ANYTHING BEYOND THIS POINT */
-$("#version-info").text(config.VER + " " + config.DATE + " Owen Bowden");
+$("#version-info").text(config.VER + " " + config.DATE + " " + config.AUTHOR);

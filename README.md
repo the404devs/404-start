@@ -15,7 +15,7 @@ Head over to the [Releases page](https://github.com/the404devs/404-start/release
 
 Extract the .zip file to your preferred location, and open `index.html` in your browser. Once you set the URL of this page, you're all set!
 
-For pywal integration: in `js/config.js`, you'll need to change the `Pywal` value to the path to `colors.css` on your system, typically this is `~/.cache/wal/colors.css`. You'll need to check off 'Pywal colours' in 404-Start's settings menu to enable the feature.
+For pywal integration: in the Settings menu (top right), under 'Local Settings', check off `Use Pywal` to enable the feature and set the `Pywal CSS Path` value to the path to `colors.css` on your system, typically this is `/home/<user>/.cache/wal/colors.css`. Once you save your preferences, 404-Start will auto-load colours from pywal.
 
 ## Account Creation
 Hit the cog icon in the top-right corner, and select *Register*. Insert an email and password and you're good to go!
@@ -35,6 +35,7 @@ To enable the extension, perform the following steps:
 - Success! It should be working now.
 
 - Once the extension is installed, you won't need to update it again, unless explicitly mentioned in the changelog.
+- When you update 404-Start, you'll need to set the `ExtPath` variable again.
 
 ## About Icons
 You can now configure the links on the page, as well as the icons that go alongside them.
@@ -52,6 +53,14 @@ Change the `src` value to the path to your chosen image. Make sure you include t
 
 
 ## Changelog
+
+### *1.0.3 (04/18/2021)*
+------------------------
+- Fixed a bug regarding the colour of the animated weather icons.
+- Implemented the icon I made in 1.0.2, since I forgot.
+- Made the path to the user's pywal css file configurable in the settings menu.
+    - Honestly, I'm not sure why I didn't do this in the first place.
+    - Some documentation changes to match this change.
 
 ### *1.0.2 (03/18/2021)*
 ------------------------

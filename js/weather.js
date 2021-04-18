@@ -103,6 +103,7 @@ function getWeatherInfo(city1, country1, city2, country2, units) {
             } else {
                 $("#alerts-2").hide();
             }
+            setTimeout(function() { icons.color = $('.button').css('color') }, 500);
         });
     });
 }

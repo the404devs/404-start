@@ -129,7 +129,8 @@ async function setConfig() {
         Update: $("#update-toggle").prop("checked"),
         Pywal: $("#pywal-toggle").prop("checked"),
         Colours: [$("#background-colour").val(), $("#foreground-colour").val(), $("#highlight-colour").val(), $("#header-colour").val()],
-        XKCDinvert: $("#invert-toggle").prop("checked")
+        XKCDinvert: $("#invert-toggle").prop("checked"),
+        PywalPath: $("#pywal-path").val()
     });
     //TODO: make this a for loop or something
     await db.collection(uid).doc("Links").set({
@@ -234,9 +235,11 @@ async function loadGeneralConfig() {
 
     if ("Pywal" in generalConfig && "Colours" in generalConfig) {
         $("#pywal-toggle").prop("checked", generalConfig.Pywal);
+        $("#pywal-path").val(generalConfig.PywalPath);
         if (generalConfig.Pywal && LOCAL) {
             console.log("%cApplying pywal colours...", "color:yellow;font-weight:bold;font-style:italic;");
-            $('head').append('<link rel="stylesheet" type="text/css" id="pywal-css" href=' + config.Pywal + '>');
+            // $('head').append('<link rel="stylesheet" type="text/css" id="pywal-css" href=file://' + generalConfig.PywalPath + '>');
+            loadCSS("file://" + generalConfig.PywalPath);
         } else {
             console.log("%cApplying user colours...", "color:yellow;font-weight:bold;font-style:italic;");
             $("#pywal-css").remove();
@@ -385,4 +388,10 @@ function showLinkGroup() {
     var x = parseInt($("#link-selector").val());
     $(".link-group").css("display", "none");
     $("#link-config-" + x).css("display", "block");
+}
+
+function loadCSS(cssURL) {
+    $("head").append(
+        $("<link rel='stylesheet'>").attr("href", cssURL)
+    )
 }

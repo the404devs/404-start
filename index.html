@@ -8,6 +8,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/font-awesome.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/404-start.png">
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
@@ -61,7 +62,7 @@
                 </span>
             </a>
             <br>
-            <a href="https://ww.google.ca/">
+            <a href="https://www.google.ca/">
                 <span class="button">
                     <i class="fab fa-google"></i> Google
                 </span>
@@ -723,32 +724,37 @@
 
                     <span class="section-head">Theme Settings</span>
                     <br>
-                    <label>Background</label>
+                    <label>Background:</label>
                     <input type="color" id="background-colour">
                     <br>
-                    <label>Foreground</label>
+                    <label>Foreground:</label>
                     <input type="color" id="foreground-colour">
                     <br>
-                    <label>Highlight</label>
+                    <label>Highlight:</label>
                     <input type="color" id="highlight-colour">
                     <br>
-                    <label>Header</label>
+                    <label>Header:</label>
                     <input type="color" id="header-colour">
+                    <br>
+                    <span style="font-size:14px">Colours will be applied once you save the config.</span>
                     <div id="local-settings">
                         <hr>
                         <span class="section-head">Local Settings</span>
                         <br>
-                        <label>Update check:</label>
-                        <input type="checkbox" id="update-toggle">
+                        <label style="width: 110px!important;">Use Pywal:</label>
+                        <input type="checkbox" id="pywal-toggle">
+                        <br>
+                        <label style="width: 110px!important;">Pywal CSS Path:</label>
+                        <input type="text" id="pywal-path" style="width: -webkit-fill-available;">
+                        <br>
+                        <span style="font-size:14px">Note: Pywal colours will override any custom colours you've set above.</span>
+                        <br>
+                        <br>
+                        <label style="width: 136px!important;">Update check at start:</label>
+                        <input type="checkbox" id="update-toggle" style="width: 120px!important;">
                         <span class="small-button" onclick="checkForUpdate(true)" style="width:120px">
                             <i class="fas fa-redo"></i> Check Now
                         </span>
-                        <br>
-                        <label>Pywal colours:</label>
-                        <input type="checkbox" id="pywal-toggle">
-                        <br>
-                        <span style="font-size:14px">This will override any custom colours you've set above.</span>
-                        <span style="font-size:14px">Remember to set your Pywal path in config.js.</span>
                         <br>
                     </div>
                 </div>
