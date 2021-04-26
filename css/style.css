@@ -361,7 +361,8 @@ p {
 #close,
 .delete,
 .alert-button,
-.config-button {
+.config-button,
+.refresh-button {
     position: absolute;
     border-color: var(--foreground);
     border-width: 1px;
@@ -399,21 +400,32 @@ p {
     font-family: "Roboto";
 }
 
-.config-button {
+.config-button,
+.refresh-button {
     position: absolute;
-    /* margin-top: -5px; */
     font-size: 14px;
-    /* margin-left: 153px; */
     font-family: "Roboto";
+    text-shadow: none;
+    border: none;
+    transition: 0.25s all;
+    background-color: transparent;
+}
+
+.config-button {
     text-shadow: none;
     border: none;
     transition: 0.25s all;
     top: -400px;
     right: 10px;
-    background-color: transparent;
 }
 
-.config-button:hover {
+.refresh-button {
+    margin-top: 1px;
+    margin-left: 153px;
+}
+
+.config-button:hover,
+.refresh-button:hover {
     transform: rotate(45deg);
 }
 

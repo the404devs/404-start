@@ -68,6 +68,14 @@ Change the `src` value to the path to your chosen image. Make sure you include t
 
 ## Changelog
 
+### *1.0.4 (04/26/2021)*
+------------------------
+- Fixed a long-standing bug with wind direction arrows pointing in the opposite direction of where they should be.
+- Added hover text to buttons that don't have any text on them, like close buttons, etc.
+- Added a button to refresh weather info.
+- You can now press `Enter` in the password fields of the login & register forms to submit them.
+
+
 ### *1.0.3 (04/18/2021)*
 ------------------------
 - Fixed a bug regarding the colour of the animated weather icons.

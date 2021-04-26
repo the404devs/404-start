@@ -361,7 +361,7 @@ async function readEvents() {
             ).append(
                 $('<span/>').attr('class', 'eventBody').html("- " + events[keylist[i]][3])
             ).append(
-                $('<span/>').attr('class', 'delete').click(deleteEvent).html('×')
+                $('<span/>').attr('class', 'delete').click(deleteEvent).html('×').attr('title', 'Delete Event')
             )
         );
     }

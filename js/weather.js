@@ -137,7 +137,7 @@ function getDirection(bearing) {
         [337.5, 360]
     ];
 
-    var arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘", "↓"];
+    var arrows = ["↑", "↗", "→", "↘", "↓", "↙", "←", "↖", "↑"];
     var x = 0;
     var arrow = "";
     directions.forEach(function(dir) {

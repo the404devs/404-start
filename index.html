@@ -21,7 +21,9 @@
         <span id="time"></span>
         <br style="line-height: 10px">
         <span id="date"></span>
-        <span class="config-button" id="config-open" onclick="showModal('#config-window')"><i class="fas fa-cog"></i></span>
+        <span class="config-button" id="config-open" onclick="showModal('#config-window')">
+            <i class="fas fa-cog" title="Open Settings"></i>
+        </span>
     </div>
 
     <div class="row" id="main-content">
@@ -71,7 +73,7 @@
         <div class="column" id="right">
             <div class="weather-container" id="weather-1">
                 <canvas id="weathericon-1"></canvas>
-                <span class="alert-button" id="alerts-1" onclick="showModal('#alertModal1')">!</span>
+                <span class="alert-button" id="alerts-1" onclick="showModal('#alertModal1')" title="Weather Warnings">!</span>
                 <span id="temperature"></span>
                 <span class="weathername" id="weathername-1"></span>
                 <span id="conditions"></span>
@@ -80,8 +82,11 @@
                 <span id="wind"></span>
             </div>
             <div class="weather-container" id="weather-2">
+                <span class="refresh-button" id="refresh-weather" onclick="loadWeather()">
+                    <i class="fas fa-redo" title="Refresh Weather Info"></i>
+                </span>
                 <canvas id="weathericon-2"></canvas>
-                <span class="alert-button" id="alerts-2" onclick="showModal('#alertModal2')">!</span>
+                <span class="alert-button" id="alerts-2" onclick="showModal('#alertModal2')" title="Weather Warnings">!</span>
                 <span id="temperature"></span>
                 <span class="weathername" id="weathername-2"></span>
                 <span id="conditions"></span>
@@ -93,7 +98,7 @@
             <div id="todo-container">
                 <!-- <div id="loader"></div> -->
             </div>
-            <span id="plus" onclick="showModal('#eventModal')">+</span>
+            <span id="plus" onclick="showModal('#eventModal')" title="Add New Event">+</span>
         </div>
     </div>
 
@@ -101,7 +106,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span>Add Event</span>
-                <span id="close" onclick="hideModal('#eventModal')">×</span>
+                <span id="close" onclick="hideModal('#eventModal')" title="Close">×</span>
             </div>
             <div class="modal-body">
                 <label>Name: </label>
@@ -142,7 +147,7 @@
         <div class="modal-content" style="max-height: 75%;">
             <div class="modal-header">
                 <span>Configuration</span>
-                <span id="close" onclick="hideModal('#config-window')" style="margin-left:237px">×</span>
+                <span id="close" onclick="hideModal('#config-window')" style="margin-left:237px" title="Close">×</span>
             </div>
             <div class="modal-body" style="height:45vh; overflow-y:scroll; overflow-x:hidden">
                 <div id="settings-not-signed-in">
@@ -771,14 +776,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span>Registration</span>
-                <span id="close" onclick="hideModal('#register-window')" style="margin-left:116px">×</span>
+                <span id="close" onclick="hideModal('#register-window')" style="margin-left:116px" title="close">×</span>
             </div>
             <div class="modal-body">
                 <label>Email: </label>
                 <input type="text" id="reg-email" required>
                 <br>
                 <label>Password: </label>
-                <input type="password" id="reg-pass" required>
+                <input type="password" id="reg-pass" required onkeypress="function k(e){if (e.keyCode==13)createAccount()} k(event)">
                 <br>
                 <label id="errmsg2">bruh</label>
             </div>
@@ -793,14 +798,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span>Sign In</span>
-                <span id="close" onclick="hideModal('#login-window')" style="margin-left:205px">×</span>
+                <span id="close" onclick="hideModal('#login-window')" style="margin-left:205px" title="Close">×</span>
             </div>
             <div class="modal-body">
                 <label>Email: </label>
                 <input type="text" id="login-email" required>
                 <br>
                 <label>Password: </label>
-                <input type="password" id="login-pass" required>
+                <input type="password" id="login-pass" required onkeypress="function k(e){if (e.keyCode==13)login()} k(event)">
                 <br>
                 <label id="errmsg1">bruh</label>
             </div>
