@@ -124,6 +124,7 @@ var loadFromLS = function() {
         $("#weather-code-1").val(6167865);
         $("#weather-code-2").val(6077243);
         $("#show-link-box").prop("checked", true);
+        $("#update-toggle").prop("checked", true);
 
         getWeatherInfo(6167865, 6077243, "metric");
         showLinkGroup(0);
