@@ -32,7 +32,7 @@ function checkForUpdate(manual) {
         var currentVer = parseInt(config.VER.replace(/\D/g, ''));
         console.log("Current version is: " + currentVer + ", newest one online is: " + newestVer);
         if (currentVer < newestVer) {
-            if (confirm("There is an update available!\n\nLatest version: " + data + "Current version: " + config.VER + "\n\nPress OK to go to the Github page to get the update and see the changelog.\nYou can turn this message off in settings.")) {
+            if (confirm("There is an update available!\n\nLatest version: " + data + "Current version: " + config.VER + "\n\nPress OK to go to the Github page to get the update and see the changelog.\nYou can turn this message off in the ⚙ settings menu.")) {
                 location.href = "https://github.com/the404devs/404-start/releases";
             }
         } else {

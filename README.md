@@ -1,38 +1,28 @@
 # 404-Start
-A custom homepage, with [**pywal**](https://github.com/dylanaraps/pywal) integration and decent customizability (more soon).
+A very customizable homepage that is in the process of being rewritten.
 
 [Setup (Normal)](#setup-normal)
 
 [Setup (Advanced)](#setup-advanced)
 
-[Account Creation](#account-creation)
 
 [Experimental New Tab Page (Chrome Extension)](#experimental-new-tab-page-chrome-extension)
-
-[About Icons](#about-icons)
 
 [Changelog](#changelog)
 
 ![alt text](img/screen1.png "screenshot 1")
+(outdated screenshot, new one soon)
 
 ## Setup (Normal)
 Just set https://start.the404.nl/ as your homepage in your browser.
 Things you miss out on:
   - Automatic update checking
       - This is fine, since the online version is *always* up to date.
-  - Pywal integration
 
 ## Setup (Advanced)
-This is the preferred method of using 404-Start if you want integration with **pywal**, since most modern browsers don't allow remote webpages to read local files, such as pywal's `colors.css`.
-
 Head over to the [Releases page](https://github.com/the404devs/404-start/releases) and download the latest version (or just `git clone`).
 
 Extract the .zip file to your preferred location, and open `index.html` in your browser. Once you set the URL of this page, you're all set!
-
-For pywal integration: in the Settings menu (top right), under 'Local Settings', check off `Use Pywal` to enable the feature and set the `Pywal CSS Path` value to the path to `colors.css` on your system, typically this is `/home/<user>/.cache/wal/colors.css`. Once you save your preferences, 404-Start will auto-load colours from pywal.
-
-## Account Creation
-Hit the cog icon in the top-right corner, and select *Register*. Insert an email and password and you're good to go!
 
 ## Experimental New Tab Page (Chrome Extension)
 *Only supported when 404-Start is a local html file (advanced setup)*
@@ -51,22 +41,26 @@ To enable the extension, perform the following steps:
 - Once the extension is installed, you won't need to update it again, unless explicitly mentioned in the changelog.
 - When you update 404-Start, you'll need to set the `ExtPath` variable again.
 
-## About Icons
-You can now configure the links on the page, as well as the icons that go alongside them.
-Since there is no documentation in the page on how to configure the icons, I'll do it here for now until I come up with a better solution.
-
-You may either use an icon from [FontAwesome](https://fontawesome.com/icons/), and set the icon HTML to the provided snippet you'll find on FontAwesome, for example: 
-
-`<i class="fab fa-google"></i>`
-
-Alternatively, you can use your own image, and put in an HTML snippet like this: 
-
-`<img src="img/r.png" class="imageicon">`
-
-Change the `src` value to the path to your chosen image. Make sure you include the `imageicon` class, because that allows the page to filter the image to make it the correct colour. Custom image icons should be square in shape, and black with a transparent background. See the file `img/r.png` for an example.
-
-
 ## Changelog
+
+### *2.0.0 (12/09/2021)*
+------------------------
+- Completely rewritten.
+- Layout has been changed to be simpler.
+- Killed off the todo list.
+- Removed accounts and firebase storage.
+- All config is saved in the browser's local storage.
+- Removed some unnecessary code and files (not all, more cleaning needed).
+- Work isn't done yet, more features to come.
+    - Reimplement XKCD comic viewer.
+    - Ability to import/export themes.
+    - Custom date/time formats.
+    - Ability to customize fonts.
+    - Bugfixes to make it not look as awful on Firefox.
+
+### *1.0.5 (07/08/2021)*
+------------------------
+- Added option to auto-refresh weather info every 10 minutes.
 
 ### *1.0.4 (04/26/2021)*
 ------------------------
@@ -74,7 +68,6 @@ Change the `src` value to the path to your chosen image. Make sure you include t
 - Added hover text to buttons that don't have any text on them, like close buttons, etc.
 - Added a button to refresh weather info.
 - You can now press `Enter` in the password fields of the login & register forms to submit them.
-
 
 ### *1.0.3 (04/18/2021)*
 ------------------------

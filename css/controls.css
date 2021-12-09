@@ -1,0 +1,273 @@
+/* BUTTONS */
+
+.button {
+    border-color: var(--border);
+    border-width: 1px;
+    border-style: solid;
+    display: inline-block;
+    background-color: var(--buttonBackground);
+    color: var(--buttonForeground);
+    text-align: left;
+    font-size: 20px;
+    width: 170px;
+    transition: all 0.25s;
+    cursor: pointer;
+    font-family: "Gilroy";
+    font-weight: bold;
+    height: 40px;
+    padding: 10px;
+    margin-top: -1px;
+}
+
+.small-button {
+    border-color: var(--border);
+    border-width: 1px;
+    border-style: solid;
+    display: inline-block;
+    background-color: var(--buttonBackground);
+    color: var(--buttonForeground);
+    text-align: left;
+    font-size: 16px;
+    width: 100px;
+    transition: all 0.25s;
+    cursor: pointer;
+    font-family: "Gilroy";
+    font-weight: bold;
+    height: 20px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.button:hover,
+.small-button:hover,
+#x-num:hover {
+    background-color: var(--buttonHighlight);
+}
+
+#plus,
+#close,
+.delete,
+.alert-button,
+.config-button,
+.refresh-button {
+    position: absolute;
+    border-color: var(--border);
+    border-width: 1px;
+    border-style: solid;
+    padding: 0!important;
+    text-align: center;
+    cursor: pointer;
+    width: 16px!important;
+    height: 16px!important;
+    transition: 0.25s all;
+    font-family: "Inconsolata";
+    margin-top: 409px;
+}
+
+.alert-button {
+    position: absolute;
+    margin-top: -5px;
+    font-size: 14px;
+    margin-left: 153px;
+    font-family: "Roboto";
+    color: var(--weatherBoxForeground);
+    /* background-color: var(--weatherBoxBackground); */
+    background-color: transparent;
+}
+
+#plus:hover,
+#close:hover,
+.delete:hover,
+.alert-button:hover {
+    background-color: var(--buttonHighlight);
+}
+
+.config-button,
+.refresh-button {
+    position: absolute;
+    font-size: 14px;
+    font-family: "Roboto";
+    text-shadow: none;
+    border: none;
+    transition: 0.25s all;
+    background-color: transparent;
+    color: var(--buttonForeground);
+}
+
+.config-button {
+    text-shadow: none;
+    border: none;
+    transition: 0.25s all;
+    top: -400px;
+    right: 10px;
+}
+
+.refresh-button {
+    margin-top: 1px;
+    margin-left: 153px;
+}
+
+.config-button:hover,
+.refresh-button:hover {
+    transform: rotate(45deg);
+}
+
+#close {
+    margin-top: -16px;
+    margin-left: 299px;
+    font-size: initial;
+}
+
+.section-head {
+    font-family: "Gilroy";
+    font-size: 20px;
+    text-decoration: underline;
+    line-height: 40px;
+}
+
+.subsection-head {
+    font-family: "Gilroy";
+    font-size: 16px;
+    text-decoration: underline;
+    line-height: 40px;
+}
+
+#user-email {
+    font-weight: bold;
+    color: var(--highlight);
+}
+
+#version-info {
+    width: 172px;
+    padding: 10px;
+    left: 0;
+    height: 40px;
+    text-align: center;
+    position: absolute;
+    color: var(--foreground);
+    font-family: "Gilroy ExtraBold";
+}
+
+.config-subgroup,
+.link-group {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+
+.link-group {
+    display: none;
+}
+
+label {
+    width: 130px;
+    clear: left;
+    font-size: 14px;
+    margin-right: 20px;
+    display: inline-block;
+    text-align: right;
+}
+
+select {
+    margin-left: -4px;
+    width: 182px;
+}
+
+#config-window input {
+    width: 176px;
+}
+
+#config-window hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    height: 0;
+}
+
+#login-window #errmsg1,
+#register-window #errmsg2 {
+    color: red;
+    opacity: 0;
+    transition: 0.5s all;
+    font-weight: bold;
+    font-size: 16px;
+    height: 0;
+    display: table-cell;
+    margin: 0;
+    vertical-align: middle;
+    text-align: left;
+    width: -webkit-fill-available!important;
+}
+
+#login-window .modal-content,
+#register-window .modal-content {
+    width: 350px
+}
+
+#login-window input,
+#register-window input {
+    width: 150px
+}
+
+#login-window label,
+#register-window label {
+    width: 80px!important
+}
+
+input,
+select {
+    margin-bottom: 5px;
+    display: inline-block;
+    max-width: 300px;
+}
+
+textarea {
+    margin-left: 114px;
+    margin-top: -18px;
+    resize: none;
+}
+
+input,
+textarea,
+select {
+    background-color: var(--background);
+    border: 1px solid var(--foreground);
+    color: var(--foreground);
+    font-family: "Roboto";
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button,
+input::-webkit-calendar-picker-indicator {
+    display: none;
+    visibility: hidden;
+}
+
+::selection,
+input::-webkit-datetime-edit-day-field:focus,
+input::-webkit-datetime-edit-month-field:focus,
+input::-webkit-datetime-edit-year-field:focus,
+input::-webkit-datetime-edit-hour-field:focus,
+input::-webkit-datetime-edit-minute-field:focus {
+    background-color: var(--highlight);
+}
+
+#config-window input[type=checkbox] {
+    width: auto;
+}
+
+.button i {
+    font-size: 40px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+    text-align: center;
+    width: 50px;
+}
+
+.small-button i {
+    font-size: 20px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+    text-align: center;
+    width: 25px;
+}

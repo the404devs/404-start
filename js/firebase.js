@@ -122,7 +122,8 @@ async function setConfig() {
     await db.collection(uid).doc("Weather").set({
         Place1: [city1, country1],
         Place2: [city2, country2],
-        Units: units
+        Units: units,
+        Refresh: $("#weather-update-toggle").prop("checked")
     });
     await db.collection(uid).doc("General").update({
         XKCD: $("#xkcd-toggle").prop("checked"),
@@ -271,12 +272,18 @@ async function loadWeather() {
         var country1 = weatherConfig.Place1[1];
         var country2 = weatherConfig.Place2[1];
         var units = weatherConfig.Units;
+        var refresh = weatherConfig.Refresh || false;
         $("#city-name-1").val(city1);
         $("#city-name-2").val(city2);
         $("#country-sel-1").val(country1);
         $("#country-sel-2").val(country2);
         $("#country-sel-2").val(country2);
         $("#unit-selector").val(units);
+        $("#weather-update-toggle").prop("checked", refresh);
+        if (refresh) {
+            console.log("beans")
+            setInterval(() => { getWeatherInfo(city1, country1, city2, country2, units) }, 600000)
+        }
         getWeatherInfo(city1, country1, city2, country2, units);
     } else {
         regen = true;
@@ -313,7 +320,8 @@ async function setDefaults(uid, addr) {
     await db.collection(uid).doc("Weather").set({
         Place1: ["Toronto", "CA"],
         Place2: ["Montreal", "CA"],
-        Units: "metric"
+        Units: "metric",
+        Refresh: true
     });
     await db.collection(uid).doc("Events").set({});
 }

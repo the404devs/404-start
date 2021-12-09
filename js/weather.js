@@ -1,6 +1,6 @@
-var icons = new Skycons({ "color": $('.button').css('color') });
+var icons = new Skycons({ "color": "white" });
 
-function getWeatherInfo(city1, country1, city2, country2, units) {
+function getWeatherInfo(code1, code2, units) {
     //TODO: reimplement windy icon based on wind speed
     //TODO: add custom icons?
     //TODO: weather alerts
@@ -9,8 +9,8 @@ function getWeatherInfo(city1, country1, city2, country2, units) {
 
 
     // in the event that this thing becomes popular and the api keys become overloaded, just make a bunch more and randomly select one
-    var WeatherURL1 = "https://api.openweathermap.org/data/2.5/weather?q=" + city1 + "," + country1 + "&appid=ac44343b90759cfe705813ff3a614fa5&units=" + units;
-    var WeatherURL2 = "https://api.openweathermap.org/data/2.5/weather?q=" + city2 + "," + country2 + "&appid=c974b8da946cbf11c238f30fff7cbbd9&units=" + units;
+    var WeatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + code1 + "&appid=ac44343b90759cfe705813ff3a614fa5&units=" + units;
+    var WeatherURL2 = "https://api.openweathermap.org/data/2.5/weather?id=" + code2 + "&appid=c974b8da946cbf11c238f30fff7cbbd9&units=" + units;
 
     var WeatherURL3;
     var WeatherURL4;
@@ -24,23 +24,20 @@ function getWeatherInfo(city1, country1, city2, country2, units) {
         windScale = 1;
     }
 
-    //Set names
-    $("#weathername-1").text(city1);
-    $("#weathername-2").text(city2);
-    $("#alert-head-1").text("Alerts for " + city1);
-    $("#alert-head-2").text("Alerts for " + city2);
-    $("#alert-body-1").empty();
-    $("#alert-body-2").empty();
-
     $.getJSON(WeatherURL1, function(data) {
-        console.log("%cGetting weather for " + city1 + "...", "color:yellow;font-weight:bold;font-style:italic;");
         var long = data.coord.lon;
         var lat = data.coord.lat;
+        var name = data.name;
+        console.log("%cGetting weather for " + name + "...", "color:yellow;font-weight:bold;font-style:italic;");
+        $("#weather-name-1").text(name);
+        $("#alert-head-1").text("Alerts for " + name);
+        $("#alert-body-1").empty();
+
         WeatherURL3 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=ac44343b90759cfe705813ff3a614fa5&exclude=minutely,hourly&units=" + units;
         console.log(WeatherURL3);
     }).then(() => {
         $.getJSON(WeatherURL3, function(data) {
-            setIcon(data.current.weather[0].icon, "weathericon-1");
+            setIcon(data.current.weather[0].icon, "weather-icon-1");
             icons.play();
             $('#weather-1 #temperature').html(data.current.temp + tempUnit);
             $('#weather-1 #conditions').html(titleCase(data.current.weather[0].description));
@@ -70,14 +67,19 @@ function getWeatherInfo(city1, country1, city2, country2, units) {
     });
 
     $.getJSON(WeatherURL2, function(data) {
-        console.log("%cGetting weather for " + city2 + "...", "color:yellow;font-weight:bold;font-style:italic;");
         var long = data.coord.lon;
         var lat = data.coord.lat;
-        WeatherURL4 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
+        var name = data.name;
+        console.log("%cGetting weather for " + name + "...", "color:yellow;font-weight:bold;font-style:italic;");
+        $("#weather-name-2").text(name);
+        $("#alert-head-2").text("Alerts for " + name);
+        $("#alert-body-2").empty();
+
+        WeatherURL4 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=ac44343b90759cfe705813ff3a614fa5&exclude=minutely,hourly&units=" + units;
         console.log(WeatherURL4);
     }).then(() => {
         $.getJSON(WeatherURL4, function(data) {
-            setIcon(data.current.weather[0].icon, "weathericon-2");
+            setIcon(data.current.weather[0].icon, "weather-icon-2");
             icons.play();
             $('#weather-2 #temperature').html(data.current.temp + tempUnit);
             $('#weather-2 #conditions').html(titleCase(data.current.weather[0].description));
@@ -103,7 +105,7 @@ function getWeatherInfo(city1, country1, city2, country2, units) {
             } else {
                 $("#alerts-2").hide();
             }
-            setTimeout(function() { icons.color = $('.button').css('color') }, 500);
+            setTimeout(function() { icons.color = $('.weather-container').css('color') }, 0);
         });
     });
 }
