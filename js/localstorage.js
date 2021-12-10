@@ -140,6 +140,7 @@ let loadFromLS = function() {
             $("#xkcd-zone").css("display", "block");
         } else {
             console.log("%cXKCD disabled", "color:lightblue");
+            $("#xkcd-zone").css("display", "none");
         }
         if (data.misc.invertXKCD) {
             $("#x-img").css("filter", "invert(1)");

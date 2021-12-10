@@ -10,8 +10,7 @@ A very customizable homepage that is in the process of being rewritten.
 
 [Changelog](#changelog)
 
-![alt text](img/screen1.png "screenshot 1")
-(outdated screenshot, new one soon)
+![alt text](img/screen2.png "screenshot 1")
 
 ## Setup (Normal)
 Just set https://start.the404.nl/ as your homepage in your browser.

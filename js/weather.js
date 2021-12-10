@@ -1,6 +1,7 @@
 let icons = new Skycons({ "color": "white" });
 
 function getWeatherInfo(code1, code2, units) {
+    return;
     //TODO: reimplement windy icon based on wind speed
     // Windy threshold has been set as 20mph or ~32km/h
     //TODO: add custom icons?
@@ -34,7 +35,7 @@ function getWeatherInfo(code1, code2, units) {
         $("#alert-modal-1 .modal-header").text("Alerts for " + name);
         $("#alert-modal-1 .modal-body").empty();
 
-        WeatherURL3 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
+        WeatherURL3 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=5819a34c58f8f07bc282820ca08948f1&exclude=minutely,hourly&units=" + units;
         console.log(WeatherURL3);
     }).then(() => {
         $.getJSON(WeatherURL3, function(data) {
@@ -82,7 +83,7 @@ function getWeatherInfo(code1, code2, units) {
         $("#alert-modal-2 .modal-header").text("Alerts for " + name);
         $("#alert-modal-2 .modal-body").empty();
 
-        WeatherURL4 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
+        WeatherURL4 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=5819a34c58f8f07bc282820ca08948f1&exclude=minutely,hourly&units=" + units;
         console.log(WeatherURL4);
     }).then(() => {
         $.getJSON(WeatherURL4, function(data) {
