@@ -11,7 +11,7 @@ function showModal(id) {
     $(id).css('filter', 'none');
 }
 
-function hideModal(id) {
+function hideModal() {
     $('#main').css('filter', 'none');
     // $('#c').css('filter','blur(5px)');
     $('#header').css('filter', 'none');

@@ -63,13 +63,13 @@
         </div>
     </div>
 
-    <div class="modal alert-modal" id="alert-modal-1" onclick="hideModal('#alert-modal-1')">
+    <div class="modal alert-modal" id="alert-modal-1" onclick="hideModal()">
         <div class="modal-content">
             <div class="modal-header"></div>
             <div class="modal-body"></div>
         </div>
     </div>
-    <div class="modal alert-modal" id="alert-modal-2" onclick="hideModal('#alert-modal-2')">
+    <div class="modal alert-modal" id="alert-modal-2" onclick="hideModal()">
         <div class="modal-content">
             <div class="modal-header"></div>
             <div class="modal-body"></div>
@@ -79,7 +79,7 @@
         <div class="modal-content" style="max-height: 75%;">
             <div class="modal-header">
                 <span>Configuration</span>
-                <span id="close" onclick="hideModal('#config-window')" style="margin-left:237px" title="Close">×</span>
+                <span id="close" onclick="hideModal()" style="margin-left:237px" title="Close">×</span>
             </div>
             <div class="modal-body" style="height:45vh; overflow-y:scroll; overflow-x:hidden">
                 <div class="config-section" id="weather-settings">
@@ -299,23 +299,6 @@
         </div>
     </div>
 
-    <div class="modal" id="date-hint-modal">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <span id="close" onclick="hideModal('#date-hint-modal')" style="margin-left:237px" title="Close">×</span>
-
-                <span class="section-head">Date</span>
-                <br>
-                <label>%M</label>
-                <label>Month (1-12), no leading 0.</label>
-                <br>
-                <label>%MM</label>
-                <label>Month (1-12), with leading 0.</label>
-            </div>
-        </div>
-    </div>
-
     <div id="xkcd-zone">
         <h2 id="x-title"></h2>
         <div class="button x-button" onclick="setnum(-1)"><span>←</span></div>
@@ -327,8 +310,6 @@
         <br>
         <img id="x-img">
     </div>
-
-
 
     <!-- <script src="js/bg.js"></script> -->
     <script src="js/xkcd.js"></script>

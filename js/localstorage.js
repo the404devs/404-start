@@ -62,7 +62,7 @@ let saveToLS = function() {
     if (success) {
         console.log("%c" + "Saved!", "color:lightgreen");
         loadFromLS();
-        hideModal("#config-window");
+        hideModal();
     }
 
 };
@@ -265,6 +265,7 @@ let importConfig = function() {
             localStorage.setItem("404CONFIG", JSON.stringify(data));
             console.log("%c" + "Theme import successful!", "color:green");
             loadFromLS();
+            hideModal();
         } catch (e) {
             console.log("%c" + "Error importing config.", "color:red");
             alert("Error importing config. Ensure the file is valid JSON.");
