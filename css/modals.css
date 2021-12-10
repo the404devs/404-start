@@ -24,7 +24,6 @@
     box-shadow: black 0px 2px 10px, black 0px -2px 10px;
     display: inline-block;
     overflow-x: hidden;
-    overflow: auto;
     padding: 0;
     position: relative;
     text-align: left;
