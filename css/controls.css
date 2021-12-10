@@ -122,8 +122,8 @@
 /* UI COMPONENTS */
 
 hr {
-    border-top: 1px solid var(--border);
     border: none;
+    border-top: 1px solid var(--border);
     height: 0;
 }
 

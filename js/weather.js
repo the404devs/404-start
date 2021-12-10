@@ -1,7 +1,6 @@
 let icons = new Skycons({ "color": "white" });
 
 function getWeatherInfo(code1, code2, units) {
-    return;
     //TODO: reimplement windy icon based on wind speed
     // Windy threshold has been set as 20mph or ~32km/h
     //TODO: add custom icons?
