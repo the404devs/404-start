@@ -2,6 +2,7 @@ let icons = new Skycons({ "color": "white" });
 
 function getWeatherInfo(code1, code2, units) {
     //TODO: reimplement windy icon based on wind speed
+    // Windy threshold has been set as 20mph or ~32km/h
     //TODO: add custom icons?
     //TODO: weather alerts
     //TODO: turn switch into function
@@ -37,7 +38,13 @@ function getWeatherInfo(code1, code2, units) {
         console.log(WeatherURL3);
     }).then(() => {
         $.getJSON(WeatherURL3, function(data) {
-            setIcon(data.current.weather[0].icon, "weather-icon-1");
+            if (data.current.wind_speed > 20) {
+                setIcon("w", "weather-icon-1");
+            } else if (data.current.weather[0].description.includes("sleet")) {
+                setIcon("s", "weather-icon-1");
+            } else {
+                setIcon(data.current.weather[0].icon, "weather-icon-1");
+            }
             icons.play();
             $('#weather-1 .temperature').html(data.current.temp + tempUnit);
             $('#weather-1 .conditions').html(titleCase(data.current.weather[0].description));
@@ -79,7 +86,13 @@ function getWeatherInfo(code1, code2, units) {
         console.log(WeatherURL4);
     }).then(() => {
         $.getJSON(WeatherURL4, function(data) {
-            setIcon(data.current.weather[0].icon, "weather-icon-2");
+            if (data.current.wind_speed > 20) {
+                setIcon("w", "weather-icon-2");
+            } else if (data.current.weather[0].description.includes("sleet")) {
+                setIcon("s", "weather-icon-2");
+            } else {
+                setIcon(data.current.weather[0].icon, "weather-icon-2");
+            }
             icons.play();
             $('#weather-2 .temperature').html(data.current.temp + tempUnit);
             $('#weather-2 .conditions').html(titleCase(data.current.weather[0].description));
@@ -199,10 +212,10 @@ function setIcon(icon, id) {
             icons.set(id, Skycons.RAIN);
             break;
         case "11d":
-            icons.set(id, Skycons.RAIN);
+            icons.set(id, Skycons.THUNDER);
             break;
         case "11n":
-            icons.set(id, Skycons.RAIN);
+            icons.set(id, Skycons.THUNDER);
             break;
         case "13d":
             icons.set(id, Skycons.SNOW);
@@ -216,8 +229,13 @@ function setIcon(icon, id) {
         case "50n":
             icons.set(id, Skycons.FOG);
             break;
-
+        case "w":
+            icons.set(id, Skycons.WIND);
+            break;
+        case "s":
+            icons.set(id, Skycons.SLEET);
+            break;
         default:
-
+            icons.set(id, Skycons.CLEAR_DAY);
     }
 }
