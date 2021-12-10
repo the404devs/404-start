@@ -11,7 +11,7 @@ function checkIfLocal() {
     }
 }
 
-var getVersion = function(url, callback) {
+function getVersion(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.responseType = 'text';

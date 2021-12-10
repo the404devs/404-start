@@ -1,11 +1,11 @@
-var backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground"];
+let backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground"];
+let base64String = "";
 
-var saveToLS = function() {
-    var userCSS = constructUserCSS();
+let saveToLS = function() {
+    let userCSS = constructUserCSS();
     console.log("%cSaving user config...", "color:lightblue");
-    var data = {
+    let data = {
         "theme": {
-            "image": $("#theme-image").val(),
             "colours": userCSS
         },
         "weather": {
@@ -43,26 +43,40 @@ var saveToLS = function() {
         },
         "misc": {
             "updateCheck": $("#update-toggle").prop("checked"),
+            "showXKCD": $("#xkcd-toggle").prop("checked"),
+            "invertXKCD": $("#invert-toggle").prop("checked"),
+            "dateFormat": $("#date-format").val(),
+            "timeFormat": $("#time-format").val()
         }
     };
-    localStorage.setItem("404CONFIG", JSON.stringify(data));
 
-    loadFromLS();
-    hideModal("#config-window");
+    let success = false;
+    try {
+        localStorage.setItem("404CONFIG", JSON.stringify(data));
+        success = true;
+    } catch (DOMException) {
+        console.log("%c" + "Image too big!", "color:red");
+        alert("Image too big!\n\nPlease select a smaller image.\nThe max size is ~3MB.");
+    }
+
+    if (success) {
+        console.log("%c" + "Saved!", "color:lightgreen");
+        loadFromLS();
+        hideModal("#config-window");
+    }
+
 };
 
-var loadFromLS = function() {
-    var data = JSON.parse(localStorage.getItem("404CONFIG"));
+let loadFromLS = function() {
+    let data = JSON.parse(localStorage.getItem("404CONFIG"));
     if (data) {
         $("head").children("style").each(function() {
             $(this).remove();
         });
         $("head").append($("<style>").html(data.theme.colours));
         $(".theme-val").each(function() {
-            // console.log($(this).attr("id"));
             $(this).val(styleVar($(this).attr("id")));
         });
-
 
         $("#weather-code-1").val(data.weather.code1);
         $("#weather-code-2").val(data.weather.code2);
@@ -95,11 +109,22 @@ var loadFromLS = function() {
 
         $("#show-link-box").prop("checked", data.links.show);
         $("#update-toggle").prop("checked", data.misc.updateCheck);
+        $("#xkcd-toggle").prop("checked", data.misc.showXKCD);
+        $("#invert-toggle").prop("checked", data.misc.invertXKCD);
+        $("#date-format").val(data.misc.dateFormat || "%W, %MMMM %d, %Y");
+        $("#time-format").val(data.misc.timeFormat || "%h:%m:%s %a");
+
+        dateFormatString = data.misc.dateFormat || "%W, %MMMM %d, %Y";
+        timeFormatString = data.misc.timeFormat || "%h:%m:%s %a";
+
         if (data.links.show) {
             $(".link-box").css("display", "block");
+            $("#xkcd-zone").css("top", "850px");
         } else {
             $(".link-box").css("display", "none");
+            $("#xkcd-zone").css("top", "450px");
         }
+
         if (data.misc.updateCheck) {
             checkForUpdate(false);
         }
@@ -110,6 +135,18 @@ var loadFromLS = function() {
             }
             setInterval(weatherRefresh, 600000);
         }
+
+        if (data.misc.showXKCD) {
+            $("#xkcd-zone").css("display", "block");
+        } else {
+            console.log("%cXKCD disabled", "color:lightblue");
+        }
+        if (data.misc.invertXKCD) {
+            $("#x-img").css("filter", "invert(1)");
+        } else {
+            $("#x-img").css("filter", "invert(0)");
+        }
+
         getWeatherInfo(data.weather.code1, data.weather.code2, data.weather.units);
         showLinkGroup(0);
     } else {
@@ -145,16 +182,16 @@ var loadFromLS = function() {
     setTimeout(unblur, 250);
 }
 
-var showLinkGroup = function() {
-    var x = parseInt($("#link-selector").val());
+let showLinkGroup = function() {
+    let x = parseInt($("#link-selector").val());
     $(".link-group").css("display", "none");
     $("#link-config-" + x).css("display", "block");
 }
 
-var constructUserCSS = function() {
+let constructUserCSS = function() {
     console.log("%c" + "Constructing user CSS", "color:lightblue");
-    var data = JSON.parse(localStorage.getItem("404CONFIG"));
-    var userCSS = "* {";
+    let data = JSON.parse(localStorage.getItem("404CONFIG"));
+    let userCSS = "* {";
     if ($("#backgroundImage").val() == "") {
         userCSS += " --backgroundImage: " + styleVar("backgroundImage") + ";";
     } else {
@@ -165,8 +202,7 @@ var constructUserCSS = function() {
         userCSS += " --" + $(this).attr("id") + ": " + $(this).val();
         if (backgroundKeys.includes($(this).attr("id"))) {
             // console.log("%c" + "background key", "color:red");
-            var alpha = 255 * Number($("#alpha").val());
-            console.log(alpha);
+            let alpha = 255 * Number($("#alpha").val());
             userCSS += Math.round(alpha).toString(16);
         } else if ($(this).attr("id") == "borderRadius") {
             userCSS += "px";
@@ -177,13 +213,10 @@ var constructUserCSS = function() {
     return userCSS;
 }
 
-let base64String = "";
-
 function imageUploaded() {
-    var file = document.querySelector(
-        'input[type=file]')['files'][0];
+    let file = document.querySelector('input[id=backgroundImage]')['files'][0];
 
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function() {
         base64String = reader.result.replace("data:", "")
             .replace(/^.+,/, "");
@@ -201,4 +234,49 @@ function styleVar(key) {
     return getComputedStyle(document.documentElement).getPropertyValue("--" + key).trim();
 }
 
+let exportConfig = function() {
+    saveToLS();
+    console.log("%c" + "Exporting config...", "color:lightblue");
+    let themeJSON = localStorage.getItem("404CONFIG");
+    let file = new Blob([themeJSON], { type: "application/json" });
+    let a = document.createElement("a");
+
+    a.href = URL.createObjectURL(file);
+    a.download = "404-Start_" + Date.now() + ".json";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() {
+        document.body.removeChild(a); //Remove it
+        window.URL.revokeObjectURL(a.href); //Get rid of the url to our file
+    }, 0);
+}
+
+let importTrigger = function() {
+    console.log("%c" + "Importing config...", "color:lightblue");
+    $("#import-theme-button").click();
+}
+
+let importConfig = function() {
+    let file = document.querySelector('input[id=import-theme-button]')['files'][0];
+    let reader = new FileReader();
+    reader.onload = function() {
+        try {
+            let data = JSON.parse(reader.result);
+            localStorage.setItem("404CONFIG", JSON.stringify(data));
+            console.log("%c" + "Theme import successful!", "color:green");
+            loadFromLS();
+        } catch (e) {
+            console.log("%c" + "Error importing config.", "color:red");
+            alert("Error importing config. Ensure the file is valid JSON.");
+        }
+    }
+    reader.readAsText(file);
+}
+
 loadFromLS();
+
+// Event listener to monitor changes made in other tabs/windows
+// This prevents desyncs
+window.addEventListener('storage', function(event) {
+    loadFromLS();
+});

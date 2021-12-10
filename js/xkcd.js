@@ -131,7 +131,6 @@ function setnum(delta) {
 
 function goto() {
     var num = document.getElementById("x-num");
-
     build_script(num.value);
 }
 
@@ -145,8 +144,8 @@ function random() {
 }
 
 document.getElementById("x-num").addEventListener("keyup", function(e) {
-    if (event.keyCode === 13) {
-        event.preventDefault();
+    if (e.key === "Enter") {
+        e.preventDefault();
         goto();
     }
 });

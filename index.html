@@ -2,18 +2,20 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
     <title>404-Start</title>
     <script src="js/skycons.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/font-awesome.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <!-- <link rel="stylesheet" type="text/css" href="css/colours.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/xkcd.css">
     <link rel="stylesheet" type="text/css" href="css/modals.css">
+    <link rel="stylesheet" type="text/css" href="css/weather.css">
     <link rel="stylesheet" type="text/css" href="css/controls.css">
     <link rel="shortcut icon" type="image/x-icon" href="img/404-start.png">
 </head>
 
-<body id="body">
+<body id="body" onload="timer()">
     <!-- <canvas id="c" width="683" height="666"></canvas> -->
     <div id="header">
         <span id="time"></span>
@@ -27,23 +29,23 @@
     <div id="main">
         <div class="weather-container" id="weather-1">
             <canvas class="weather-icon" id="weather-icon-1"></canvas>
-            <span class="alert-button" id="alerts-1" onclick="showModal('#alertModal1')" title="Weather Warnings">!</span>
-            <span id="temperature"></span>
+            <span class="alert-button" id="alerts-1" onclick="showModal('#alert-modal-1')" title="Weather Warnings">!</span>
+            <span class="temperature"></span>
             <span class="weathername" id="weather-name-1"></span>
-            <span id="conditions"></span>
-            <span id="feels-like"></span>
-            <span id="high"></span>
-            <span id="wind"></span>
+            <span class="conditions"></span>
+            <span class="feels-like"></span>
+            <span class="high"></span>
+            <span class="wind"></span>
         </div>
         <div class="weather-container" id="weather-2">
             <canvas class="weather-icon" id="weather-icon-2"></canvas>
-            <span class="alert-button" id="alerts-2" onclick="showModal('#alertModal2')" title="Weather Warnings">!</span>
-            <span id="temperature"></span>
+            <span class="alert-button" id="alerts-2" onclick="showModal('#alert-modal-2')" title="Weather Warnings">!</span>
+            <span class="temperature"></span>
             <span class="weathername" id="weather-name-2"></span>
-            <span id="conditions"></span>
-            <span id="feels-like"></span>
-            <span id="high"></span>
-            <span id="wind"></span>
+            <span class="conditions"></span>
+            <span class="feels-like"></span>
+            <span class="high"></span>
+            <span class="wind"></span>
         </div>
         <div class="link-box" id="link-box-1">
             <a class="link" id="link1" href="https://www.example.com/">Text Here</a>
@@ -61,18 +63,16 @@
         </div>
     </div>
 
-    <div class="modal" id="alertModal1" onclick="hideModal('#alertModal1')">
+    <div class="modal alert-modal" id="alert-modal-1" onclick="hideModal('#alert-modal-1')">
         <div class="modal-content">
-            <div class="modal-header" id="alert-head-1"></div>
-            <div class="modal-body" id="alert-body-1"></div>
-            <div class="modal-footer"></div>
+            <div class="modal-header"></div>
+            <div class="modal-body"></div>
         </div>
     </div>
-    <div class="modal" id="alertModal2" onclick="hideModal('#alertModal2')">
+    <div class="modal alert-modal" id="alert-modal-2" onclick="hideModal('#alert-modal-2')">
         <div class="modal-content">
-            <div class="modal-header" id="alert-head-2"></div>
-            <div class="modal-body" id="alert-body-2"></div>
-            <div class="modal-footer"></div>
+            <div class="modal-header"></div>
+            <div class="modal-body"></div>
         </div>
     </div>
     <div class="modal" id="config-window">
@@ -85,7 +85,7 @@
                 <div class="config-section" id="weather-settings">
                     <span class="section-head">Weather Settings</span>
                     <br>
-                    <span style="font-size:14px">Uses the OpenWeatherAPI.</span>
+                    <span style="font-size:14px">Uses the OpenWeather API.</span>
                     <br>
                     <label>City ID 1: </label><input id="weather-code-1" type="text">
                     <br>
@@ -119,7 +119,7 @@
                         <input class="theme-val" type="color" id="border">
                         <br>
                         <label>Border Radius (px):</label>
-                        <input class="theme-val" type="number" id="borderRadius">
+                        <input class="theme-val" type="number" step=1 id="borderRadius">
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Weather Boxes</span>
@@ -170,7 +170,7 @@
                         <input type="file" id="backgroundImage" onchange="imageUploaded()">
                         <br>
                         <label>Box Transparency:</label>
-                        <input class="theme-val" type="number" id="alpha">
+                        <input class="theme-val" type="number" step=0.01 id="alpha">
                         <br>
                     </div>
 
@@ -239,23 +239,55 @@
                 <div class="config-section" id="misc-settings">
                     <span class="section-head">Additional Settings</span>
                     <br>
-                    <span style="font-size:14px">More coming soon...</span>
+                    <label>Date Format: </label>
+                    <input type="text" id="date-format">
                     <br>
-                    <!-- <label>XKCD comic: </label>
+                    <label>Time Format: </label>
+                    <input type="text" id="time-format">
+                    <br>
+                    <span class="subsection-head" onclick="toggleTimeDocs()" id="time-docs-clickable">Show Format Documentation</span>
+                    <div class="config-subgroup" id="time-docs">
+                        <p><b><u>Date:</u></b></p>
+                        <p><b>%M</b> - Month (1-12), no leading 0.</p>
+                        <p><b>%MM</b> - Month (1-12), with leading 0.</p>
+                        <p><b>%MMM</b> - Month, abbreviated text ("Jan").</p>
+                        <p><b>%MMMM</b> - Month, full text ("January").</p>
+                        <p><b>%d</b> - Day (1-31), no leading 0.</p>
+                        <p><b>%D</b> - Day (1-31), with leading 0.</p>
+                        <p><b>%y</b> - Year, two digits ("21").</p>
+                        <p><b>%Y</b> - Year, full representation ("2021").</p>
+                        <p><b>%w</b> - Weekday, abbreviated ("Fri").</p>
+                        <p><b>%W</b> - Weekday, full representation ("Friday").</p>
+                        <p><b><u>Time:</u></b></p>
+                        <p><b>%h</b> - Hour, 24-hour format.</p>
+                        <p><b>%hh</b> - Hour, 12-hour format, no leading 0.</p>
+                        <p><b>%hhh</b> - Hour, 12-hour format, with leading 0.</p>
+                        <p><b>%m</b> - Minutes.</p>
+                        <p><b>%s</b> - Seconds.</p>
+                        <p><b>%a</b> - AM/PM indicator.</p>
+                    </div>
+                    <br>
+                    <label>XKCD comic: </label>
                     <input type="checkbox" id="xkcd-toggle">
                     <br>
                     <label>Invert XKCD: </label>
                     <input type="checkbox" id="invert-toggle">
                     <br>
-                    <span style="font-size:14px">This is good for dark themes.</span> -->
                     <div id="local-settings">
                         <label style="width: 136px!important;">Update check at start:</label>
                         <input type="checkbox" id="update-toggle">
-                        <br>
-                        <span class="small-button" onclick="checkForUpdate(true)" style="width:120px">
+                        <span class="small-button" onclick="checkForUpdate(true)" style="width:120px; margin-left: 20px;">
                             <i class="fas fa-redo"></i> Check Now
                         </span>
                     </div>
+                    <br>
+                    <span class="small-button" onclick="importTrigger()" style="width:150px;">
+                        <i class="fas fa-upload"></i> Import Config
+                    </span>
+                    <span class="small-button" onclick="exportConfig()" style="width:150px; margin-left: 20px;">
+                        <i class="fas fa-download"></i> Export Config
+                    </span>
+                    <input type="file" id="import-theme-button" style="display: none;" accept=".json" onchange="importConfig()">
                 </div>
             </div>
             <div class="modal-footer" style="height: 61px;">
@@ -267,20 +299,40 @@
         </div>
     </div>
 
-    <script>
-        timer();
-        var time = setInterval(timer, 1000);
+    <div class="modal" id="date-hint-modal">
+        <div class="modal-content">
 
-        function timer() {
-            d = new Date();
-            document.getElementById("time").innerHTML = d.toLocaleTimeString().toLowerCase().replace(" a.m.", "").replace(" p.m.", "");
-            formattedDate = ('0' + (d.getMonth() + 1)).slice(-2) + "/" + ('0' + d.getDate()).slice(-2) + "/" + (d.getFullYear() + "");
-            document.getElementById("date").innerHTML = (formattedDate);
-        }
-    </script>
+            <div class="modal-body">
+                <span id="close" onclick="hideModal('#date-hint-modal')" style="margin-left:237px" title="Close">×</span>
+
+                <span class="section-head">Date</span>
+                <br>
+                <label>%M</label>
+                <label>Month (1-12), no leading 0.</label>
+                <br>
+                <label>%MM</label>
+                <label>Month (1-12), with leading 0.</label>
+            </div>
+        </div>
+    </div>
+
+    <div id="xkcd-zone">
+        <h2 id="x-title"></h2>
+        <div class="button x-button" onclick="setnum(-1)"><span>←</span></div>
+        <div style="display: inline-block;">
+            <input id="x-num"></label>
+            <span id="x-rand" onclick="random()">Random</span>
+        </div>
+        <div class="button x-button" onclick="setnum(1)"><span>→</span></div>
+        <br>
+        <img id="x-img">
+    </div>
+
+
 
     <!-- <script src="js/bg.js"></script> -->
-    <!-- <script src="js/xkcd.js"></script> -->
+    <script src="js/xkcd.js"></script>
+    <script src="js/time.js"></script>
     <script src="js/modal.js"></script>
     <script src="js/config.js"></script>
     <script src="js/update.js"></script>

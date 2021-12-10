@@ -43,6 +43,38 @@ To enable the extension, perform the following steps:
 
 ## Changelog
 
+### *2.0.1 (12/10/2021)*
+------------------------
+- Reimplemented XKCD comic viewer.
+    - Has the same functionality as the old one.
+    - May or may not just be identical to the old one.
+    - Moves upwards if link section is hidden.
+- Added a warning if the selected background image is too large for the browser's local storage.
+    - The max size is around 3MB, but I can't be bothered to check.
+- CSS fixes.
+- Date and time formats are now customizable, with the following expressions:
+    - Date:
+        - %M - Month (1-12), no leading 0.
+        - %MM - Month (1-12), with leading 0.
+        - %MMM - Month, abbreviated text ("Jan").
+        - %MMMM - Month, full text ("January").
+        - %d - Day (1-31), no leading 0.
+        - %D - Day (1-31), with leading 0.
+        - %y - Year, two digits ("21").
+        - %Y - Year, full representation ("2021").
+        - %w - Weekday, abbreviated ("Fri").
+        - %W - Weekday, full representation ("Friday").
+    - Time:
+        - %h - Hour, 24-hour format.
+        - %hh - Hour, 12-hour format, no leading 0.
+        - %hhh - Hour, 12-hour format, with leading 0.
+        - %m - Minutes.
+        - %s - Seconds.
+        - %a - AM/PM indicator.
+- Lots of general code cleanup. CSS split into multiple files, removed many redundant rules.
+- Removed unused JS files.
+- Added ability to export the current configuration to a JSON file, and the ability to import config from said files.
+
 ### *2.0.0 (12/09/2021)*
 ------------------------
 - Completely rewritten.
@@ -177,9 +209,3 @@ To enable the extension, perform the following steps:
 -----------------------
 - Initial version
 - Added weather display using DarkSky API and Skycons.
-
-
-
-
-
-
