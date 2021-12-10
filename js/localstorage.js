@@ -112,10 +112,10 @@ let loadFromLS = function() {
         $("#xkcd-toggle").prop("checked", data.misc.showXKCD);
         $("#invert-toggle").prop("checked", data.misc.invertXKCD);
         $("#date-format").val(data.misc.dateFormat || "%W, %MMMM %d, %Y");
-        $("#time-format").val(data.misc.timeFormat || "%h:%m:%s %a");
+        $("#time-format").val(data.misc.timeFormat || "%hh:%m:%s %a");
 
         dateFormatString = data.misc.dateFormat || "%W, %MMMM %d, %Y";
-        timeFormatString = data.misc.timeFormat || "%h:%m:%s %a";
+        timeFormatString = data.misc.timeFormat || "%hh:%m:%s %a";
 
         if (data.links.show) {
             $(".link-box").css("display", "block");
