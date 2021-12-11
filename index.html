@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/xkcd.css">
     <link rel="stylesheet" type="text/css" href="css/modals.css">
     <link rel="stylesheet" type="text/css" href="css/weather.css">
+    <link rel="stylesheet" type="text/css" href="css/colours.css">
     <link rel="stylesheet" type="text/css" href="css/controls.css">
     <link rel="shortcut icon" type="image/x-icon" href="img/404-start.png">
 </head>
@@ -31,7 +32,7 @@
             <canvas class="weather-icon" id="weather-icon-1"></canvas>
             <span class="alert-button" id="alerts-1" onclick="showModal('#alert-modal-1')" title="Weather Warnings">!</span>
             <span class="temperature"></span>
-            <span class="weathername" id="weather-name-1"></span>
+            <span class="weather-name" id="weather-name-1"></span>
             <span class="conditions"></span>
             <span class="feels-like"></span>
             <span class="high"></span>
@@ -41,7 +42,7 @@
             <canvas class="weather-icon" id="weather-icon-2"></canvas>
             <span class="alert-button" id="alerts-2" onclick="showModal('#alert-modal-2')" title="Weather Warnings">!</span>
             <span class="temperature"></span>
-            <span class="weathername" id="weather-name-2"></span>
+            <span class="weather-name" id="weather-name-2"></span>
             <span class="conditions"></span>
             <span class="feels-like"></span>
             <span class="high"></span>
@@ -79,13 +80,17 @@
         <div class="modal-content" style="max-height: 75%;">
             <div class="modal-header">
                 <span>Configuration</span>
-                <span id="close" onclick="hideModal()" style="margin-left:237px" title="Close">×</span>
+                <span id="close" onclick="hideModal()" style="margin-left:237px" title="Close">&times;</span>
             </div>
             <div class="modal-body" style="height:45vh; overflow-y:scroll; overflow-x:hidden">
                 <div class="config-section" id="weather-settings">
                     <span class="section-head">Weather Settings</span>
                     <br>
-                    <span style="font-size:14px">Uses the OpenWeather API.</span>
+                    <span style="font-size:14px">
+                        Uses the <a class="link inline-link" href="https://openweathermap.org/">OpenWeather</a> API.
+                        <br>
+                        To find the ID for your desired location, see <a class="link inline-link" href="https://github.com/the404devs/404-start/#openweather-api">here</a>.
+                    </span>
                     <br>
                     <label>City ID 1: </label><input id="weather-code-1" type="text">
                     <br>
@@ -129,6 +134,10 @@
                         <br>
                         <label>Background:</label>
                         <input class="theme-val" type="color" id="weatherBoxBackground">
+                        <br>
+                        <label>Margin:</label>
+                        <input class="theme-val" type="range" step=1 min=0 max=90 id="weatherBoxMargin" oninput="$('#weatherBoxMarginVal').html($('#weatherBoxMargin').val()+'%');">
+                        <span id="weatherBoxMarginVal">10</span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Modal Dialogs</span>

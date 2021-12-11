@@ -1,30 +1,9 @@
-.arrow {
-    font-family: "Inconsolata";
-    font-size: 16px;
-    font-weight: normal;
-}
-
-.conditions {
-    display: table-cell!important;
-    height: 35px;
-    vertical-align: middle;
-}
-
-.temperature {
-    font-family: "Gilroy";
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: -2px;
-    padding: 0 5px 0px 5px;
-    text-align: left;
-}
-
 #weather-1 {
-    left: 25%;
+    left: var(--weatherBoxMargin);
 }
 
 #weather-2 {
-    right: 25%;
+    right: var(--weatherBoxMargin);
 }
 
 .weather-container {
@@ -51,19 +30,40 @@
     min-height: 243px;
 }
 
+.weather-container .arrow {
+    font-family: "Inconsolata";
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.weather-container .conditions {
+    display: table-cell!important;
+    height: 35px;
+    vertical-align: middle;
+}
+
 .weather-container span {
     display: inline-block;
     padding: 0 0 2px 5px;
     width: 95%;
 }
 
-.weather-icon {
+.weather-container .temperature {
+    font-family: "Gilroy";
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: -2px;
+    padding: 0 5px 0px 5px;
+    text-align: left;
+}
+
+.weather-container .weather-icon {
     border-bottom: 1px solid var(--border);
     padding-bottom: 5px;
     padding-top: 5px;
     width: inherit;
 }
 
-.weather-name {
+.weather-container .weather-name {
     font-weight: bold;
 }

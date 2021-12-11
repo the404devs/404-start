@@ -127,6 +127,17 @@ hr {
     height: 0;
 }
 
+.inline-link {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+.inline-link:before {
+    border-bottom: 1px solid;
+}
+
 label {
     clear: left;
     display: inline-block;
@@ -134,11 +145,6 @@ label {
     margin-right: 20px;
     text-align: right;
     width: 130px;
-}
-
-select {
-    margin-left: -4px;
-    width: 182px;
 }
 
 .section-head {
@@ -181,10 +187,28 @@ select {
     width: 176px;
 }
 
+input[type=color],
+select {
+    width: 182px;
+}
+
+input[type=color] {
+    margin-left: 0px;
+}
+
+select {
+    margin-left: -4.5px;
+}
+
 ::selection {
     background-color: var(--highlight);
 }
 
 input[type=checkbox] {
     width: auto;
+}
+
+input[type=range] {
+    transform: translateY(4px);
+    width: 140px;
 }

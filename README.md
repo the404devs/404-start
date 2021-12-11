@@ -5,18 +5,17 @@ A very customizable homepage that is in the process of being rewritten.
 
 [Setup (Advanced)](#setup-advanced)
 
-
 [Experimental New Tab Page (Chrome Extension)](#experimental-new-tab-page-chrome-extension)
 
+[OpenWeather API](#openweather-api)
+
 [Changelog](#changelog)
+
 
 ![alt text](img/screen2.png "screenshot 1")
 
 ## Setup (Normal)
 Just set https://start.the404.nl/ as your homepage in your browser.
-Things you miss out on:
-  - Automatic update checking
-      - This is fine, since the online version is *always* up to date.
 
 ## Setup (Advanced)
 Head over to the [Releases page](https://github.com/the404devs/404-start/releases) and download the latest version (or just `git clone`).
@@ -40,7 +39,29 @@ To enable the extension, perform the following steps:
 - Once the extension is installed, you won't need to update it again, unless explicitly mentioned in the changelog.
 - When you update 404-Start, you'll need to set the `ExtPath` variable again.
 
+## OpenWeather API
+404-Start uses the [OpenWeatherMap](https://openweathermap.org/) API to get weather information. When configuring the weather display, you'll need to provide the ID of the town/city you want to display.
+
+![alt text](img/owm1.png "Weather display settings")
+
+To find this ID, head over to the [OpenWeatherMap](https://openweathermap.org/) website and search for the town/city you want to display.
+You'll find the ID at the end of the page's URL. This is the value you need to put in the 'City ID' field.
+
+![alt text](img/owm2.png "OpenWeather URL, showing the city ID")
+
+
 ## Changelog
+
+### *2.0.2 (12/11/2021)*
+------------------------
+- Can now change the spacing between the weather boxes (thanks mom).
+- Hacky fix to use the unused 'sleet' and 'windy' weather icons.
+    - 'Wind' icon is triggered by wind speeds over 30km/h, but I'm no meteorologist.
+    - 'Sleet' icon is triggered by checking if the forecast description contains the word "sleet".
+- Added some documentation on using OpenWeather and finding city ID.
+- Fixes and such.
+    - Restores old config upon failed import of valid non-theme JSON, so we don't accidentally save garbage as our config.
+    - More CSS fixes.
 
 ### *2.0.1 (12/10/2021)*
 ------------------------

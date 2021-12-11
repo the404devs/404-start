@@ -82,6 +82,7 @@ let loadFromLS = function() {
         $("#weather-code-2").val(data.weather.code2);
         $("#unit-selector").val(data.weather.units);
         $("#weather-auto-refresh").prop("checked", data.weather.autoRefresh);
+        $('#weatherBoxMarginVal').html($('#weatherBoxMargin').val() + '%');
 
         $("#link-name-1").val(data.links.link1.name);
         $("#link-url-1").val(data.links.link1.url);
@@ -152,12 +153,11 @@ let loadFromLS = function() {
         showLinkGroup(0);
     } else {
         console.log("%cNo config found, setting defaults.", "color:red");
-        $("head").append($("<link>").attr({ "rel": "stylesheet", "href": "css/colours.css" }));
+        // $("head").append($("<link>").attr({ "rel": "stylesheet", "href": "css/colours.css" }));
         $(".theme-val").each(function() {
             // console.log($(this).attr("id"));
             $(this).val(styleVar($(this).attr("id")));
         });
-
 
         $("#weather-code-1").val(6167865);
         $("#weather-code-2").val(6077243);
@@ -207,6 +207,8 @@ let constructUserCSS = function() {
             userCSS += Math.round(alpha).toString(16);
         } else if ($(this).attr("id") == "borderRadius") {
             userCSS += "px";
+        } else if ($(this).attr("id") == "weatherBoxMargin") {
+            userCSS += "%";
         }
         userCSS += ";";
     });
@@ -231,6 +233,8 @@ function styleVar(key) {
         return getComputedStyle(document.documentElement).getPropertyValue("--" + key).trim().slice(0, 7);
     } else if (key == "borderRadius") {
         return getComputedStyle(document.documentElement).getPropertyValue("--" + key).trim().slice(0, -2);
+    } else if (key == "weatherBoxMargin") {
+        return getComputedStyle(document.documentElement).getPropertyValue("--" + key).trim().slice(0, -1);
     }
     return getComputedStyle(document.documentElement).getPropertyValue("--" + key).trim();
 }
@@ -261,6 +265,7 @@ let importConfig = function() {
     let file = document.querySelector('input[id=import-theme-button]')['files'][0];
     let reader = new FileReader();
     reader.onload = function() {
+        let oldData = JSON.parse(localStorage.getItem("404CONFIG"));
         try {
             let data = JSON.parse(reader.result);
             localStorage.setItem("404CONFIG", JSON.stringify(data));
@@ -269,7 +274,9 @@ let importConfig = function() {
             hideModal();
         } catch (e) {
             console.log("%c" + "Error importing config.", "color:red");
-            alert("Error importing config. Ensure the file is valid JSON.");
+            alert("Error importing config.\nEnsure the file is valid JSON, and an actual theme config.\n\n" + e);
+            localStorage.setItem("404CONFIG", JSON.stringify(oldData)); //restore old config
+            loadFromLS();
         }
     }
     reader.readAsText(file);
