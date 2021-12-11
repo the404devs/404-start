@@ -96,16 +96,13 @@
 .config-button {
     background-color: transparent;
     border: none;
-    border: none;
     color: var(--buttonForeground);
     font-family: "Roboto";
     font-size: 14px;
     position: absolute;
     right: 10px;
     text-shadow: none;
-    text-shadow: none;
     top: -400px;
-    transition: 0.25s all;
     transition: 0.25s all;
 }
 

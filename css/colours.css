@@ -2,17 +2,17 @@
     /*  */
     /* GENERIC */
     --background: #11111180;
-    --foreground: #f5f5f5;
-    --highlight: #e699cd;
+    --backgroundImage: url(../img/ladybug1.png);
     --border: #f5f5f5;
     --borderRadius: 5px;
-    --backgroundImage: url(../img/ladybug1.png);
+    --foreground: #f5f5f5;
+    --highlight: #e699cd;
     /* Currently unexposed */
     --backgroundImagePositionX: 0%;
     /*  */
     /* WEATHER */
-    --weatherBoxForeground: #f5f5f5;
     --weatherBoxBackground: #11111180;
+    --weatherBoxForeground: #f5f5f5;
     --weatherBoxMargin: 25%;
     /*  */
     /* MODAL */
@@ -20,9 +20,9 @@
     --modalForeground: #f5f5f5;
     /*  */
     /* BUTTONS */
-    --buttonHighlight: #800080;
     --buttonBackground: #11111180;
     --buttonForeground: #f5f5f5;
+    --buttonHighlight: #800080;
     /*  */
     /* LINKS */
     --linkBoxBackground: #11111180;

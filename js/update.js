@@ -28,6 +28,7 @@ function getVersion(url, callback) {
 
 function checkForUpdate(manual) {
     getVersion("https://start.the404.nl/VER", function(data) {
+        //TODO: make this not dumb
         var newestVer = parseInt(data.replace(/\D/g, ''));
         var currentVer = parseInt(config.VER.replace(/\D/g, ''));
         console.log("Current version is: " + currentVer + ", newest one online is: " + newestVer);

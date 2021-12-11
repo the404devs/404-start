@@ -8,6 +8,9 @@ function getWeatherInfo(code1, code2, units) {
     //TODO: turn switch into function
     //TODO: make someone post this on r/badcode
     // ac44343b90759cfe705813ff3a614fa5
+    // c974b8da946cbf11c238f30fff7cbbd9
+    // console.log("weather!");
+    // return;
 
     // in the event that this thing becomes popular and the api keys become overloaded, just make a bunch more and randomly select one
     let WeatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + code1 + "&appid=ac44343b90759cfe705813ff3a614fa5&units=" + units;
@@ -34,7 +37,7 @@ function getWeatherInfo(code1, code2, units) {
         $("#alert-modal-1 .modal-header").text("Alerts for " + name);
         $("#alert-modal-1 .modal-body").empty();
 
-        WeatherURL3 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=5819a34c58f8f07bc282820ca08948f1&exclude=minutely,hourly&units=" + units;
+        WeatherURL3 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
         console.log(WeatherURL3);
     }).then(() => {
         $.getJSON(WeatherURL3, function(data) {
@@ -82,7 +85,7 @@ function getWeatherInfo(code1, code2, units) {
         $("#alert-modal-2 .modal-header").text("Alerts for " + name);
         $("#alert-modal-2 .modal-body").empty();
 
-        WeatherURL4 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=5819a34c58f8f07bc282820ca08948f1&exclude=minutely,hourly&units=" + units;
+        WeatherURL4 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
         console.log(WeatherURL4);
     }).then(() => {
         $.getJSON(WeatherURL4, function(data) {

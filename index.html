@@ -11,8 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/xkcd.css">
     <link rel="stylesheet" type="text/css" href="css/modals.css">
     <link rel="stylesheet" type="text/css" href="css/weather.css">
-    <link rel="stylesheet" type="text/css" href="css/colours.css">
     <link rel="stylesheet" type="text/css" href="css/controls.css">
+    <link rel="stylesheet" type="text/css" id="default-theme" href="css/colours.css">
     <link rel="shortcut icon" type="image/x-icon" href="img/404-start.png">
 </head>
 
@@ -123,8 +123,9 @@
                         <label>Border:</label>
                         <input class="theme-val" type="color" id="border">
                         <br>
-                        <label>Border Radius (px):</label>
-                        <input class="theme-val" type="number" step=1 id="borderRadius">
+                        <label>Border Radius:</label>
+                        <input class="theme-val" type="range" step=1 min=0 max=100 id="borderRadius" oninput="$('#borderRadiusVal').html($('#borderRadius').val()+'px');">
+                        <span id="borderRadiusVal"></span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Weather Boxes</span>
@@ -137,7 +138,7 @@
                         <br>
                         <label>Margin:</label>
                         <input class="theme-val" type="range" step=1 min=0 max=90 id="weatherBoxMargin" oninput="$('#weatherBoxMarginVal').html($('#weatherBoxMargin').val()+'%');">
-                        <span id="weatherBoxMarginVal">10</span>
+                        <span id="weatherBoxMarginVal"></span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Modal Dialogs</span>
@@ -178,8 +179,9 @@
                         <label>Background Image:</label>
                         <input type="file" id="backgroundImage" onchange="imageUploaded()">
                         <br>
-                        <label>Box Transparency:</label>
-                        <input class="theme-val" type="number" step=0.01 id="alpha">
+                        <label>Box Opacity:</label>
+                        <input class="theme-val" type="range" step=0.01 min=0 max=1 id="alpha" oninput="$('#alphaVal').html(($('#alpha').val()*100).toFixed(0)+'%');">
+                        <span id="alphaVal"></span>
                         <br>
                     </div>
 
@@ -291,17 +293,17 @@
                     </div>
                     <br>
                     <span class="small-button" onclick="importTrigger()" style="width:150px;">
-                        <i class="fas fa-upload"></i> Import Config
+                        <i class="fas fa-upload"></i> Import Theme
                     </span>
                     <span class="small-button" onclick="exportConfig()" style="width:150px; margin-left: 20px;">
-                        <i class="fas fa-download"></i> Export Config
+                        <i class="fas fa-download"></i> Export Theme
                     </span>
                     <input type="file" id="import-theme-button" style="display: none;" accept=".json" onchange="importConfig()">
                 </div>
             </div>
             <div class="modal-footer" style="height: 61px;">
                 <a id="version-info" href="https://github.com/the404devs/404-start"></a>
-                <span class="button" onclick="saveToLS()" id="config-save-button">
+                <span class="button" onclick="saveToLS(true)" id="config-save-button">
                     <i class="fa fa-save"></i> Save Config
                 </span>
             </div>

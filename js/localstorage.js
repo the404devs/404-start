@@ -1,7 +1,9 @@
 let backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground"];
 let base64String = "";
+let dataVersion = 1;
+let minimumSupportedDataVersion = 0;
 
-let saveToLS = function() {
+let saveToLS = function(reload) {
     let userCSS = constructUserCSS();
     console.log("%cSaving user config...", "color:lightblue");
     let data = {
@@ -47,7 +49,8 @@ let saveToLS = function() {
             "invertXKCD": $("#invert-toggle").prop("checked"),
             "dateFormat": $("#date-format").val(),
             "timeFormat": $("#time-format").val()
-        }
+        },
+        "version": dataVersion
     };
 
     let success = false;
@@ -61,7 +64,9 @@ let saveToLS = function() {
 
     if (success) {
         console.log("%c" + "Saved!", "color:lightgreen");
-        loadFromLS();
+        if (reload) {
+            loadFromLS();
+        }
         hideModal();
     }
 
@@ -69,113 +74,107 @@ let saveToLS = function() {
 
 let loadFromLS = function() {
     let data = JSON.parse(localStorage.getItem("404CONFIG"));
-    if (data) {
-        $("head").children("style").each(function() {
-            $(this).remove();
-        });
-        $("head").append($("<style>").html(data.theme.colours));
-        $(".theme-val").each(function() {
-            $(this).val(styleVar($(this).attr("id")));
-        });
+    let saveAfterLoad = false;
 
-        $("#weather-code-1").val(data.weather.code1);
-        $("#weather-code-2").val(data.weather.code2);
-        $("#unit-selector").val(data.weather.units);
-        $("#weather-auto-refresh").prop("checked", data.weather.autoRefresh);
-        $('#weatherBoxMarginVal').html($('#weatherBoxMargin').val() + '%');
-
-        $("#link-name-1").val(data.links.link1.name);
-        $("#link-url-1").val(data.links.link1.url);
-        $("#link1").prop("href", data.links.link1.url).text(data.links.link1.name);
-
-        $("#link-name-2").val(data.links.link2.name);
-        $("#link-url-2").val(data.links.link2.url);
-        $("#link2").prop("href", data.links.link2.url).text(data.links.link2.name);
-
-        $("#link-name-3").val(data.links.link3.name);
-        $("#link-url-3").val(data.links.link3.url);
-        $("#link3").prop("href", data.links.link3.url).text(data.links.link3.name);
-
-        $("#link-name-4").val(data.links.link4.name);
-        $("#link-url-4").val(data.links.link4.url);
-        $("#link4").prop("href", data.links.link4.url).text(data.links.link4.name);
-
-        $("#link-name-5").val(data.links.link5.name);
-        $("#link-url-5").val(data.links.link5.url);
-        $("#link5").prop("href", data.links.link5.url).text(data.links.link5.name);
-
-        $("#link-name-6").val(data.links.link6.name);
-        $("#link-url-6").val(data.links.link6.url);
-        $("#link6").prop("href", data.links.link6.url).text(data.links.link6.name);
-
-        $("#show-link-box").prop("checked", data.links.show);
-        $("#update-toggle").prop("checked", data.misc.updateCheck);
-        $("#xkcd-toggle").prop("checked", data.misc.showXKCD);
-        $("#invert-toggle").prop("checked", data.misc.invertXKCD);
-        $("#date-format").val(data.misc.dateFormat || "%W, %MMMM %d, %Y");
-        $("#time-format").val(data.misc.timeFormat || "%hh:%m:%s %a");
-
-        dateFormatString = data.misc.dateFormat || "%W, %MMMM %d, %Y";
-        timeFormatString = data.misc.timeFormat || "%hh:%m:%s %a";
-
-        if (data.links.show) {
-            $(".link-box").css("display", "block");
-            $("#xkcd-zone").css("top", "850px");
-        } else {
-            $(".link-box").css("display", "none");
-            $("#xkcd-zone").css("top", "450px");
-        }
-
-        if (data.misc.updateCheck) {
-            checkForUpdate(false);
-        }
-
-        if (data.weather.autoRefresh) {
-            function weatherRefresh() {
-                getWeatherInfo(data.weather.code1, data.weather.code2, data.weather.units);
-            }
-            setInterval(weatherRefresh, 600000);
-        }
-
-        if (data.misc.showXKCD) {
-            $("#xkcd-zone").css("display", "block");
-        } else {
-            console.log("%cXKCD disabled", "color:lightblue");
-            $("#xkcd-zone").css("display", "none");
-        }
-        if (data.misc.invertXKCD) {
-            $("#x-img").css("filter", "invert(1)");
-        } else {
-            $("#x-img").css("filter", "invert(0)");
-        }
-
-        getWeatherInfo(data.weather.code1, data.weather.code2, data.weather.units);
-        showLinkGroup(0);
-    } else {
+    if (!data) {
         console.log("%cNo config found, setting defaults.", "color:red");
-        // $("head").append($("<link>").attr({ "rel": "stylesheet", "href": "css/colours.css" }));
         $(".theme-val").each(function() {
-            // console.log($(this).attr("id"));
             $(this).val(styleVar($(this).attr("id")));
         });
-
-        $("#weather-code-1").val(6167865);
-        $("#weather-code-2").val(6077243);
-        $("#show-link-box").prop("checked", true);
-        $("#update-toggle").prop("checked", true);
-
-        getWeatherInfo(6167865, 6077243, "metric");
-        showLinkGroup(0);
-
-        function loadDefaultValues() {
-            $(".theme-val").each(function() {
-                // console.log($(this).attr("id"));
-                $(this).val(styleVar($(this).attr("id")));
-            });
-            saveToLS();
-        }
-        setTimeout(loadDefaultValues, 100);
+        saveAfterLoad = true;
+        saveToLS(false);
+        data = JSON.parse(localStorage.getItem("404CONFIG"));
     }
+
+    $("head").children("style").each(function() {
+        $(this).remove();
+    });
+    $("head").append($("<style>").html(data.theme.colours));
+
+    $(".theme-val").each(function() {
+        $(this).val(styleVar($(this).attr("id")));
+    });
+
+    $('#alphaVal').html(($('#alpha').val() * 100).toFixed(0) + '%');
+    $('#borderRadiusVal').html($('#borderRadius').val() + 'px');
+
+    $("#weather-code-1").val(data.weather.code1 || 6167865);
+    $("#weather-code-2").val(data.weather.code2 || 6077243);
+    $("#unit-selector").val(data.weather.units || "metric");
+    $("#weather-auto-refresh").prop("checked", data.weather.autoRefresh || false);
+    $('#weatherBoxMarginVal').html($('#weatherBoxMargin').val() + '%');
+
+    $("#link-name-1").val(data.links.link1.name);
+    $("#link-url-1").val(data.links.link1.url);
+    $("#link1").prop("href", data.links.link1.url).text(data.links.link1.name);
+
+    $("#link-name-2").val(data.links.link2.name);
+    $("#link-url-2").val(data.links.link2.url);
+    $("#link2").prop("href", data.links.link2.url).text(data.links.link2.name);
+
+    $("#link-name-3").val(data.links.link3.name);
+    $("#link-url-3").val(data.links.link3.url);
+    $("#link3").prop("href", data.links.link3.url).text(data.links.link3.name);
+
+    $("#link-name-4").val(data.links.link4.name);
+    $("#link-url-4").val(data.links.link4.url);
+    $("#link4").prop("href", data.links.link4.url).text(data.links.link4.name);
+
+    $("#link-name-5").val(data.links.link5.name);
+    $("#link-url-5").val(data.links.link5.url);
+    $("#link5").prop("href", data.links.link5.url).text(data.links.link5.name);
+
+    $("#link-name-6").val(data.links.link6.name);
+    $("#link-url-6").val(data.links.link6.url);
+    $("#link6").prop("href", data.links.link6.url).text(data.links.link6.name);
+
+    $("#show-link-box").prop("checked", data.links.show || false);
+    $("#update-toggle").prop("checked", data.misc.updateCheck || true);
+    $("#xkcd-toggle").prop("checked", data.misc.showXKCD || false);
+    $("#invert-toggle").prop("checked", data.misc.invertXKCD || false);
+    $("#date-format").val(data.misc.dateFormat || "%W, %MMMM %d, %Y");
+    $("#time-format").val(data.misc.timeFormat || "%hh:%m:%s %a");
+
+    dateFormatString = data.misc.dateFormat || "%W, %MMMM %d, %Y";
+    timeFormatString = data.misc.timeFormat || "%hh:%m:%s %a";
+
+    if (data.links.show) {
+        $(".link-box").css("display", "block");
+        $("#xkcd-zone").css("top", "850px");
+    } else {
+        $(".link-box").css("display", "none");
+        $("#xkcd-zone").css("top", "450px");
+    }
+
+    if (data.misc.updateCheck) {
+        checkForUpdate(false);
+    }
+
+    if (data.weather.autoRefresh) {
+        function weatherRefresh() {
+            getWeatherInfo(data.weather.code1, data.weather.code2, data.weather.units);
+        }
+        setInterval(weatherRefresh, 600000);
+    }
+
+    if (data.misc.showXKCD) {
+        $("#xkcd-zone").css("display", "block");
+    } else {
+        console.log("%cXKCD disabled", "color:lightblue");
+        $("#xkcd-zone").css("display", "none");
+    }
+    if (data.misc.invertXKCD) {
+        $("#x-img").css("filter", "invert(1)");
+    } else {
+        $("#x-img").css("filter", "invert(0)");
+    }
+
+    if (saveAfterLoad) {
+        saveToLS(false);
+    }
+
+    getWeatherInfo(data.weather.code1, data.weather.code2, data.weather.units);
+    showLinkGroup(0);
 
     function unblur() {
         $('html').css('filter', 'none');
@@ -190,7 +189,7 @@ let showLinkGroup = function() {
 }
 
 let constructUserCSS = function() {
-    console.log("%c" + "Constructing user CSS", "color:lightblue");
+    console.log("%c" + "Constructing user CSS...", "color:lightblue");
     let data = JSON.parse(localStorage.getItem("404CONFIG"));
     let userCSS = "* {";
     if ($("#backgroundImage").val() == "") {
@@ -199,10 +198,8 @@ let constructUserCSS = function() {
         userCSS += " --backgroundImage: url(data:image/jpg;base64," + base64String + ");";
     }
     $(".theme-val").each(function() {
-        // console.log($(this).attr("id"));
         userCSS += " --" + $(this).attr("id") + ": " + $(this).val();
         if (backgroundKeys.includes($(this).attr("id"))) {
-            // console.log("%c" + "background key", "color:red");
             let alpha = 255 * Number($("#alpha").val());
             userCSS += Math.round(alpha).toString(16);
         } else if ($(this).attr("id") == "borderRadius") {
@@ -221,9 +218,7 @@ function imageUploaded() {
 
     let reader = new FileReader();
     reader.onload = function() {
-        base64String = reader.result.replace("data:", "")
-            .replace(/^.+,/, "");
-        // console.log(base64String);
+        base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
     }
     reader.readAsDataURL(file);
 }
@@ -240,7 +235,7 @@ function styleVar(key) {
 }
 
 let exportConfig = function() {
-    saveToLS();
+    saveToLS(true);
     console.log("%c" + "Exporting config...", "color:lightblue");
     let themeJSON = localStorage.getItem("404CONFIG");
     let file = new Blob([themeJSON], { type: "application/json" });
@@ -268,6 +263,19 @@ let importConfig = function() {
         let oldData = JSON.parse(localStorage.getItem("404CONFIG"));
         try {
             let data = JSON.parse(reader.result);
+            let incomingDataVersion = data.version || 0; // assume 1 if no version is given
+            console.log("%c" + "Current data version: " + dataVersion, "color:lightblue");
+            console.log("%c" + "Minimum data version: " + minimumSupportedDataVersion, "color:lightblue");
+            console.log("%c" + "Incoming data version: " + incomingDataVersion, "color:lightblue");
+            if (minimumSupportedDataVersion > incomingDataVersion) {
+                console.log("%c" + "Incompatible theme: data version " + incomingDataVersion, "color:red");
+                alert("This configuration file is from an older version of 404 Start, and cannot be imported.");
+                return;
+            }
+            if (JSON.stringify(data) === JSON.stringify(oldData)) {
+                console.log("%c" + "No changes detected.", "color:lightblue");
+                return;
+            }
             localStorage.setItem("404CONFIG", JSON.stringify(data));
             console.log("%c" + "Theme import successful!", "color:green");
             loadFromLS();
@@ -280,6 +288,22 @@ let importConfig = function() {
         }
     }
     reader.readAsText(file);
+    $("#import-theme-button").val("");
+}
+
+function getDifference(a, b) {
+    var i = 0;
+    var j = 0;
+    var result = "";
+
+    while (j < b.length) {
+        if (a[i] != b[j] || i == a.length)
+            result += b[j];
+        else
+            i++;
+        j++;
+    }
+    return "b" + result + "a";
 }
 
 loadFromLS();
