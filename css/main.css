@@ -54,7 +54,7 @@ body {
 #header {
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    background-color: transparent;
+    background-color: var(--headerBackground);
     border-bottom: 1px solid var(--border);
     box-shadow: black 0px 2px 10px, black 0px -2px 10px;
     min-height: 100px;
@@ -67,7 +67,7 @@ body {
 }
 
 #time {
-    color: var(--headerTextForeground);
+    color: var(--headerForeground);
     font-family: "Gilroy";
     font-size: 5em;
     line-height: 0.8em;
@@ -76,7 +76,7 @@ body {
 }
 
 #date {
-    color: var(--headerTextForeground);
+    color: var(--headerForeground);
     font-family: "Gilroy Light";
     font-size: 1.5em;
     font-weight: bold;

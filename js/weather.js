@@ -3,12 +3,10 @@ let icons = new Skycons({ "color": "white" });
 function getWeatherInfo(code1, code2, units) {
     //TODO: reimplement windy icon based on wind speed
     // Windy threshold has been set as 20mph or ~32km/h
-    //TODO: add custom icons?
-    //TODO: weather alerts
-    //TODO: turn switch into function
-    //TODO: make someone post this on r/badcode
+
     // ac44343b90759cfe705813ff3a614fa5
     // c974b8da946cbf11c238f30fff7cbbd9
+
     // console.log("weather!");
     // return;
 
@@ -43,6 +41,7 @@ function getWeatherInfo(code1, code2, units) {
         $.getJSON(WeatherURL3, function(data) {
             if (data.current.wind_speed > 20) {
                 setIcon("w", "weather-icon-1");
+                data.current.weather[0].description += " and Windy";
             } else if (data.current.weather[0].description.includes("sleet")) {
                 setIcon("s", "weather-icon-1");
             } else {
@@ -91,6 +90,7 @@ function getWeatherInfo(code1, code2, units) {
         $.getJSON(WeatherURL4, function(data) {
             if (data.current.wind_speed > 20) {
                 setIcon("w", "weather-icon-2");
+                data.current.weather[0].description += " and Windy";
             } else if (data.current.weather[0].description.includes("sleet")) {
                 setIcon("s", "weather-icon-2");
             } else {

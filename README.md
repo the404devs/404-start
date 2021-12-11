@@ -62,8 +62,14 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 - Fixes and such.
     - Restores old config upon failed import of valid non-theme JSON, so we don't accidentally save garbage as our config.
     - More CSS fixes.
+    - Workaround for some Firefox-specific CSS issues.
 - Added `dataVersion` field to themes, future-proofing for breaking changes.
 - Optimized loading and saving of config from local storage.
+- Slider-ified some config values (`borderRadius`, `weatherBoxMargin`, `boxAlpha`, `headerAlpha`).
+- Can now change the background of the header (colour and transparency).
+- Moved around some of the config options to make more sense.
+- Made the update-checking more logical.
+
 
 ### *2.0.1 (12/10/2021)*
 ------------------------

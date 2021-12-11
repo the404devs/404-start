@@ -109,7 +109,7 @@
                 <div class="config-section" id="theme-settings">
                     <span class="section-head">Theme Settings</span>
                     <div class="config-subgroup">
-                        <span class="subsection-head">General Colours</span>
+                        <span class="subsection-head">General</span>
                         <br>
                         <label>Background:</label>
                         <input class="theme-val" type="color" id="background">
@@ -126,6 +126,27 @@
                         <label>Border Radius:</label>
                         <input class="theme-val" type="range" step=1 min=0 max=100 id="borderRadius" oninput="$('#borderRadiusVal').html($('#borderRadius').val()+'px');">
                         <span id="borderRadiusVal"></span>
+                        <br>
+                        <label>Box Opacity:</label>
+                        <input class="theme-val" type="range" step=0.01 min=0 max=1 id="boxAlpha" oninput="$('#boxAlphaVal').html(($('#boxAlpha').val()*100).toFixed(0)+'%');">
+                        <span id="boxAlphaVal"></span>
+                        <br>
+                        <label>Background Image:</label>
+                        <input type="file" id="backgroundImage" onchange="imageUploaded()" style="margin-top: 5px;">
+                        <br>
+                    </div>
+                    <div class="config-subgroup">
+                        <span class="subsection-head">Header (Date/Time)</span>
+                        <br>
+                        <label>Header Foreground:</label>
+                        <input class="theme-val" type="color" id="headerForeground">
+                        <br>
+                        <label>Header Background:</label>
+                        <input class="theme-val" type="color" id="headerBackground">
+                        <br>
+                        <label>Header Opacity:</label>
+                        <input class="theme-val" type="range" step=0.01 min=0 max=1 id="headerAlpha" oninput="$('#headerAlphaVal').html(($('#headerAlpha').val()*100).toFixed(0)+'%');">
+                        <span id="headerAlphaVal"></span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Weather Boxes</span>
@@ -170,20 +191,7 @@
                         <label>Background:</label>
                         <input class="theme-val" type="color" id="linkBoxBackground">
                     </div>
-                    <div class="config-subgroup">
-                        <span class="subsection-head">Others</span>
-                        <br>
-                        <label>Header Foreground:</label>
-                        <input class="theme-val" type="color" id="headerTextForeground">
-                        <br>
-                        <label>Background Image:</label>
-                        <input type="file" id="backgroundImage" onchange="imageUploaded()">
-                        <br>
-                        <label>Box Opacity:</label>
-                        <input class="theme-val" type="range" step=0.01 min=0 max=1 id="alpha" oninput="$('#alphaVal').html(($('#alpha').val()*100).toFixed(0)+'%');">
-                        <span id="alphaVal"></span>
-                        <br>
-                    </div>
+
 
                     <br>
                     <span style="font-size:14px">New theme settings will be applied once you save.</span>
@@ -285,7 +293,7 @@
                     <input type="checkbox" id="invert-toggle">
                     <br>
                     <div id="local-settings">
-                        <label style="width: 136px!important;">Update check at start:</label>
+                        <label style="width: 140px!important;">Update check on start:</label>
                         <input type="checkbox" id="update-toggle">
                         <span class="small-button" onclick="checkForUpdate(true)" style="width:120px; margin-left: 20px;">
                             <i class="fas fa-redo"></i> Check Now

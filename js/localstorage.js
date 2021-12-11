@@ -1,4 +1,4 @@
-let backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground"];
+let backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground", "headerBackground"];
 let base64String = "";
 let dataVersion = 1;
 let minimumSupportedDataVersion = 0;
@@ -95,7 +95,8 @@ let loadFromLS = function() {
         $(this).val(styleVar($(this).attr("id")));
     });
 
-    $('#alphaVal').html(($('#alpha').val() * 100).toFixed(0) + '%');
+    $('#boxAlphaVal').html(($('#boxAlpha').val() * 100).toFixed(0) + '%');
+    $('#headerAlphaVal').html(($('#headerAlpha').val() * 100).toFixed(0) + '%');
     $('#borderRadiusVal').html($('#borderRadius').val() + 'px');
 
     $("#weather-code-1").val(data.weather.code1 || 6167865);
@@ -129,7 +130,7 @@ let loadFromLS = function() {
     $("#link6").prop("href", data.links.link6.url).text(data.links.link6.name);
 
     $("#show-link-box").prop("checked", data.links.show || false);
-    $("#update-toggle").prop("checked", data.misc.updateCheck || true);
+    $("#update-toggle").prop("checked", data.misc.updateCheck || false);
     $("#xkcd-toggle").prop("checked", data.misc.showXKCD || false);
     $("#invert-toggle").prop("checked", data.misc.invertXKCD || false);
     $("#date-format").val(data.misc.dateFormat || "%W, %MMMM %d, %Y");
@@ -199,8 +200,11 @@ let constructUserCSS = function() {
     }
     $(".theme-val").each(function() {
         userCSS += " --" + $(this).attr("id") + ": " + $(this).val();
-        if (backgroundKeys.includes($(this).attr("id"))) {
-            let alpha = 255 * Number($("#alpha").val());
+        if ($(this).attr("id") == "headerBackground") {
+            let alpha = 255 * Number($("#headerAlpha").val());
+            userCSS += Math.round(alpha).toString(16);
+        } else if (backgroundKeys.includes($(this).attr("id"))) {
+            let alpha = 255 * Number($("#boxAlpha").val());
             userCSS += Math.round(alpha).toString(16);
         } else if ($(this).attr("id") == "borderRadius") {
             userCSS += "px";
@@ -291,22 +295,21 @@ let importConfig = function() {
     $("#import-theme-button").val("");
 }
 
-function getDifference(a, b) {
-    var i = 0;
-    var j = 0;
-    var result = "";
-
-    while (j < b.length) {
-        if (a[i] != b[j] || i == a.length)
-            result += b[j];
-        else
-            i++;
-        j++;
+function firefoxCheck() {
+    // hacky fixes for some Firefox oddities
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        $("#close").css("margin-left", "236px");
+        $("input[type=range]").css("margin-bottom", "0px");
+        $("input[type=range]").css("margin-top", "0px");
+        $("input[type=range]").css("transform", "translateY(3.5px)");
+        $(".small-button i").css("vertical-align", "top");
+        $(".alert-button").css("margin-top", "95px");
+        $(".alert-button").css("margin-left", "-17px");
     }
-    return "b" + result + "a";
 }
 
 loadFromLS();
+firefoxCheck();
 
 // Event listener to monitor changes made in other tabs/windows
 // This prevents desyncs
