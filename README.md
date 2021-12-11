@@ -52,7 +52,7 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
-### *2.0.2 (12/11/2021)*
+### *2.0.2 (Tentative - 12/11/2021)*
 ------------------------
 - Can now change the spacing between the weather boxes (thanks mom).
 - Hacky fix to use the unused 'sleet' and 'windy' weather icons.
@@ -69,6 +69,7 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 - Can now change the background of the header (colour and transparency).
 - Moved around some of the config options to make more sense.
 - Made the update-checking more logical.
+- We only monitor the `404CONFIG` key in local storage for changes, not the entire local storage.
 
 
 ### *2.0.1 (12/10/2021)*

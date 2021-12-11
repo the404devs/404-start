@@ -73,6 +73,7 @@ let saveToLS = function(reload) {
 };
 
 let loadFromLS = function() {
+    console.log("%c" + "Loading config...", "color:lightblue");
     let data = JSON.parse(localStorage.getItem("404CONFIG"));
     let saveAfterLoad = false;
 
@@ -152,6 +153,8 @@ let loadFromLS = function() {
     }
 
     if (data.weather.autoRefresh) {
+        console.log("%cWeather auto-refresh enabled.", "color:lightgreen");
+
         function weatherRefresh() {
             getWeatherInfo(data.weather.code1, data.weather.code2, data.weather.units);
         }
@@ -314,5 +317,8 @@ firefoxCheck();
 // Event listener to monitor changes made in other tabs/windows
 // This prevents desyncs
 window.addEventListener('storage', function(event) {
-    loadFromLS();
+    if (event.key == "404CONFIG") {
+        console.log("%c" + "Storage event detected.", "color:lightblue");
+        loadFromLS();
+    }
 });

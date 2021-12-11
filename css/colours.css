@@ -12,9 +12,9 @@
     --backgroundImagePositionX: 0%;
     /*  */
     /* HEADER */
-    --headerForeground: #f5f5f5;
-    --headerBackground: #11111100;
     --headerAlpha: 0;
+    --headerBackground: #11111100;
+    --headerForeground: #f5f5f5;
     /*  */
     /* WEATHER */
     --weatherBoxBackground: #11111180;
