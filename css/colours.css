@@ -1,5 +1,4 @@
 * {
-    /*  */
     /* GENERIC */
     --background: #11111180;
     --backgroundImage: url(../img/ladybug1.png);
@@ -8,28 +7,21 @@
     --boxAlpha: 0.5;
     --foreground: #f5f5f5;
     --highlight: #e699cd;
-    /* Currently unexposed */
-    --backgroundImagePositionX: 0%;
-    /*  */
     /* HEADER */
     --headerAlpha: 0;
     --headerBackground: #11111100;
     --headerForeground: #f5f5f5;
-    /*  */
     /* WEATHER */
     --weatherBoxBackground: #11111180;
     --weatherBoxForeground: #f5f5f5;
     --weatherBoxMargin: 25%;
-    /*  */
     /* MODAL */
     --modalBackground: #11111180;
     --modalForeground: #f5f5f5;
-    /*  */
     /* BUTTONS */
     --buttonBackground: #11111180;
     --buttonForeground: #f5f5f5;
     --buttonHighlight: #800080;
-    /*  */
     /* LINKS */
     --linkBoxBackground: #11111180;
     --linkBoxForeground: #a7e7ff;

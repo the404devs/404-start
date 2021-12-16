@@ -72,6 +72,9 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 - We only monitor the `404CONFIG` key in local storage for changes, not the entire local storage.
 - Refactored `weather.js`, to make it easier to manage, and possibly more efficient.
 - Wind direction is now shown correctly, instead the opposite of where the wind is blowing (See [v1.0.4](#104-04262021)).
+- JS (mostly) documented.
+- Moved fonts to `css/fonts/` subdirectory.
+- Removed unused `css/sample-colors.css` file.
 
 
 ### *2.0.1 (12/10/2021)*

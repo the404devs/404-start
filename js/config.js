@@ -1,4 +1,4 @@
-var config = {
+const config = {
     "ExtPath": "file:///home/the404/homepage/index.html",
     "VER": "v2.0.2",
     "DATE": "(12/17/2021)",

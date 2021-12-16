@@ -1,27 +1,29 @@
-let time = setInterval(timer, 1000);
-let dateFormatString = "";
-let timeFormatString = "";
+setInterval(timer, 1000); // Update the time every second
+let dateFormatString = ""; // These will hold the user's preferred date/time formats,
+let timeFormatString = ""; // and are set in localstorage.js
 
 function timer() {
-    let d = new Date();
-    let userFormattedDate = dateFormatter(d);
-    let userFormattedTime = timeFormatter(d);
-    $('#date').html(userFormattedDate);
+    const d = new Date();
+    const userFormattedDate = dateFormatter(d); // Get the date and time in the user's preferred formats
+    const userFormattedTime = timeFormatter(d);
+    $('#date').html(userFormattedDate); // Fill the date and time in the DOM
     $('#time').html(userFormattedTime);
 }
 
 function dateFormatter(d) {
-    let yearFull = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-    let yearShort = new Intl.DateTimeFormat('en', { year: '2-digit' }).format(d);
-    let monthWordShort = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-    let monthWordLong = new Intl.DateTimeFormat('en', { month: 'long' }).format(d);
-    let monthNumericalShort = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(d);
-    let monthNumericalLong = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
-    let dayLong = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-    let dayShort = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(d);
-    let weekdayLong = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(d);
-    let weekdayShort = new Intl.DateTimeFormat('en', { weekday: 'short' }).format(d);
+    // I hate this so much, but it's the only way (?)
+    const yearFull = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+    const yearShort = new Intl.DateTimeFormat('en', { year: '2-digit' }).format(d);
+    const monthWordShort = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+    const monthWordLong = new Intl.DateTimeFormat('en', { month: 'long' }).format(d);
+    const monthNumericalShort = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(d);
+    const monthNumericalLong = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
+    const dayLong = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+    const dayShort = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(d);
+    const weekdayLong = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(d);
+    const weekdayShort = new Intl.DateTimeFormat('en', { weekday: 'short' }).format(d);
 
+    // Substitute the placeholders with the values they represent
     let userFormattedDate = dateFormatString
         .replace("%MMMM", monthWordLong)
         .replace("%MMM", monthWordShort)
@@ -37,16 +39,18 @@ function dateFormatter(d) {
 }
 
 function timeFormatter(d) {
-    let hour24 = new Intl.DateTimeFormat('en-CA', { hour: 'numeric', hourCycle: 'h23' }).format(d);
-    let hourShort = new Intl.DateTimeFormat('en', { hour: 'numeric', hour12: true }).format(d).replace(/\D/g, '');
-    let hourLong = new Intl.DateTimeFormat('en', { hour: '2-digit', hour12: true }).format(d).replace(/\D/g, '');
+    // Guess what? I still hate this.
+    const hour24 = new Intl.DateTimeFormat('en-CA', { hour: 'numeric', hourCycle: 'h23' }).format(d);
+    const hourShort = new Intl.DateTimeFormat('en', { hour: 'numeric', hour12: true }).format(d).replace(/\D/g, '');
+    const hourLong = new Intl.DateTimeFormat('en', { hour: '2-digit', hour12: true }).format(d).replace(/\D/g, '');
     let minute = new Intl.DateTimeFormat('en', { minute: 'numeric' }).format(d);
     let second = new Intl.DateTimeFormat('en', { second: 'numeric' }).format(d);
-    let ampm = new Intl.DateTimeFormat('en', { hour: 'numeric', hour12: true }).format(d).replace(/\d/g, '');
+    const ampm = new Intl.DateTimeFormat('en', { hour: 'numeric', hour12: true }).format(d).replace(/\d/g, '');
 
     minute = ('0' + minute).slice(-2); //Workaround for the lack of leading zeros 
     second = ('0' + second).slice(-2); //Maybe I'm just dumb
 
+    // Substitute the placeholders with the values they represent
     let userFormattedTime = timeFormatString
         .replace("%hhh", hourLong)
         .replace("%hh", hourShort)
@@ -57,7 +61,8 @@ function timeFormatter(d) {
     return userFormattedTime;
 }
 
-
+// There's a thing in the config that shows/hides the date/time keys and what they represent.
+// This function controls that thing. Wow.
 function toggleTimeDocs() {
     if ($('#time-docs').css('display') == 'none') {
         $('#time-docs').css('display', 'block');

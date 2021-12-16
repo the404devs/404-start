@@ -2,27 +2,27 @@
 
 @font-face {
     font-family: "Gilroy";
-    src: url("Gilroy-ExtraBold.otf");
+    src: url("font/Gilroy-ExtraBold.otf");
 }
 
 @font-face {
     font-family: "Gilroy Light";
-    src: url("Gilroy-Light.otf");
+    src: url("font/Gilroy-Light.otf");
 }
 
 @font-face {
     font-family: "Roboto";
-    src: url("Roboto-Regular.ttf");
+    src: url("font/Roboto-Regular.ttf");
 }
 
 @font-face {
     font-family: "Inconsolata";
-    src: url("Inconsolata-Regular.ttf");
+    src: url("font/Inconsolata-Regular.ttf");
 }
 
 @font-face {
     font-family: "Camaraderie";
-    src: url("Camaraderie.otf");
+    src: url("font/Camaraderie.otf");
 }
 
 
