@@ -52,7 +52,7 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
-### *2.0.2 (Tentative - 12/11/2021)*
+### *2.0.2 (Tentative - 12/17/2021)*
 ------------------------
 - Can now change the spacing between the weather boxes (thanks mom).
 - Hacky fix to use the unused 'sleet' and 'windy' weather icons.
@@ -70,6 +70,8 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 - Moved around some of the config options to make more sense.
 - Made the update-checking more logical.
 - We only monitor the `404CONFIG` key in local storage for changes, not the entire local storage.
+- Refactored `weather.js`, to make it easier to manage, and possibly more efficient.
+- Wind direction is now shown correctly, instead the opposite of where the wind is blowing (See [v1.0.4](#104-04262021)).
 
 
 ### *2.0.1 (12/10/2021)*
@@ -126,6 +128,7 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 ### *1.0.4 (04/26/2021)*
 ------------------------
 - Fixed a long-standing bug with wind direction arrows pointing in the opposite direction of where they should be.
+    - As of 2.0.2 (12/17/2021), I've realized it was actually fine to begin with, and this "fix" made it wrong, lmao.
 - Added hover text to buttons that don't have any text on them, like close buttons, etc.
 - Added a button to refresh weather info.
 - You can now press `Enter` in the password fields of the login & register forms to submit them.

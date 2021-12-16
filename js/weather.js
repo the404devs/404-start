@@ -1,132 +1,93 @@
 let icons = new Skycons({ "color": "white" });
+let apiKeys = ["ac44343b90759cfe705813ff3a614fa5", "c974b8da946cbf11c238f30fff7cbbd9"];
+//We dual-wield API keys, so we don't overload a single one. I'm a cheap bastard, what can I say?
 
 function getWeatherInfo(code1, code2, units) {
-    //TODO: reimplement windy icon based on wind speed
-    // Windy threshold has been set as 20mph or ~32km/h
+    // return; //for debugging
+    let weatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + code1 + "&appid=" + apiKeys[0] + "&units=" + units;
+    let weatherURL2 = "https://api.openweathermap.org/data/2.5/weather?id=" + code2 + "&appid=" + apiKeys[1] + "&units=" + units;
+    getOpenWeatherData(weatherURL1, "#weather-1", units);
+    getOpenWeatherData(weatherURL2, "#weather-2", units);
+}
 
-    // ac44343b90759cfe705813ff3a614fa5
-    // c974b8da946cbf11c238f30fff7cbbd9
-
-    // console.log("weather!");
-    // return;
-
-    // in the event that this thing becomes popular and the api keys become overloaded, just make a bunch more and randomly select one
-    let WeatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + code1 + "&appid=ac44343b90759cfe705813ff3a614fa5&units=" + units;
-    let WeatherURL2 = "https://api.openweathermap.org/data/2.5/weather?id=" + code2 + "&appid=ac44343b90759cfe705813ff3a614fa5&units=" + units;
-
-    let WeatherURL3;
-    let WeatherURL4;
-
+function getOpenWeatherData(URL, boxID, units) {
+    let oneCallURL = "";
     let tempUnit = "°C";
     let windUnit = "km/h"
-    let windScale = 3.6;
+    let windScale = 1.609344;
+    let alertModalID = boxID.replace('weather', 'alert-modal');
+    let iconID = boxID.replace('weather', 'weather-icon').replace('#', '');
     if (units == "imperial") {
         tempUnit = "°F";
         windUnit = "mph";
         windScale = 1;
     }
-
-    $.getJSON(WeatherURL1, function(data) {
+    $.getJSON(URL, function(data) {
+        // Yes, we call one API to get the lat/long of the city, and use that to call another API.
+        // Yes, its stupid as hell, but it works.
         let long = data.coord.lon;
         let lat = data.coord.lat;
         let name = data.name;
-        console.log("%cGetting weather for " + name + "...", "color:yellow;font-weight:bold;font-style:italic;");
-        $("#weather-name-1").text(name);
-        $("#alert-modal-1 .modal-header").text("Alerts for " + name);
-        $("#alert-modal-1 .modal-body").empty();
 
-        WeatherURL3 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
-        console.log(WeatherURL3);
+        console.log("%cGetting weather for " + name + "...", "color:yellow;font-weight:bold;font-style:italic;");
+        $(boxID + ' .weather-name').text(name);
+        $(alertModalID + " .modal-header").text("Alerts for " + name);
+        $(alertModalID + " .modal-body").empty();
+
+        let apiKey = "";
+        if (boxID == "#weather-1") {
+            apiKey = apiKeys[0];
+        } else if (boxID == "#weather-2") {
+            apiKey = apiKeys[1];
+        }
+        oneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=" + apiKey + "&exclude=minutely,hourly&units=" + units;
     }).then(() => {
-        $.getJSON(WeatherURL3, function(data) {
+        $.getJSON(oneCallURL, function(data) {
+            // Hacky workarounds for wind and sleet conditions
             if (data.current.wind_speed > 20) {
-                setIcon("w", "weather-icon-1");
-                data.current.weather[0].description += " and Windy";
+                setIcon("w", iconID);
+                data.current.weather[0].description += " & Windy";
             } else if (data.current.weather[0].description.includes("sleet")) {
-                setIcon("s", "weather-icon-1");
+                setIcon("s", iconID);
             } else {
-                setIcon(data.current.weather[0].icon, "weather-icon-1");
+                setIcon(data.current.weather[0].icon, iconID);
             }
             icons.play();
-            $('#weather-1 .temperature').html(data.current.temp + tempUnit);
-            $('#weather-1 .conditions').html(titleCase(data.current.weather[0].description));
+
+            $(boxID + ' .temperature').html(data.current.temp + tempUnit);
+            $(boxID + ' .conditions').html(titleCase(data.current.weather[0].description));
             if (data.current.feels_like) {
-                $('#weather-1 .feels-like').html("<b>Feels Like: </b>" + data.current.feels_like.toFixed(1) + tempUnit);
+                $(boxID + ' .feels-like').html("<b>Feels Like: </b>" + data.current.feels_like.toFixed(1) + tempUnit);
             } else {
-                $('#weather-1 .feels-like').remove();
+                $(boxID + ' .feels-like').remove();
             }
 
-            $('#weather-1 .high').html("<b>H/L: </b>" + data.daily[0].temp.max.toFixed(1) + tempUnit + "/" + data.daily[0].temp.min.toFixed(1) + tempUnit);
-            $('#weather-1 .wind').html("<b>Wind: </b>" + (data.current.wind_speed * windScale).toFixed(2) + windUnit + " <b class='arrow'>" + getDirection(data.current.wind_deg)) + "</b>";
+            $(boxID + ' .high').html("<b>H/L: </b>" + data.daily[0].temp.max.toFixed(1) + tempUnit + "/" + data.daily[0].temp.min.toFixed(1) + tempUnit);
+            $(boxID + ' .wind').html("<b>Wind: </b>" + (data.current.wind_speed * windScale).toFixed(2) + windUnit + " <b class='arrow'>" + getDirection(data.current.wind_deg)) + "</b>";
 
             if (data.alerts) {
-                $("#alerts-1").show();
+                $(boxID + " .alert-button").show();
                 data.alerts.forEach((alert) => {
                     let start = new Date(alert.start * 1000);
                     let end = new Date(alert.end * 1000);
-                    $("#alert-modal-1 .modal-body").append($("<h3>").html(titleCase(alert.event) + " Warning"));
-                    $("#alert-modal-1 .modal-body").append($("<p>").html("Issued: " + start.getFullYear() + "-" + ('0' + (start.getMonth() + 1)).slice(-2) + "-" + ('0' + start.getDate()).slice(-2) + " " + ('0' + start.getHours()).slice(-2) + ":" + ('0' + start.getMinutes()).slice(-2) + ":" + ('0' + start.getSeconds()).slice(-2)));
-                    $("#alert-modal-1 .modal-body").append($("<p>").html("Ending: " + end.getFullYear() + "-" + ('0' + (end.getMonth() + 1)).slice(-2) + "-" + ('0' + end.getDate()).slice(-2) + " " + ('0' + end.getHours()).slice(-2) + ":" + ('0' + end.getMinutes()).slice(-2) + ":" + ('0' + end.getSeconds()).slice(-2)));
-                    $("#alert-modal-1 .modal-body").append($("<p>").html(alert.description));
+                    $(alertModalID + " .modal-body").append($("<h3>").html(titleCase(alert.event) + " Warning"));
+                    $(alertModalID + " .modal-body").append($("<p>").html("Issued: " + alertDateFormatter(start)));
+                    $(alertModalID + " .modal-body").append($("<p>").html("Ending: " + alertDateFormatter(end)));
+                    $(alertModalID + " .modal-body").append($("<p>").html(alert.description));
                 });
             } else {
-                $("#alerts-1").hide();
+                $(boxID + " .alert-button").hide();
             }
-        });
-    });
-
-    $.getJSON(WeatherURL2, function(data) {
-        let long = data.coord.lon;
-        let lat = data.coord.lat;
-        let name = data.name;
-        console.log("%cGetting weather for " + name + "...", "color:yellow;font-weight:bold;font-style:italic;");
-        $("#weather-name-2").text(name);
-        $("#alert-modal-2 .modal-header").text("Alerts for " + name);
-        $("#alert-modal-2 .modal-body").empty();
-
-        WeatherURL4 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=c974b8da946cbf11c238f30fff7cbbd9&exclude=minutely,hourly&units=" + units;
-        console.log(WeatherURL4);
-    }).then(() => {
-        $.getJSON(WeatherURL4, function(data) {
-            if (data.current.wind_speed > 20) {
-                setIcon("w", "weather-icon-2");
-                data.current.weather[0].description += " and Windy";
-            } else if (data.current.weather[0].description.includes("sleet")) {
-                setIcon("s", "weather-icon-2");
-            } else {
-                setIcon(data.current.weather[0].icon, "weather-icon-2");
-            }
-            icons.play();
-            $('#weather-2 .temperature').html(data.current.temp + tempUnit);
-            $('#weather-2 .conditions').html(titleCase(data.current.weather[0].description));
-            if (data.current.feels_like) {
-                $('#weather-2 .feels-like').html("<b>Feels Like: </b>" + data.current.feels_like.toFixed(1) + tempUnit);
-            } else {
-                $('#weather-2 .feels-like').remove();
-            }
-
-            $('#weather-2 .high').html("<b>H/L: </b>" + data.daily[0].temp.max.toFixed(1) + tempUnit + "/" + data.daily[0].temp.min.toFixed(1) + tempUnit);
-            $('#weather-2 .wind').html("<b>Wind: </b>" + (data.current.wind_speed * windScale).toFixed(2) + windUnit + " <b class='arrow'>" + getDirection(data.current.wind_deg)) + "</b>";
-
-            if (data.alerts) {
-                $("#alerts-2").show();
-                data.alerts.forEach((alert) => {
-                    let start = new Date(alert.start * 1000);
-                    let end = new Date(alert.end * 1000);
-                    $("#alert-modal-2 .modal-body").append($("<h3>").html(titleCase(alert.event) + " Warning"));
-                    $("#alert-modal-2 .modal-body").append($("<p>").html("Issued: " + start.getFullYear() + "-" + ('0' + (start.getMonth() + 1)).slice(-2) + "-" + ('0' + start.getDate()).slice(-2) + " " + ('0' + start.getHours()).slice(-2) + ":" + ('0' + start.getMinutes()).slice(-2) + ":" + ('0' + start.getSeconds()).slice(-2)));
-                    $("#alert-modal-2 .modal-body").append($("<p>").html("Ending: " + end.getFullYear() + "-" + ('0' + (end.getMonth() + 1)).slice(-2) + "-" + ('0' + end.getDate()).slice(-2) + " " + ('0' + end.getHours()).slice(-2) + ":" + ('0' + end.getMinutes()).slice(-2) + ":" + ('0' + end.getSeconds()).slice(-2)));
-                    $("#alert-modal-2 .modal-body").append($("<p>").html(alert.description));
-                });
-            } else {
-                $("#alerts-2").hide();
-            }
-            setTimeout(function() { icons.color = $('.weather-container').css('color') }, 0);
         });
     });
 }
 
-let getJSON = function(url, callback) {
+function alertDateFormatter(date) {
+    // awful one-liner
+    return date.getFullYear() + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + ('0' + date.getDate()).slice(-2) + " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2) + ":" + ('0' + date.getSeconds()).slice(-2);
+}
+
+function getJSON(url, callback) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.responseType = 'json';
@@ -139,8 +100,7 @@ let getJSON = function(url, callback) {
         }
     };
     xhr.send();
-};
-
+}
 
 function getDirection(bearing) {
     let directions = [
@@ -155,7 +115,7 @@ function getDirection(bearing) {
         [337.5, 360]
     ];
 
-    let arrows = ["↑", "↗", "→", "↘", "↓", "↙", "←", "↖", "↑"];
+    let arrows = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘", "↓"];
     let x = 0;
     let arrow = "";
     directions.forEach(function(dir) {
