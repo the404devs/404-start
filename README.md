@@ -52,30 +52,32 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
-### *2.0.2 (Tentative - 12/17/2021)*
+### *2.0.2 (12/17/2021)*
 ------------------------
-- Can now change the spacing between the weather boxes (thanks mom).
+- Plenty of changes to customization and configuration options.
+    - Can now change the spacing between the weather boxes (thanks mom).
+    - Slider-ified some config values (`borderRadius`, `weatherBoxMargin`, `boxAlpha`, `headerAlpha`).
+    - Can now change the background of the header (colour and transparency).
+    - Moved around some of the config options to make more sense.
+    - Optimized loading and saving of config from local storage.
+    - Added `dataVersion` field to themes, future-proofing for breaking changes.
 - Hacky fix to use the unused 'sleet' and 'windy' weather icons.
     - 'Wind' icon is triggered by wind speeds over 30km/h, but I'm no meteorologist.
     - 'Sleet' icon is triggered by checking if the forecast description contains the word "sleet".
-- Added some documentation on using OpenWeather and finding city ID.
 - Fixes and such.
     - Restores old config upon failed import of valid non-theme JSON, so we don't accidentally save garbage as our config.
     - More CSS fixes.
     - Workaround for some Firefox-specific CSS issues.
-- Added `dataVersion` field to themes, future-proofing for breaking changes.
-- Optimized loading and saving of config from local storage.
-- Slider-ified some config values (`borderRadius`, `weatherBoxMargin`, `boxAlpha`, `headerAlpha`).
-- Can now change the background of the header (colour and transparency).
-- Moved around some of the config options to make more sense.
 - Made the update-checking more logical.
+    - Automatic update checks only happen once per session, not every time the page is loaded (Fix for [#3](/../../issues/3)).
 - We only monitor the `404CONFIG` key in local storage for changes, not the entire local storage.
 - Refactored `weather.js`, to make it easier to manage, and possibly more efficient.
-- Wind direction is now shown correctly, instead the opposite of where the wind is blowing (See [v1.0.4](#104-04262021)).
+    - Wind direction is now shown correctly, instead the opposite of where the wind is blowing (See [v1.0.4](#104-04262021)).
+    - Wind speed is also shown correctly, because math is hard.
+    - Added some documentation on using OpenWeather and finding city ID.
 - JS (mostly) documented.
 - Moved fonts to `css/fonts/` subdirectory.
 - Removed unused `css/sample-colors.css` file.
-
 
 ### *2.0.1 (12/10/2021)*
 ------------------------

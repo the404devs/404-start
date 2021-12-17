@@ -174,7 +174,14 @@ function loadFromLS() {
 
     // If the user has indicated to check for updates at startup, do so.
     if (data.misc.updateCheck) {
-        checkForUpdate(false);
+        if (sessionStorage.getItem("404UPDATED") === "true") {
+            // If the user has already checked for updates, don't do it again.
+            console.log("%cAlready checked for updates, not checking again this session.", "color:red");
+        } else {
+            // Check for updates.
+            sessionStorage.setItem("404UPDATED", "true");
+            checkForUpdate(false);
+        }
     }
 
     // If the user has indicated to auto-refresh the weather, do so at a 10-minute interval.

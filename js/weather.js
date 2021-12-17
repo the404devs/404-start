@@ -1,6 +1,7 @@
 const icons = new Skycons({ "color": "white" });
 const apiKeys = ["ac44343b90759cfe705813ff3a614fa5", "c974b8da946cbf11c238f30fff7cbbd9"];
-//We dual-wield API keys, so we don't overload a single one. I'm a cheap bastard, what can I say?
+// We dual-wield API keys, so we don't overload a single one. I'm a cheap bastard, what can I say?
+// If they start hitting limits, I'll just add more keys, lol.
 
 // Initial weather-getting function.
 function getWeatherInfo(code1, code2, units) {
