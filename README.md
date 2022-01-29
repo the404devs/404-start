@@ -5,11 +5,12 @@ A very customizable homepage that is in the process of being rewritten.
 
 [Setup (Advanced)](#setup-advanced)
 
-[Experimental New Tab Page (Chrome Extension)](#experimental-new-tab-page-chrome-extension)
-
 [OpenWeather API](#openweather-api)
 
 [Changelog](#changelog)
+
+[Experimental New Tab Page (Chrome Extension)](#experimental-new-tab-page-chrome-extension)
+
 
 
 ![alt text](img/screen2.png "screenshot 1")
@@ -22,22 +23,7 @@ Head over to the [Releases page](https://github.com/the404devs/404-start/release
 
 Extract the .zip file to your preferred location, and open `index.html` in your browser. Once you set the URL of this page, you're all set!
 
-## Experimental New Tab Page (Chrome Extension)
-*Only supported when 404-Start is a local html file (advanced setup)*
 
-I'm currently working on a Chrome extension that will make this start page your new tab page as well. This feature is still experimental. You've been warned.
-
-In `js/config.js`, change the `ExtPath` variable to the path of `index.html` (You can just copy the url when on the homepage, the 'file://' prefix is required). This path is where the extension redirects the browser upon the creation of a new tab.
-
-To enable the extension, perform the following steps:
-- Head over to Chrome's extension settings page **chrome://extensions**.
-- Enable "Developer Mode" with the toggle in the top-right corner.
-- Hit the "Load Unpacked" button that appears.
-- Choose the base directory of the homepage (the one containing `index.html`).
-- Success! It should be working now.
-
-- Once the extension is installed, you won't need to update it again, unless explicitly mentioned in the changelog.
-- When you update 404-Start, you'll need to set the `ExtPath` variable again.
 
 ## OpenWeather API
 404-Start uses the [OpenWeatherMap](https://openweathermap.org/) API to get weather information. When configuring the weather display, you'll need to provide the ID of the town/city you want to display.
@@ -51,6 +37,13 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 
 ## Changelog
+
+### *2.0.3 (01/28/2022)*
+------------------------
+- Theme properties now have a short description when hovering over them.
+- CSS property fixes, some elements were using the wrong theme colours.
+- User is now prompted to enter a name for the theme when exporting (Default is still the timestamp).
+- File name is now displayed in messages related to theme importing.
 
 ### *2.0.2 (12/17/2021)*
 ------------------------
@@ -246,3 +239,22 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 -----------------------
 - Initial version
 - Added weather display using DarkSky API and Skycons.
+
+
+----------------------------------------------------------------------------------------------------------------------
+## Experimental New Tab Page (Chrome Extension)
+*Only supported when 404-Start is a local html file (advanced setup)*
+
+I'm currently working on a Chrome extension that will make this start page your new tab page as well. This feature is still experimental. You've been warned.
+
+In `js/config.js`, change the `ExtPath` variable to the path of `index.html` (You can just copy the url when on the homepage, the 'file://' prefix is required). This path is where the extension redirects the browser upon the creation of a new tab.
+
+To enable the extension, perform the following steps:
+- Head over to Chrome's extension settings page **chrome://extensions**.
+- Enable "Developer Mode" with the toggle in the top-right corner.
+- Hit the "Load Unpacked" button that appears.
+- Choose the base directory of the homepage (the one containing `index.html`).
+- Success! It should be working now.
+
+- Once the extension is installed, you won't need to update it again, unless explicitly mentioned in the changelog.
+- When you update 404-Start, you'll need to set the `ExtPath` variable again.

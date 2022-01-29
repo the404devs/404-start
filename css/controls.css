@@ -159,7 +159,7 @@ label {
 }
 
 #version-info {
-    color: var(--foreground);
+    color: var(--modalForeground);
     font-family: "Gilroy";
     height: 40px;
     left: 0;

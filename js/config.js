@@ -1,7 +1,7 @@
 const config = {
     "ExtPath": "file:///home/the404/homepage/index.html",
-    "VER": "v2.0.2",
-    "DATE": "(12/17/2021)",
+    "VER": "v2.0.3",
+    "DATE": "(01/29/2022)",
     "AUTHOR": "Owen Bowden"
 };
 // DON'T FORGET TO CHANGE THE VER FILE TOO

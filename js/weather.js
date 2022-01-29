@@ -21,7 +21,7 @@ function getOpenWeatherData(URL, boxID, units) {
     let windUnit = "km/h" // Wind defaults to kilometers per hour.
     let windScale = 3.6; // OpenWeather gives wind speeds in metres per second, this is our multiplier to convert to km/h.
     const alertModalID = boxID.replace('weather', 'alert-modal'); // We will need the ID of the alert modal for each weather box.
-    const iconID = boxID.replace('weather', 'weather-icon').replace('#', ''); // We will need the ID of the weather icon for each weather box.
+    const iconID = boxID.replace('weather', 'weather-icon'); // We will need the ID of the weather icon for each weather box.
     if (units == "imperial") {
         // If the user has selected imperial units, we need to convert the temperature and wind speeds to imperial units.
         tempUnit = "°F";
@@ -59,6 +59,7 @@ function getOpenWeatherData(URL, boxID, units) {
         }
         // Finally, construct the URL for the second API call.
         oneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=" + apiKey + "&exclude=minutely,hourly&units=" + units;
+        // console.log("%cCalling " + oneCallURL + "...", "color:yellow;font-weight:bold;font-style:italic;");
     }).then(() => {
         // Make the second API call once the first wave of nonsense has finished.
         $.getJSON(oneCallURL, function(data) {
@@ -159,6 +160,7 @@ function titleCase(str) {
 
 // Used to determine the icon to use for the current conditions.
 function setIcon(icon, id) {
+    id = id.substring(1); // Remove the # from the ID.
     switch (icon) {
         case "01d":
             icons.set(id, Skycons.CLEAR_DAY);

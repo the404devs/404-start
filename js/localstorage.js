@@ -4,7 +4,7 @@ let base64String = ""; // Will hold the base64 string of an uploaded image
 // All theme keys representing the background colour of various elements
 const backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground", "headerBackground"];
 
-// Used to save current configuraiton to local storage.
+// Used to save current configuration to local storage.
 function saveToLS(reload) {
     // In some situations we don't want to reload the config, so that's what the reload parameter is for.
     console.log("%cSaving user config...", "color:lightblue");
@@ -67,6 +67,7 @@ function saveToLS(reload) {
         // Local storage can only hold so much data, so if it fails the culprit is usually the user attempting to set a particularly large image as the background.
         // Other things can probably make it fail, but if I haven't encountered them they don't exist.
         console.log("%c" + "Image too big!", "color:red");
+        console.log("%c" + "DOMException: " + DOMException, "color:red");
         alert("Image too big!\n\nPlease select a smaller image.\nThe max size is ~3MB.");
     }
 
@@ -83,7 +84,7 @@ function saveToLS(reload) {
 // Used to load the current config from local storage.
 function loadFromLS() {
     console.log("%c" + "Loading config...", "color:lightblue");
-    const data = JSON.parse(localStorage.getItem("404CONFIG")); // Grab the config from local storage.
+    let data = JSON.parse(localStorage.getItem("404CONFIG")); // Grab the config from local storage.
     // In some situations we will want to save immediately after loading, so this variable is used to determine if we should save.
     // Example: no config is found in local storage, so we want to save the default config.
     let saveAfterLoad = false;
@@ -304,13 +305,12 @@ function exportConfig() {
     // Create a link to download the file.
     const a = document.createElement("a");
     a.href = URL.createObjectURL(file);
-    a.download = "404-Start_" + Date.now() + ".json";
+    const fileName = prompt("Name of this theme?", "404-Start_" + Date.now()); // Ask the user for a name for the file, the default is the current timestamp.
+    a.download = fileName + ".json";
     document.body.appendChild(a); // Append the link to the body.
     a.click(); // Click it.
-    setTimeout(function() {
-        document.body.removeChild(a); //Remove it
-        URL.revokeObjectURL(a.href); //Get rid of the url to our file
-    }, 0);
+    document.body.removeChild(a); //Remove it
+    URL.revokeObjectURL(a.href); //Get rid of the url to our file
 }
 
 // Called when the user presses the "Import" button.
@@ -335,7 +335,7 @@ function importConfig() {
             if (minimumSupportedDataVersion > incomingDataVersion) {
                 // Theme is incompatible, show an error message and do nothing.
                 console.log("%c" + "Incompatible theme: data version " + incomingDataVersion, "color:red");
-                alert("This configuration file is from an older version of 404 Start, and cannot be imported.");
+                alert(file.name + " is from an older version of 404 Start, and cannot be imported.");
                 return;
             }
             // Check if the incoming theme is identical to the current theme.
@@ -348,11 +348,11 @@ function importConfig() {
             localStorage.setItem("404CONFIG", JSON.stringify(data));
             loadFromLS(); // Reload
             hideModal(); // Hide the modal.
-            console.log("%c" + "Theme import successful!", "color:green");
+            console.log("%c" + "Successfully imported " + file.name, "color:green");
         } catch (e) {
             // Something went horribly wrong, such as the user uploading JSON that isn't an actual theme, or just plain garbage.
-            console.log("%c" + "Error importing config.", "color:red");
-            alert("Error importing config.\nEnsure the file is valid JSON, and an actual theme config.\n\n" + e);
+            console.log("%c" + "Error importing " + file.name, "color:red");
+            alert("Error importing " + file.name + "\nEnsure the file is valid JSON, and an actual theme config.\n\n" + e);
             localStorage.setItem("404CONFIG", JSON.stringify(oldData)); // Restore the original config, in case it just got overwritten with god-knows-what.
             loadFromLS(); // Reload
         }
@@ -364,6 +364,7 @@ function importConfig() {
 // hacky fixes for some Firefox oddities
 function firefoxCheck() {
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        console.log("%c" + "Firefox detected, applying fixes...", "color:lightblue");
         $("#close").css("margin-left", "236px");
         $("input[type=range]").css("margin-bottom", "0px");
         $("input[type=range]").css("margin-top", "0px");
@@ -382,6 +383,6 @@ firefoxCheck();
 window.addEventListener('storage', function(event) {
     if (event.key == "404CONFIG") {
         console.log("%c" + "Storage event detected.", "color:lightblue");
-        loadFromLS();
+        // loadFromLS();
     }
 });

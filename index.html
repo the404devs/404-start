@@ -108,93 +108,125 @@
                 <hr>
                 <div class="config-section" id="theme-settings">
                     <span class="section-head">Theme Settings</span>
+                    <br>
+                    <span style="font-size:14px">Hover over a property's name for a description.</span>
                     <div class="config-subgroup">
                         <span class="subsection-head">General</span>
                         <br>
-                        <label>Background:</label>
+                        <label title="Background colour for: Inputs, textboxes, XKCD display.">Background:</label>
                         <input class="theme-val" type="color" id="background">
                         <br>
-                        <label>Foreground:</label>
+                        <label title="Text and border colour for: Inputs, textboxes, XKCD display.">Foreground:</label>
                         <input class="theme-val" type="color" id="foreground">
                         <br>
-                        <label>Highlight:</label>
+                        <label title="Accent colour on sliders, text selection colour.">Highlight:</label>
                         <input class="theme-val" type="color" id="highlight">
                         <br>
-                        <label>Border:</label>
+                        <label title="Colour of any and all borders.">Border:</label>
                         <input class="theme-val" type="color" id="border">
                         <br>
-                        <label>Border Radius:</label>
+                        <label title="How rounded the corners of elements are.">Border Radius:</label>
                         <input class="theme-val" type="range" step=1 min=0 max=100 id="borderRadius" oninput="$('#borderRadiusVal').html($('#borderRadius').val()+'px');">
                         <span id="borderRadiusVal"></span>
                         <br>
-                        <label>Box Opacity:</label>
+                        <label title="Adjust the transparency of elements.">Box Opacity:</label>
                         <input class="theme-val" type="range" step=0.01 min=0 max=1 id="boxAlpha" oninput="$('#boxAlphaVal').html(($('#boxAlpha').val()*100).toFixed(0)+'%');">
                         <span id="boxAlphaVal"></span>
                         <br>
-                        <label>Background Image:</label>
+                        <label title="Sets the background image.">Background Image:</label>
                         <input type="file" id="backgroundImage" onchange="imageUploaded()" style="margin-top: 5px;">
                         <br>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Header (Date/Time)</span>
                         <br>
-                        <label>Header Foreground:</label>
+                        <label title="text colour of the date/time text.">Header Foreground:</label>
                         <input class="theme-val" type="color" id="headerForeground">
                         <br>
-                        <label>Header Background:</label>
+                        <label title="Background colour of the top header bar.">Header Background:</label>
                         <input class="theme-val" type="color" id="headerBackground">
                         <br>
-                        <label>Header Opacity:</label>
+                        <label title="Adjust the transparency of the header bar.">Header Opacity:</label>
                         <input class="theme-val" type="range" step=0.01 min=0 max=1 id="headerAlpha" oninput="$('#headerAlphaVal').html(($('#headerAlpha').val()*100).toFixed(0)+'%');">
                         <span id="headerAlphaVal"></span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Weather Boxes</span>
                         <br>
-                        <label>Foreground:</label>
+                        <label title="Text colour of the weather boxes.">Foreground:</label>
                         <input class="theme-val" type="color" id="weatherBoxForeground">
                         <br>
-                        <label>Background:</label>
+                        <label title="Background colour of the weather boxes.">Background:</label>
                         <input class="theme-val" type="color" id="weatherBoxBackground">
                         <br>
-                        <label>Margin:</label>
-                        <input class="theme-val" type="range" step=1 min=0 max=90 id="weatherBoxMargin" oninput="$('#weatherBoxMarginVal').html($('#weatherBoxMargin').val()+'%');">
+                        <label title="Adjust the position of the weather boxes. (0%: Boxes at the sides, 50%: Boxes in the centre.)">Margin:</label>
+                        <input class="theme-val" type="range" step=1 min=0 max=50 id="weatherBoxMargin" oninput="$('#weatherBoxMarginVal').html($('#weatherBoxMargin').val()+'%');">
                         <span id="weatherBoxMarginVal"></span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Modal Dialogs</span>
                         <br>
-                        <label>Foreground:</label>
+                        <label title="Text colour in modal dialogs.">Foreground:</label>
                         <input class="theme-val" type="color" id="modalForeground">
                         <br>
-                        <label>Background:</label>
+                        <label title="Background color of modal dialogs.">Background:</label>
                         <input class="theme-val" type="color" id="modalBackground">
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Buttons</span>
                         <br>
-                        <label>Foreground:</label>
+                        <label title="Text/icon colour of buttons.">Foreground:</label>
                         <input class="theme-val" type="color" id="buttonForeground">
                         <br>
-                        <label>Background:</label>
+                        <label title="Background colour of buttons.">Background:</label>
                         <input class="theme-val" type="color" id="buttonBackground">
                         <br>
-                        <label>Highlight:</label>
+                        <label title="Button highlight colour (when hovered over).">Highlight:</label>
                         <input class="theme-val" type="color" id="buttonHighlight">
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Link Box</span>
                         <br>
-                        <label>Foreground:</label>
+                        <label title="Text colour of links.">Foreground:</label>
                         <input class="theme-val" type="color" id="linkBoxForeground">
                         <br>
-                        <label>Background:</label>
+                        <label title="Background colour of link box.">Background:</label>
                         <input class="theme-val" type="color" id="linkBoxBackground">
                     </div>
-
-
                     <br>
                     <span style="font-size:14px">New theme settings will be applied once you save.</span>
+                </div>
+                <hr>
+                <div class="config-section" id="date-settings">
+                    <span class="section-head">Date & Time Settings</span>
+                    <br>
+                    <label>Date Format: </label>
+                    <input type="text" id="date-format">
+                    <br>
+                    <label>Time Format: </label>
+                    <input type="text" id="time-format">
+                    <br>
+                    <span class="subsection-head" onclick="toggleTimeDocs()" id="time-docs-clickable">Show Format Documentation</span>
+                    <div class="config-subgroup" id="time-docs">
+                        <p><b><u>Date:</u></b></p>
+                        <p><b>%M</b> - Month (1-12), no leading 0.</p>
+                        <p><b>%MM</b> - Month (1-12), with leading 0.</p>
+                        <p><b>%MMM</b> - Month, abbreviated text ("Jan").</p>
+                        <p><b>%MMMM</b> - Month, full text ("January").</p>
+                        <p><b>%d</b> - Day (1-31), no leading 0.</p>
+                        <p><b>%D</b> - Day (1-31), with leading 0.</p>
+                        <p><b>%y</b> - Year, two digits ("21").</p>
+                        <p><b>%Y</b> - Year, full representation ("2021").</p>
+                        <p><b>%w</b> - Weekday, abbreviated ("Fri").</p>
+                        <p><b>%W</b> - Weekday, full representation ("Friday").</p>
+                        <p><b><u>Time:</u></b></p>
+                        <p><b>%h</b> - Hour, 24-hour format.</p>
+                        <p><b>%hh</b> - Hour, 12-hour format, no leading 0.</p>
+                        <p><b>%hhh</b> - Hour, 12-hour format, with leading 0.</p>
+                        <p><b>%m</b> - Minutes.</p>
+                        <p><b>%s</b> - Seconds.</p>
+                        <p><b>%a</b> - AM/PM indicator.</p>
+                    </div>
                 </div>
                 <hr>
                 <div class="config-section" id="link-settings">
@@ -258,34 +290,6 @@
                 <div class="config-section" id="misc-settings">
                     <span class="section-head">Additional Settings</span>
                     <br>
-                    <label>Date Format: </label>
-                    <input type="text" id="date-format">
-                    <br>
-                    <label>Time Format: </label>
-                    <input type="text" id="time-format">
-                    <br>
-                    <span class="subsection-head" onclick="toggleTimeDocs()" id="time-docs-clickable">Show Format Documentation</span>
-                    <div class="config-subgroup" id="time-docs">
-                        <p><b><u>Date:</u></b></p>
-                        <p><b>%M</b> - Month (1-12), no leading 0.</p>
-                        <p><b>%MM</b> - Month (1-12), with leading 0.</p>
-                        <p><b>%MMM</b> - Month, abbreviated text ("Jan").</p>
-                        <p><b>%MMMM</b> - Month, full text ("January").</p>
-                        <p><b>%d</b> - Day (1-31), no leading 0.</p>
-                        <p><b>%D</b> - Day (1-31), with leading 0.</p>
-                        <p><b>%y</b> - Year, two digits ("21").</p>
-                        <p><b>%Y</b> - Year, full representation ("2021").</p>
-                        <p><b>%w</b> - Weekday, abbreviated ("Fri").</p>
-                        <p><b>%W</b> - Weekday, full representation ("Friday").</p>
-                        <p><b><u>Time:</u></b></p>
-                        <p><b>%h</b> - Hour, 24-hour format.</p>
-                        <p><b>%hh</b> - Hour, 12-hour format, no leading 0.</p>
-                        <p><b>%hhh</b> - Hour, 12-hour format, with leading 0.</p>
-                        <p><b>%m</b> - Minutes.</p>
-                        <p><b>%s</b> - Seconds.</p>
-                        <p><b>%a</b> - AM/PM indicator.</p>
-                    </div>
-                    <br>
                     <label>XKCD comic: </label>
                     <input type="checkbox" id="xkcd-toggle">
                     <br>
@@ -330,7 +334,6 @@
         <img id="x-img">
     </div>
 
-    <!-- <script src="js/bg.js"></script> -->
     <script src="js/xkcd.js"></script>
     <script src="js/time.js"></script>
     <script src="js/modal.js"></script>
