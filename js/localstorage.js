@@ -306,11 +306,13 @@ function exportConfig() {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(file);
     const fileName = prompt("Name of this theme?", "404-Start_" + Date.now()); // Ask the user for a name for the file, the default is the current timestamp.
-    a.download = fileName + ".json";
-    document.body.appendChild(a); // Append the link to the body.
-    a.click(); // Click it.
-    document.body.removeChild(a); //Remove it
-    URL.revokeObjectURL(a.href); //Get rid of the url to our file
+    if (fileName) {
+        a.download = fileName + ".json";
+        document.body.appendChild(a); // Append the link to the body.
+        a.click(); // Click it.
+        document.body.removeChild(a); //Remove it
+        URL.revokeObjectURL(a.href); //Get rid of the url to our file
+    }
 }
 
 // Called when the user presses the "Import" button.

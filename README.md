@@ -1,5 +1,5 @@
 # 404-Start
-A very customizable homepage that is in the process of being rewritten.
+A very customizable homepage (more soon).
 
 [Setup (Normal)](#setup-normal)
 
@@ -21,7 +21,7 @@ Just set https://start.the404.nl/ as your homepage in your browser.
 ## Setup (Advanced)
 Head over to the [Releases page](https://github.com/the404devs/404-start/releases) and download the latest version (or just `git clone`).
 
-Extract the .zip file to your preferred location, and open `index.html` in your browser. Once you set the URL of this page, you're all set!
+Extract the .zip file to your preferred location, and open `index.html` in your browser. Once you set this as your homepage, you're all set!
 
 
 
@@ -37,6 +37,13 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 
 ## Changelog
+
+### *2.0.4 (03/18/2022)*
+------------------------
+- 3-Year Anniversary!
+- Bugfix: Clicking "Cancel" when prompted to name the exported theme file now closes the prompt and cancels the export, rather than exporting the theme as `null.json`.
+- Correct some weird phrasing in `README.md`
+- Migrate to Font Awesome 6
 
 ### *2.0.3 (01/28/2022)*
 ------------------------
