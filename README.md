@@ -38,6 +38,15 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
+### *2.0.5 (05/27/2022)*
+------------------------
+- Bugfix: FontAwesome icons no longer disappear upon saving settings.
+- Added a search bar below the weather display.
+    - Currently supports the following search engines: DuckDuckGo, Google, Bing.
+    - Can toggle showing the search bar, and whether it gets automatically focused when the page loads.
+- Bumped config data version to 2, due to the addition of a new config key `search`, containing values related to the new search bar.
+- Changed the way default values are filled in case of missing options due to an older config file.
+
 ### *2.0.4 (03/18/2022)*
 ------------------------
 - 3-Year Anniversary!

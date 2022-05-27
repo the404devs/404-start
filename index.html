@@ -6,8 +6,8 @@
     <title>404-Start</title>
     <script src="js/skycons.js"></script>
     <script src="js/jquery.min.js"></script>
-    <script src="js/font-awesome.js"></script>
-    <!-- <script src="https://kit.fontawesome.com/a79a931136.js" crossorigin="anonymous"></script> -->
+    <!--     <script src="js/font-awesome.js"></script> -->
+    <script src="https://kit.fontawesome.com/a79a931136.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/xkcd.css">
     <link rel="stylesheet" type="text/css" href="css/modals.css">
@@ -48,6 +48,12 @@
             <span class="feels-like"></span>
             <span class="high"></span>
             <span class="wind"></span>
+        </div>
+        <div class="search-container" id="search-bar">
+            <input type="text" id="search-input" placeholder="Search...">
+            <button id="search-button" onclick="search()">
+                <i class="fas fa-search"></i>
+            </button>
         </div>
         <div class="link-box" id="link-box-1">
             <a class="link" id="link1" href="https://www.example.com/">Text Here</a>
@@ -230,6 +236,23 @@
                     </div>
                 </div>
                 <hr>
+                <div class="config-section" id="search-settings">
+                    <span class="section-head">Search Settings</span>
+                    <br>
+                    <label>Show search bar: </label>
+                    <input type="checkbox" id="show-search-bar">
+                    <br>
+                    <label>Focus search bar: </label>
+                    <input type="checkbox" id="focus-search-bar">
+                    <br>
+                    <label>Search Engine: </label>
+                    <select id="search-engine-selector">
+                        <option value="duckduckgo">DuckDuckGo</option>
+                        <option value="google">Google</option>
+                        <option value="bing">Bing</option>
+                    </select>
+                </div>
+                <hr>
                 <div class="config-section" id="link-settings">
                     <span class="section-head">Link Settings</span>
                     <br>
@@ -339,6 +362,7 @@
     <script src="js/time.js"></script>
     <script src="js/modal.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/search.js"></script>
     <script src="js/update.js"></script>
     <script src="js/weather.js"></script>
     <script src="js/localstorage.js"></script>

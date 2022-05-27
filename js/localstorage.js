@@ -1,8 +1,57 @@
-const dataVersion = 1; // Current theme data version
+const dataVersion = 2; // Current theme data version
 const minimumSupportedDataVersion = 0; // Minimum supported data version, used to determine if an imported theme is compatible with the current version
 let base64String = ""; // Will hold the base64 string of an uploaded image
 // All theme keys representing the background colour of various elements
 const backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground", "headerBackground"];
+
+const defaults = {
+    "weather": {
+        "code1": 6167865,
+        "code2": 6077243,
+        "units": "metric",
+        "autoRefresh": false
+    },
+    "search": {
+        "show": true,
+        "engine": "duckduckgo",
+        "focus": true
+    },
+    "links": {
+        "show": true,
+        "link1": {
+            "name": "",
+            "url": "",
+        },
+        "link2": {
+            "name": "",
+            "url": "",
+        },
+        "link3": {
+            "name": "",
+            "url": "",
+        },
+        "link4": {
+            "name": "",
+            "url": "",
+        },
+        "link5": {
+            "name": "",
+            "url": "",
+        },
+        "link6": {
+            "name": "",
+            "url": "",
+        },
+        "show": false,
+    },
+    "misc": {
+        "updateCheck": false,
+        "showXKCD": false,
+        "invertXKCD": false,
+        "dateFormat": "%W, %MMMM %d, %Y",
+        "timeFormat": "%hh:%m:%s %a"
+    }
+};
 
 // Used to save current configuration to local storage.
 function saveToLS(reload) {
@@ -19,6 +68,11 @@ function saveToLS(reload) {
             "code2": $("#weather-code-2").val(),
             "units": $("#unit-selector").val(),
             "autoRefresh": $("#weather-auto-refresh").prop("checked")
+        },
+        "search": {
+            "engine": $("#search-engine-selector").val(),
+            "show": $("#show-search-bar").prop("checked"),
+            "focus": $("#focus-search-bar").prop("checked")
         },
         "links": {
             "link1": {
@@ -102,16 +156,18 @@ function loadFromLS() {
     }
 
     // Remove any existing style tags, such as ones containing the old CSS after the user makes a change to the theme.
-    $("head").children("style").each(function() {
+    $("head").children("#USER-STYLE").each(function() {
         $(this).remove();
     });
     // Pop in a new style tag with the current theme CSS.
-    $("head").append($("<style>").html(data.theme.colours));
+    $("head").append($("<style>").attr("id", "USER-STYLE").html(data.theme.colours));
 
     // Fill all the theme config inputs (colours, etc) with the values of the current theme.
     $(".theme-val").each(function() {
         $(this).val(styleVar($(this).attr("id")));
     });
+
+    fillMissingValues(data); // Fill in any missing values in the config.
 
     // Set the indicator labels for the slider-based inputs.
     $('#boxAlphaVal').html(($('#boxAlpha').val() * 100).toFixed(0) + '%');
@@ -120,10 +176,16 @@ function loadFromLS() {
     $('#weatherBoxMarginVal').html($('#weatherBoxMargin').val() + '%');
 
     // Fill the weather configuration keys with what's in local storage, or the default if unavailable.
-    $("#weather-code-1").val(data.weather.code1 || 6167865);
-    $("#weather-code-2").val(data.weather.code2 || 6077243);
-    $("#unit-selector").val(data.weather.units || "metric");
-    $("#weather-auto-refresh").prop("checked", data.weather.autoRefresh || false);
+    $("#weather-code-1").val(data.weather.code1);
+    $("#weather-code-2").val(data.weather.code2);
+    $("#unit-selector").val(data.weather.units);
+    $("#weather-auto-refresh").prop("checked", data.weather.autoRefresh);
+
+    // Fill the search engine selector with the current value, or the default if unavailable.
+    $("#search-engine-selector").val(data.search.engine);
+    // Set the search bar to be visible or not, depending on the current value.
+    $("#show-search-bar").prop("checked", data.search.show);
+    $("#focus-search-bar").prop("checked", data.search.focus);
 
     // Fill the link configuration keys with what's in local storage. Will be blank if unset, and that's ok.
     $("#link-name-1").val(data.links.link1.name);
@@ -151,15 +213,15 @@ function loadFromLS() {
     $("#link6").prop("href", data.links.link6.url).text(data.links.link6.name);
 
     // Set the checkboxes to the correct values, defaulting to false if no value exists.
-    $("#show-link-box").prop("checked", data.links.show || false);
-    $("#update-toggle").prop("checked", data.misc.updateCheck || false);
-    $("#xkcd-toggle").prop("checked", data.misc.showXKCD || false);
-    $("#invert-toggle").prop("checked", data.misc.invertXKCD || false);
+    $("#show-link-box").prop("checked", data.links.show);
+    $("#update-toggle").prop("checked", data.misc.updateCheck);
+    $("#xkcd-toggle").prop("checked", data.misc.showXKCD);
+    $("#invert-toggle").prop("checked", data.misc.invertXKCD);
 
     // Fill in the user's custom date formats, or the defaults if unavailable.
     // We set the global format strings in the process, used in time.js.   
-    dateFormatString = data.misc.dateFormat || "%W, %MMMM %d, %Y";
-    timeFormatString = data.misc.timeFormat || "%hh:%m:%s %a";
+    dateFormatString = data.misc.dateFormat;
+    timeFormatString = data.misc.timeFormat;
     $("#date-format").val(dateFormatString);
     $("#time-format").val(timeFormatString);
 
@@ -170,7 +232,20 @@ function loadFromLS() {
         $("#xkcd-zone").css("top", "850px");
     } else {
         $(".link-box").css("display", "none");
-        $("#xkcd-zone").css("top", "450px");
+        $("#xkcd-zone").css("top", "500px");
+    }
+
+    // Somehow, showing/hiding the search bar doesn't affect the layout all that bad.
+    if (data.search.show) {
+        $("#search-bar").css("display", "block");
+        $(".link-box").css("top", "500px");
+        if (data.search.focus) {
+            console.log("Search bar is focused.");
+            $("#search-input").focus();
+        }
+    } else {
+        $("#search-bar").css("display", "none");
+        $(".link-box").css("top", "450px");
     }
 
     // If the user has indicated to check for updates at startup, do so.
@@ -293,6 +368,23 @@ function styleVar(key) {
         return style.getPropertyValue("--" + key).trim().slice(0, -1);
     }
     return style.getPropertyValue("--" + key).trim();
+}
+
+// If the user has not set any values for a particular key, fill it with the default value.
+function fillMissingValues(data) {
+    for (let key in defaults) {
+        if (data[key] === undefined) {
+            console.log("%c" + "Filling in missing value for: " + key, "color:orange");
+            data[key] = defaults[key];
+        } else {
+            for (let subKey in defaults[key]) {
+                if (data[key][subKey] === undefined) {
+                    console.log("%c" + "Filling in missing value for: " + key + "." + subKey, "color:orange");
+                    data[key][subKey] = defaults[key][subKey];
+                }
+            }
+        }
+    }
 }
 
 // Function to export the user's settings to a JSON file.
