@@ -8,7 +8,8 @@ function search() {
     const query = $('#search-input').val();
     const engine = $('#search-engine-selector').val();
     const url = engineURLS[engine] + query;
-    window.open(url);
+    if (query && query.replace(/\s+/g, ''))
+        window.open(url);
 }
 
 $('#search-input').keypress(function(e) {
