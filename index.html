@@ -26,6 +26,9 @@
         <span class="config-button" id="config-open" onclick="showModal('#config-window')">
             <i class="fas fa-cog" title="Open Settings"></i>
         </span>
+        <span class="edit-button" id="edit-toggle" onclick="toggleEditMode()">
+            <i class="fa-solid fa-pen-ruler" title="Edit Layout"></i>
+        </span>
     </div>
 
     <div id="main">
@@ -55,7 +58,7 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
-        <div class="link-box" id="link-box-1">
+        <div class="link-box" id="link-box">
             <a class="link" id="link1" href="https://www.example.com/">Text Here</a>
             <br>
             <a class="link" id="link2" href="https://www.example.com/">Text Here</a>
@@ -240,10 +243,10 @@
                     <span class="section-head">Search Settings</span>
                     <br>
                     <label>Show search bar: </label>
-                    <input type="checkbox" id="show-search-bar">
+                    <input type="checkbox" id="show-search-bar" checked>
                     <br>
                     <label>Focus search bar: </label>
-                    <input type="checkbox" id="focus-search-bar">
+                    <input type="checkbox" id="focus-search-bar" checked>
                     <br>
                     <label>Search Engine: </label>
                     <select id="search-engine-selector">
@@ -320,6 +323,12 @@
                     <label>Invert XKCD: </label>
                     <input type="checkbox" id="invert-toggle">
                     <br>
+                    <br>
+                    <label>UI Customization: </label>
+                    <input type="checkbox" id="custom-position-toggle">
+                    <br>
+                    <span style="font-size:14px">When enabled, click the <i class="fa-solid fa-pen-ruler" title="Edit Layout"></i> button in the top left to customize the position of the different UI elements. This is an experimental feature.</span>
+                    <br>
                     <div id="local-settings">
                         <label style="width: 140px!important;">Update check on start:</label>
                         <input type="checkbox" id="update-toggle">
@@ -327,7 +336,6 @@
                             <i class="fas fa-redo"></i> Check Now
                         </span>
                     </div>
-                    <br>
                     <span class="small-button" onclick="importTrigger()" style="width:150px;">
                         <i class="fas fa-upload"></i> Import Theme
                     </span>
@@ -359,6 +367,7 @@
     </div>
 
     <script src="js/xkcd.js"></script>
+    <script src="js/edit.js"></script>
     <script src="js/time.js"></script>
     <script src="js/modal.js"></script>
     <script src="js/config.js"></script>

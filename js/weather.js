@@ -10,6 +10,7 @@ function getWeatherInfo(code1, code2, units) {
     const weatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + code1 + "&appid=" + apiKeys[0] + "&units=" + units;
     const weatherURL2 = "https://api.openweathermap.org/data/2.5/weather?id=" + code2 + "&appid=" + apiKeys[1] + "&units=" + units;
     // Grab weather data for the two cities.
+    // Comment out the following two lines to disable weather info (for debugging).
     getOpenWeatherData(weatherURL1, "#weather-1", units);
     getOpenWeatherData(weatherURL2, "#weather-2", units);
 }

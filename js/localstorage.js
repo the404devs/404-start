@@ -1,4 +1,4 @@
-const dataVersion = 2; // Current theme data version
+const dataVersion = 3; // Current theme data version
 const minimumSupportedDataVersion = 0; // Minimum supported data version, used to determine if an imported theme is compatible with the current version
 let base64String = ""; // Will hold the base64 string of an uploaded image
 // All theme keys representing the background colour of various elements
@@ -17,7 +17,7 @@ const defaults = {
         "focus": true
     },
     "links": {
-        "show": true,
+        "show": false,
         "link1": {
             "name": "",
             "url": "",
@@ -42,15 +42,37 @@ const defaults = {
             "name": "",
             "url": "",
         },
-        "show": false,
     },
     "misc": {
         "updateCheck": false,
         "showXKCD": false,
         "invertXKCD": false,
         "dateFormat": "%W, %MMMM %d, %Y",
-        "timeFormat": "%hh:%m:%s %a"
-    }
+        "timeFormat": "%hh:%m:%s %a",
+        "useCustomPositioning": false
+    },
+    "customLayout": {
+        "weather1": {
+            "x": "20%",
+            "y": "150px"
+        },
+        "weather2": {
+            "x": "70%",
+            "y": "150px"
+        },
+        "search": {
+            "x": "40%",
+            "y": "400px"
+        },
+        "link": {
+            "x": "45%",
+            "y": "450px"
+        },
+        "xkcd": {
+            "x": "45%",
+            "y": "500px"
+        }
+    },
 };
 
 // Used to save current configuration to local storage.
@@ -106,11 +128,12 @@ function saveToLS(reload) {
             "showXKCD": $("#xkcd-toggle").prop("checked"),
             "invertXKCD": $("#invert-toggle").prop("checked"),
             "dateFormat": $("#date-format").val(),
-            "timeFormat": $("#time-format").val()
+            "timeFormat": $("#time-format").val(),
+            "useCustomPositioning": $("#custom-position-toggle").prop("checked")
         },
+        "customLayout": currentCustomLayout,
         "version": dataVersion
     };
-
 
     let success = false;
     try {
@@ -217,6 +240,7 @@ function loadFromLS() {
     $("#update-toggle").prop("checked", data.misc.updateCheck);
     $("#xkcd-toggle").prop("checked", data.misc.showXKCD);
     $("#invert-toggle").prop("checked", data.misc.invertXKCD);
+    $("#custom-position-toggle").prop("checked", data.misc.useCustomPositioning);
 
     // Fill in the user's custom date formats, or the defaults if unavailable.
     // We set the global format strings in the process, used in time.js.   
@@ -237,13 +261,15 @@ function loadFromLS() {
 
     // Somehow, showing/hiding the search bar doesn't affect the layout all that bad.
     if (data.search.show) {
-        $("#search-bar").css("display", "block");
+        console.log("%cSearch bar is visible.", "color:green");
+        $("#search-bar").css("display", "flex");
         $(".link-box").css("top", "500px");
         if (data.search.focus) {
             console.log("Search bar is focused.");
             $("#search-input").focus();
         }
     } else {
+        console.log("%cSearch bar is hidden.", "color:red");
         $("#search-bar").css("display", "none");
         $(".link-box").css("top", "450px");
     }
@@ -282,6 +308,15 @@ function loadFromLS() {
         $("#x-img").css("filter", "invert(1)");
     } else {
         $("#x-img").css("filter", "invert(0)");
+    }
+
+    // If the user has indicated to use custom positioning, do so.
+    currentCustomLayout = data.customLayout;
+    if (data.misc.useCustomPositioning) {
+        $("#edit-toggle").css("display", "block");
+        setCustomLayout(currentCustomLayout);
+    } else {
+        $("#edit-toggle").css("display", "none");
     }
 
     // If we should be saving config because this is the first time, do so.
@@ -376,11 +411,13 @@ function fillMissingValues(data) {
         if (data[key] === undefined) {
             console.log("%c" + "Filling in missing value for: " + key, "color:orange");
             data[key] = defaults[key];
+            console.log("Value filled in: ", data[key]);
         } else {
             for (let subKey in defaults[key]) {
-                if (data[key][subKey] === undefined) {
+                if (data[key][subKey] === undefined || data[key][subKey] === "") {
                     console.log("%c" + "Filling in missing value for: " + key + "." + subKey, "color:orange");
                     data[key][subKey] = defaults[key][subKey];
+                    console.log("Value filled in: ", data[key][subKey]);
                 }
             }
         }

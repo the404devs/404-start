@@ -21,6 +21,7 @@
 #x-img {
     border: 1px solid;
     margin-top: 10px;
+    margin-bottom: 10px;
     max-width: -webkit-fill-available;
     padding: 2px;
 }
@@ -78,4 +79,14 @@
 
 #x-rand:hover {
     background-color: var(--buttonHighlight);
+}
+
+#xkcd-zone::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    left: 0;
+    bottom: -15px;
+    position: absolute;
+    z-index: -1;
 }

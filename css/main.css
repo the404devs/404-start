@@ -32,6 +32,7 @@ html {
     filter: blur(25px);
     height: -webkit-fill-available;
     transition: 1s filter ease;
+    overflow-x: hidden;
 }
 
 body {
@@ -155,7 +156,7 @@ body {
     top: 400px;
     transition: 0.1s ease all;
     width: 400px;
-    display: block;
+    display: flex;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
@@ -166,10 +167,14 @@ body {
     border-width: 0;
     color: var(--foreground);
     font-family: "Roboto";
-    font-size: 24px;
+    font-size: 16px;
+    height: 28px;
     margin: 0;
+    padding-left: 5px;
+    padding-right: 32px;
     width: 100%;
     max-width: unset;
+    background: transparent;
 }
 
 #search-button {
@@ -186,4 +191,5 @@ body {
     cursor: pointer;
     width: 32px;
     height: 32px;
+    margin-right: 3px;
 }

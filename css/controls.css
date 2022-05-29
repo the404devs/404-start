@@ -62,7 +62,8 @@
 
 #close,
 .alert-button,
-.config-button {
+.config-button,
+.edit-button {
     border-color: var(--border);
     border-style: solid;
     border-width: 1px;
@@ -93,7 +94,8 @@
     position: absolute;
 }
 
-.config-button {
+.config-button,
+.edit-button {
     background-color: transparent;
     border: none;
     color: var(--buttonForeground);
@@ -106,6 +108,11 @@
     transition: 0.25s all;
 }
 
+.edit-button {
+    left: 10px;
+    display: none;
+}
+
 #close:hover,
 .alert-button:hover {
     background-color: var(--buttonHighlight);
@@ -113,6 +120,10 @@
 
 .config-button:hover {
     transform: rotate(45deg);
+}
+
+.edit-button:hover {
+    transform: rotate(-45deg);
 }
 
 
@@ -255,4 +266,25 @@ input[type="range"]::-moz-range-thumb {
     margin-top: -5px;
     transform: scale(0.75);
     width: 15px;
+}
+
+.editing,
+.editing * {
+    cursor: grab;
+    transition: none;
+}
+
+.dragging {
+    cursor: grabbing!important;
+    z-index: 99999999;
+}
+
+.hijacked {
+    font-size: 3em!important;
+    line-height: 1.2em!important;
+}
+
+#local-settings {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

@@ -38,6 +38,19 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
+### *2.0.6 (05/29/2022)*
+------------------------
+- The positions of UI elements is now fully customizable.
+    - This feature is still in development.
+    - To enable this, you'll find a new toggle in the settings menu called 'UI Customization'.
+    - The 'Edit Layout' button will appear in the top-left corner, and will allow you to drag the elements around.
+    - Click the 'Edit Layout' button again to save.
+- Custom Layout can be disabled at any time to return to the normal layout.
+    - While Custom Layout is enabled, the 'Weather Box Margin' setting will be ignored.
+- Bumped config data version to 3, due to the new config key `customLayout`. Older configs remain backwards compatible, back to data version 0, from [v2.0.0](#200-12092021).
+- Search bar now rejects empty searches.
+- Changed default background image from a crusty ladybug to some lovely ducks.
+
 ### *2.0.5 (05/27/2022)*
 ------------------------
 - Bugfix: FontAwesome icons no longer disappear upon saving settings.
@@ -142,7 +155,7 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 ### *1.0.4 (04/26/2021)*
 ------------------------
 - Fixed a long-standing bug with wind direction arrows pointing in the opposite direction of where they should be.
-    - As of 2.0.2 (12/17/2021), I've realized it was actually fine to begin with, and this "fix" made it wrong, lmao.
+    - As of [v2.0.2](#202-12172021), I've realized it was actually fine to begin with, and this "fix" made it wrong, lmao.
 - Added hover text to buttons that don't have any text on them, like close buttons, etc.
 - Added a button to refresh weather info.
 - You can now press `Enter` in the password fields of the login & register forms to submit them.
