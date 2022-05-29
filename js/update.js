@@ -42,8 +42,8 @@ function checkForUpdate(manual) {
         if (compareVersions(currentVer, newestVer)) {
             // Outdated version.
             console.log("%c404-Start is outdated!", "color:red;font-weight:bold;font-style:italic;");
-            if (confirm("There is an update available!\n\nLatest version: " + newestVer + "\nCurrent version: " + currentVer + "\n\nPress OK to go to the Github page to get the update and see the changelog.\nYou can turn this message off in the ⚙ settings menu.")) {
-                location.href = "https://github.com/the404devs/404-start/releases";
+            if (confirm("404-Start: There is an update available!\n\nLatest version: " + newestVer + "\nCurrent version: " + currentVer + "\n\nPress OK to go to the Github page to get the update and see the changelog.\nYou can turn this message off in the ⚙ settings menu.")) {
+                location.href = "https://github.com/the404devs/404-start/releases/latest";
             }
         } else {
             // Up to date. If this is a manual check, we show a message to the user.
