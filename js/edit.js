@@ -27,6 +27,7 @@ function toggleEditMode() {
             if (isEditing) {
                 e.preventDefault();
                 if (e.which == 1) {
+                    unsavedChanges = true;
                     mouseHeld = true;
                     currentElement = $(this);
                     $(this).addClass("dragging");
@@ -113,6 +114,10 @@ function setCustomLayout(layout) {
     $("#link-box").css("top", layout.link.y);
     $("#xkcd-zone").css("left", layout.xkcd.x);
     $("#xkcd-zone").css("top", layout.xkcd.y);
+
+    $("#weatherBoxMargin").attr("disabled", true);
+    $("#wbMarginDisableWarning").show();
+    $("#edit-toggle").css("display", "block");
 }
 
 function disableCustomLayout() {
@@ -126,6 +131,10 @@ function disableCustomLayout() {
     $("#link-box")[0].style.top = "";
     $("#xkcd-zone")[0].style.left = "";
     $("#xkcd-zone")[0].style.top = "";
+
+    $("#weatherBoxMargin").attr("disabled", false);
+    $("#wbMarginDisableWarning").hide();
+    $("#edit-toggle").css("display", "none");
 }
 
 $("#custom-position-toggle").on("change", function() {

@@ -38,6 +38,14 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
+### *2.0.7 (08/14/2022)*
+------------------------
+- Search box is now cleared after a search is made. (Fix for [#7](/../../issues/7))
+- A warning is now shown to indicate when the `weatherBoxMargin` setting is disabled with Custom Layout active. (Fix for [#6](/../../issues/6))
+- Added some slightly more verbose descriptions to the Link config section. (Fix for [#5](/../../issues/5))
+- An indicator (⚠) is now shown at the top of the config modal, indicating there are unsaved changes. (Fix for [#4](/../../issues/4))
+    - You will also now be prompted to save your changes if you attempt to close the config modal or unload the page before saving.
+
 ### *2.0.6 (05/29/2022)*
 ------------------------
 - The positions of UI elements is now fully customizable.

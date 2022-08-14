@@ -3,6 +3,7 @@ const minimumSupportedDataVersion = 0; // Minimum supported data version, used t
 let base64String = ""; // Will hold the base64 string of an uploaded image
 // All theme keys representing the background colour of various elements
 const backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground", "headerBackground"];
+let unsavedChanges = false; // Used to determine if the user has made any unsaved changes.
 
 const defaults = {
     "weather": {
@@ -151,6 +152,8 @@ function saveToLS(reload) {
     if (success) {
         // If the save was successful, hide the config modal, and reload if necessary.
         console.log("%c" + "Saved!", "color:lightgreen");
+        unsavedChanges = false;
+        $("#unsaved-indicator").hide();
         if (reload) {
             loadFromLS();
         }
@@ -506,6 +509,23 @@ function firefoxCheck() {
     }
 }
 
+// Function to check for unsaved changes when closing the config modal or leaving the page.
+function warnUnsavedChanges() {
+    if (unsavedChanges) {
+        let answer = confirm("You have unsaved changes.\n\nClick OK to save your changes.\nIf you click Cancel, your changes will be discarded.");
+        if (answer) {
+            // save, then hide modal
+            saveToLS();
+            hideModal();
+        } else {
+            //discard changes, hide modal
+            hideModal();
+        }
+    } else {
+        hideModal();
+    }
+}
+
 loadFromLS(); // Load from local storage immediately on page load.
 firefoxCheck();
 
@@ -517,3 +537,16 @@ window.addEventListener('storage', function(event) {
         // loadFromLS();
     }
 });
+
+// Listen for changes to any of the settings in the config and warn for unsaved changes.
+$(".config-value").on("change", function() {
+    unsavedChanges = true;
+    $("#unsaved-indicator").show();
+});
+
+// Warn for unsaved changes on page unload.
+window.onbeforeunload = function() {
+    if (unsavedChanges) {
+        return "You have unsaved changes. Are you sure you want to leave?";
+    }
+}

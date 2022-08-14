@@ -1,4 +1,5 @@
 // Simple modal-related functions
+let currentModal = null;
 
 function showModal(id) {
     // Hide everything that needs to be hidden
@@ -13,10 +14,11 @@ function showModal(id) {
     // Show the modal
     $(id).fadeIn();
     $(id).css('filter', 'none');
+    currentModal = id;
 }
 
 function hideModal() {
-    // Unide everything that needs to be unhidden
+    // Unhide everything that needs to be unhidden
     $('#main').css('filter', 'none');
     // $('#c').css('filter','blur(5px)');
     $('#header').css('filter', 'none');
@@ -27,11 +29,16 @@ function hideModal() {
     $('#xkcd-zone').css('-webkit-backdrop-filter', 'blur(10px)');
     // Unshow the modals. All of them.
     $(".modal").fadeOut();
+    currentModal = null;
 }
 
 // Let the user press escape to close modals
 $(document).keyup(function(e) {
     if (e.key === "Escape") {
-        hideModal();
+        if (currentModal === "#config-window") {
+            warnUnsavedChanges();
+        } else {
+            hideModal();
+        }
     }
 });

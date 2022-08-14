@@ -155,6 +155,10 @@ label {
     width: 130px;
 }
 
+.config-small-text {
+    font-size: 14px;
+}
+
 .section-head {
     font-family: "Gilroy";
     font-size: 20px;
@@ -180,6 +184,13 @@ label {
     width: 172px;
 }
 
+#unsaved-indicator {
+    color: var(--modalForeground);
+    float: right;
+    margin-right: 10px;
+    display: none;
+}
+
 
 /* INPUTS */
 
@@ -202,6 +213,10 @@ select {
 
 input[type="color"] {
     margin-left: 0px;
+}
+
+input:disabled {
+    opacity: 0.25;
 }
 
 select {
@@ -287,4 +302,8 @@ input[type="range"]::-moz-range-thumb {
 #local-settings {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+#wbMarginDisableWarning {
+    display: none;
 }

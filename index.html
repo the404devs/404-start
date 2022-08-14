@@ -90,131 +90,136 @@
         <div class="modal-content" style="max-height: 75%;">
             <div class="modal-header">
                 <span>Configuration</span>
-                <span id="close" onclick="hideModal()" style="margin-left:237px" title="Close">&times;</span>
+                <span id="unsaved-indicator">
+                    <i class="fa-solid fa-triangle-exclamation" title="Unsaved Changes"></i>
+                </span>
+                <span id="close" onclick="warnUnsavedChanges()" style="margin-left:237px" title="Close">&times;</span>
             </div>
             <div class="modal-body" style="height:45vh; overflow-y:scroll; overflow-x:hidden">
                 <div class="config-section" id="weather-settings">
                     <span class="section-head">Weather Settings</span>
                     <br>
-                    <span style="font-size:14px">
+                    <span class="config-small-text">
                         Uses the <a class="link inline-link" href="https://openweathermap.org/">OpenWeather</a> API.
                         <br>
                         To find the ID for your desired location, see <a class="link inline-link" onclick="window.open('https://github.com/the404devs/404-start/#openweather-api')">here</a>.
                     </span>
                     <br>
-                    <label>City ID 1: </label><input id="weather-code-1" type="text">
+                    <label>City ID 1: </label><input id="weather-code-1" type="text" class="config-value">
                     <br>
-                    <label>City ID 2: </label><input id="weather-code-2" type="text">
+                    <label>City ID 2: </label><input id="weather-code-2" type="text" class="config-value">
                     <br>
                     <label>Units: </label>
-                    <select id="unit-selector">
+                    <select id="unit-selector" class="config-value">
                         <option value="metric">Metric</option>
                         <option value="imperial">Imperial</option>
                     </select>
                     <br>
                     <label>Automatically update weather info: </label>
-                    <input type="checkbox" id="weather-auto-refresh">
+                    <input type="checkbox" id="weather-auto-refresh" class="config-value">
                 </div>
                 <hr>
                 <div class="config-section" id="theme-settings">
                     <span class="section-head">Theme Settings</span>
                     <br>
-                    <span style="font-size:14px">Hover over a property's name for a description.</span>
+                    <span class="config-small-text">Hover over a property's name for a description.</span>
                     <div class="config-subgroup">
                         <span class="subsection-head">General</span>
                         <br>
                         <label title="Background colour for: Inputs, textboxes, XKCD display.">Background:</label>
-                        <input class="theme-val" type="color" id="background">
+                        <input class="theme-val config-value" type="color" id="background">
                         <br>
                         <label title="Text and border colour for: Inputs, textboxes, XKCD display.">Foreground:</label>
-                        <input class="theme-val" type="color" id="foreground">
+                        <input class="theme-val config-value" type="color" id="foreground">
                         <br>
                         <label title="Accent colour on sliders, text selection colour.">Highlight:</label>
-                        <input class="theme-val" type="color" id="highlight">
+                        <input class="theme-val config-value" type="color" id="highlight">
                         <br>
                         <label title="Colour of any and all borders.">Border:</label>
-                        <input class="theme-val" type="color" id="border">
+                        <input class="theme-val config-value" type="color" id="border">
                         <br>
                         <label title="How rounded the corners of elements are.">Border Radius:</label>
-                        <input class="theme-val" type="range" step=1 min=0 max=100 id="borderRadius" oninput="$('#borderRadiusVal').html($('#borderRadius').val()+'px');">
+                        <input class="theme-val config-value" type="range" step=1 min=0 max=100 id="borderRadius" oninput="$('#borderRadiusVal').html($('#borderRadius').val()+'px');">
                         <span id="borderRadiusVal"></span>
                         <br>
                         <label title="Adjust the transparency of elements.">Box Opacity:</label>
-                        <input class="theme-val" type="range" step=0.01 min=0 max=1 id="boxAlpha" oninput="$('#boxAlphaVal').html(($('#boxAlpha').val()*100).toFixed(0)+'%');">
+                        <input class="theme-val config-value" type="range" step=0.01 min=0 max=1 id="boxAlpha" oninput="$('#boxAlphaVal').html(($('#boxAlpha').val()*100).toFixed(0)+'%');">
                         <span id="boxAlphaVal"></span>
                         <br>
                         <label title="Sets the background image.">Background Image:</label>
-                        <input type="file" id="backgroundImage" onchange="imageUploaded()" style="margin-top: 5px;">
+                        <input type="file" id="backgroundImage" onchange="imageUploaded()" style="margin-top: 5px;" class="config-value">
                         <br>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Header (Date/Time)</span>
                         <br>
                         <label title="text colour of the date/time text.">Header Foreground:</label>
-                        <input class="theme-val" type="color" id="headerForeground">
+                        <input class="theme-val config-value" type="color" id="headerForeground">
                         <br>
                         <label title="Background colour of the top header bar.">Header Background:</label>
-                        <input class="theme-val" type="color" id="headerBackground">
+                        <input class="theme-val config-value" type="color" id="headerBackground">
                         <br>
                         <label title="Adjust the transparency of the header bar.">Header Opacity:</label>
-                        <input class="theme-val" type="range" step=0.01 min=0 max=1 id="headerAlpha" oninput="$('#headerAlphaVal').html(($('#headerAlpha').val()*100).toFixed(0)+'%');">
+                        <input class="theme-val config-value" type="range" step=0.01 min=0 max=1 id="headerAlpha" oninput="$('#headerAlphaVal').html(($('#headerAlpha').val()*100).toFixed(0)+'%');">
                         <span id="headerAlphaVal"></span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Weather Boxes</span>
                         <br>
                         <label title="Text colour of the weather boxes.">Foreground:</label>
-                        <input class="theme-val" type="color" id="weatherBoxForeground">
+                        <input class="theme-val config-value" type="color" id="weatherBoxForeground">
                         <br>
                         <label title="Background colour of the weather boxes.">Background:</label>
-                        <input class="theme-val" type="color" id="weatherBoxBackground">
+                        <input class="theme-val config-value" type="color" id="weatherBoxBackground">
                         <br>
                         <label title="Adjust the position of the weather boxes. (0%: Boxes at the sides, 50%: Boxes in the centre.)">Margin:</label>
-                        <input class="theme-val" type="range" step=1 min=0 max=50 id="weatherBoxMargin" oninput="$('#weatherBoxMarginVal').html($('#weatherBoxMargin').val()+'%');">
+                        <input class="theme-val config-value" type="range" step=1 min=0 max=50 id="weatherBoxMargin" oninput="$('#weatherBoxMarginVal').html($('#weatherBoxMargin').val()+'%');">
                         <span id="weatherBoxMarginVal"></span>
+                        <br>
+                        <span class="config-small-text" id="wbMarginDisableWarning">This setting is disabled when Custom Layout is active</span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Modal Dialogs</span>
                         <br>
                         <label title="Text colour in modal dialogs.">Foreground:</label>
-                        <input class="theme-val" type="color" id="modalForeground">
+                        <input class="theme-val config-value" type="color" id="modalForeground">
                         <br>
                         <label title="Background color of modal dialogs.">Background:</label>
-                        <input class="theme-val" type="color" id="modalBackground">
+                        <input class="theme-val config-value" type="color" id="modalBackground">
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Buttons</span>
                         <br>
                         <label title="Text/icon colour of buttons.">Foreground:</label>
-                        <input class="theme-val" type="color" id="buttonForeground">
+                        <input class="theme-val config-value" type="color" id="buttonForeground">
                         <br>
                         <label title="Background colour of buttons.">Background:</label>
-                        <input class="theme-val" type="color" id="buttonBackground">
+                        <input class="theme-val config-value" type="color" id="buttonBackground">
                         <br>
                         <label title="Button highlight colour (when hovered over).">Highlight:</label>
-                        <input class="theme-val" type="color" id="buttonHighlight">
+                        <input class="theme-val config-value" type="color" id="buttonHighlight">
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Link Box</span>
                         <br>
                         <label title="Text colour of links.">Foreground:</label>
-                        <input class="theme-val" type="color" id="linkBoxForeground">
+                        <input class="theme-val config-value" type="color" id="linkBoxForeground">
                         <br>
                         <label title="Background colour of link box.">Background:</label>
-                        <input class="theme-val" type="color" id="linkBoxBackground">
+                        <input class="theme-val config-value" type="color" id="linkBoxBackground">
                     </div>
                     <br>
-                    <span style="font-size:14px">New theme settings will be applied once you save.</span>
+                    <span class="config-small-text">New theme settings will be applied once you save.</span>
                 </div>
                 <hr>
                 <div class="config-section" id="date-settings">
                     <span class="section-head">Date & Time Settings</span>
                     <br>
                     <label>Date Format: </label>
-                    <input type="text" id="date-format">
+                    <input type="text" id="date-format" class="config-value">
                     <br>
                     <label>Time Format: </label>
-                    <input type="text" id="time-format">
+                    <input type="text" id="time-format" class="config-value">
                     <br>
                     <span class="subsection-head" onclick="toggleTimeDocs()" id="time-docs-clickable">Show Format Documentation</span>
                     <div class="config-subgroup" id="time-docs">
@@ -243,13 +248,13 @@
                     <span class="section-head">Search Settings</span>
                     <br>
                     <label>Show search bar: </label>
-                    <input type="checkbox" id="show-search-bar" checked>
+                    <input type="checkbox" id="show-search-bar" class="config-value" checked>
                     <br>
                     <label>Focus search bar: </label>
-                    <input type="checkbox" id="focus-search-bar" checked>
+                    <input type="checkbox" id="focus-search-bar" class="config-value" checked>
                     <br>
                     <label>Search Engine: </label>
-                    <select id="search-engine-selector">
+                    <select id="search-engine-selector" class="config-value">
                         <option value="duckduckgo">DuckDuckGo</option>
                         <option value="google">Google</option>
                         <option value="bing">Bing</option>
@@ -259,7 +264,7 @@
                 <div class="config-section" id="link-settings">
                     <span class="section-head">Link Settings</span>
                     <br>
-                    <label>Link: </label>
+                    <label title="Select which link to change the settings for.">Link to Set: </label>
                     <select id="link-selector" onchange="showLinkGroup()">
                         <option value="1">Link 1</option>
                         <option value="2">Link 2</option>
@@ -270,68 +275,68 @@
                     </select>
                     <div class="link-group" id="link-config-1">
                         <label>Display Name: </label>
-                        <input id="link-name-1" type="text">
+                        <input id="link-name-1" type="text" class="config-value">
                         <br>
                         <label>URL: </label>
-                        <input id="link-url-1" type="text">
+                        <input id="link-url-1" type="text" class="config-value">
                     </div>
                     <div class="link-group" id="link-config-2">
                         <label>Display Name: </label>
-                        <input id="link-name-2" type="text">
+                        <input id="link-name-2" type="text" class="config-value">
                         <br>
                         <label>URL: </label>
-                        <input id="link-url-2" type="text">
+                        <input id="link-url-2" type="text" class="config-value">
                     </div>
                     <div class="link-group" id="link-config-3">
                         <label>Display Name: </label>
-                        <input id="link-name-3" type="text">
+                        <input id="link-name-3" type="text" class="config-value">
                         <br>
                         <label>URL: </label>
-                        <input id="link-url-3" type="text">
+                        <input id="link-url-3" type="text" class="config-value">
                     </div>
                     <div class="link-group" id="link-config-4">
                         <label>Display Name: </label>
-                        <input id="link-name-4" type="text">
+                        <input id="link-name-4" type="text" class="config-value">
                         <br>
                         <label>URL: </label>
-                        <input id="link-url-4" type="text">
+                        <input id="link-url-4" type="text" class="config-value">
                     </div>
                     <div class="link-group" id="link-config-5">
                         <label>Display Name: </label>
-                        <input id="link-name-5" type="text">
+                        <input id="link-name-5" type="text" class="config-value">
                         <br>
                         <label>URL: </label>
-                        <input id="link-url-5" type="text">
+                        <input id="link-url-5" type="text" class="config-value">
                     </div>
                     <div class="link-group" id="link-config-6">
                         <label>Display Name: </label>
-                        <input id="link-name-6" type="text">
+                        <input id="link-name-6" type="text" class="config-value">
                         <br>
                         <label>URL: </label>
-                        <input id="link-url-6" type="text">
+                        <input id="link-url-6" type="text" class="config-value">
                     </div>
                     <label>Show link section: </label>
-                    <input type="checkbox" id="show-link-box">
+                    <input type="checkbox" id="show-link-box" class="config-value">
                 </div>
                 <hr>
                 <div class="config-section" id="misc-settings">
                     <span class="section-head">Additional Settings</span>
                     <br>
                     <label>XKCD comic: </label>
-                    <input type="checkbox" id="xkcd-toggle">
+                    <input type="checkbox" id="xkcd-toggle" class="config-value">
                     <br>
                     <label>Invert XKCD: </label>
-                    <input type="checkbox" id="invert-toggle">
+                    <input type="checkbox" id="invert-toggle" class="config-value">
                     <br>
                     <br>
                     <label>UI Customization: </label>
-                    <input type="checkbox" id="custom-position-toggle">
+                    <input type="checkbox" id="custom-position-toggle" class="config-value">
                     <br>
-                    <span style="font-size:14px">When enabled, click the <i class="fa-solid fa-pen-ruler" title="Edit Layout"></i> button in the top left to customize the position of the different UI elements. This is an experimental feature.</span>
+                    <span class="config-small-text">When enabled, click the <i class="fa-solid fa-pen-ruler" title="Edit Layout"></i> button in the top left to customize the position of the different UI elements. This is an experimental feature.</span>
                     <br>
                     <div id="local-settings">
                         <label style="width: 140px!important;">Update check on start:</label>
-                        <input type="checkbox" id="update-toggle">
+                        <input type="checkbox" id="update-toggle" class="config-value">
                         <span class="small-button" onclick="checkForUpdate(true)" style="width:120px; margin-left: 20px;">
                             <i class="fas fa-redo"></i> Check Now
                         </span>
