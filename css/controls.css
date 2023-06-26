@@ -17,7 +17,7 @@
     text-align: left;
     transition: all 0.25s;
     width: 170px;
-    whitespace: nowrap;
+    white-space: nowrap;
 }
 
 .button i {
