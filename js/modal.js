@@ -14,6 +14,7 @@ function showModal(id) {
     // Show the modal
     $(id).fadeIn();
     $(id).css('filter', 'none');
+    $(id).css('backdrop-filter', 'blur(10px)');
     currentModal = id;
 }
 
