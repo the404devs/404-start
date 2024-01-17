@@ -264,8 +264,7 @@
                 <div class="config-section" id="link-settings">
                     <span class="section-head">Link Settings</span>
                     <br>
-                    <label title="Select which link to change the settings for.">Link to Set: </label>
-                    <select id="link-selector" onchange="showLinkGroup()">
+                    <select title="Select which link to change the settings for." id="link-selector" onchange="showLinkGroup()">
                         <option value="1">Link 1</option>
                         <option value="2">Link 2</option>
                         <option value="3">Link 3</option>
@@ -361,13 +360,14 @@
 
     <div id="xkcd-zone">
         <h2 id="x-title"></h2>
-        <div class="button x-button" onclick="setnum(-1)"><span>←</span></div>
-        <div style="display: inline-block;">
-            <input id="x-num"></label>
-            <span id="x-rand" onclick="random()">Random</span>
+        <div class="x-controls">
+            <div class="button x-button" onclick="setnum(-1)"><span>←</span></div>
+            <div>
+                <input id="x-num"></label>
+                <span id="x-rand" onclick="random()">Random</span>
+            </div>
+            <div class="button x-button" onclick="setnum(1)"><span>→</span></div>
         </div>
-        <div class="button x-button" onclick="setnum(1)"><span>→</span></div>
-        <br>
         <img id="x-img">
     </div>
 

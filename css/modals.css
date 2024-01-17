@@ -92,8 +92,13 @@
 #time-docs-clickable {
     cursor: pointer;
     text-decoration: none;
+    font-style: italic;
 }
 
 #time-docs-clickable:hover {
     text-decoration: underline;
+}
+
+.modal#config-window .modal-content {
+    overflow: hidden;
 }

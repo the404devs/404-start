@@ -38,6 +38,10 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
+### *2.0.8 (01/16/2024)*
+------------------------
+- Minor layout fixes to the configuration modal.
+
 ### *2.0.7 (08/14/2022)*
 ------------------------
 - Search box is now cleared after a search is made. (Fix for [#7](/../../issues/7))

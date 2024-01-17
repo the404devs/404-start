@@ -310,3 +310,8 @@ input[type="range"]::-moz-range-thumb {
 #wbMarginDisableWarning {
     display: none;
 }
+
+select#link-selector {
+    margin-left: 0;
+    width: 200px;
+}

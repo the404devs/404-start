@@ -301,7 +301,7 @@ function loadFromLS() {
 
     // If the user has indicated to show the XKCD comic, do so.
     if (data.misc.showXKCD) {
-        $("#xkcd-zone").css("display", "block");
+        $("#xkcd-zone").css("display", "flex");
     } else {
         console.log("%cXKCD disabled", "color:lightblue");
         $("#xkcd-zone").css("display", "none");
