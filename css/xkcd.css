@@ -23,7 +23,7 @@
 
 #x-img {
     width: max-content;
-    border: 1px solid;
+    /* border: 1px solid; */
     margin-top: 10px;
     margin-bottom: 10px;
     max-width: -webkit-fill-available;
@@ -68,11 +68,12 @@
     transition: 0.25s all;
     width: 80px;
     border-radius: 5px;
+    border: 1px solid var(--border);
 }
 
 #x-rand {
     background-color: var(--background);
-    border: 1px solid;
+    border: 1px solid var(--border);
     color: var(--foreground);
     cursor: pointer;
     display: block;

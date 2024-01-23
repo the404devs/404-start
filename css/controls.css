@@ -200,7 +200,7 @@ label {
 input,
 select {
     background-color: var(--background);
-    border: 1px solid var(--foreground);
+    border: 1px solid var(--border);
     color: var(--foreground);
     display: inline-block;
     font-family: "Roboto";
