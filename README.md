@@ -13,7 +13,7 @@ A very customizable homepage (more soon).
 
 
 
-![alt text](img/screen2.png "screenshot 1")
+![alt text](img/screen3.png "screenshot 1")
 
 ## Setup (Normal)
 Just set https://start.the404.nl/ as your homepage in your browser.
@@ -36,7 +36,19 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 ![alt text](img/owm2.png "OpenWeather URL, showing the city ID")
 
 
+## TODO: 
+- Reimplement todo list
+
 ## Changelog
+
+### *2.0.9 (01/26/2024)*
+------------------------
+- Shadow colour is now configurable.
+    - Bump theme data version to 4: New `--shadow-color` variable in userCSS.
+
+- Renamed `colours.css` to `theme-default.css`, to better reflect it's purpose.
+
+- New screenshot in README.
 
 ### *2.0.8 (01/16/2024)*
 ------------------------

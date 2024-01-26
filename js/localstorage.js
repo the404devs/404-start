@@ -1,4 +1,4 @@
-const dataVersion = 3; // Current theme data version
+const dataVersion = 4; // Current theme data version
 const minimumSupportedDataVersion = 0; // Minimum supported data version, used to determine if an imported theme is compatible with the current version
 let base64String = ""; // Will hold the base64 string of an uploaded image
 // All theme keys representing the background colour of various elements
@@ -279,12 +279,12 @@ function loadFromLS() {
 
     // If the user has indicated to check for updates at startup, do so.
     if (data.misc.updateCheck) {
-        if (sessionStorage.getItem("404UPDATED") === "true") {
+        if (sessionStorage.getItem("UPDATE-CHECK") === "true") {
             // If the user has already checked for updates, don't do it again.
             console.log("%cAlready checked for updates, not checking again this session.", "color:red");
         } else {
             // Check for updates.
-            sessionStorage.setItem("404UPDATED", "true");
+            sessionStorage.setItem("UPDATE-CHECK", "true");
             checkForUpdate(false);
         }
     }
@@ -350,17 +350,10 @@ function showLinkGroup() {
 function constructUserCSS() {
     console.log("%c" + "Constructing user CSS...", "color:lightblue");
     let userCSS = "* {"; // String starter with the universal selector.
-    // Check if the backgroundImage field is set, this indicates the user has set a new custom background.
-    if ($("#backgroundImage").val() == "") {
-        // Field is not set, so use same one they're already using.
-        userCSS += " --backgroundImage: " + styleVar("backgroundImage") + ";";
-    } else {
-        // Set the background image to the user's new one.
-        userCSS += " --backgroundImage: url(data:image/jpg;base64," + base64String + ");";
-    }
+
+    // For each theme value, add the CSS to the string.
+    // Some special cases are handled here, like adding alpha to background colours, or adding "px" and "%" to values.
     $(".theme-val").each(function() {
-        // For each theme value, add the CSS to the string.
-        // Some special cases are handled here, like adding alpha to background colours, or adding "px" and "%" to values.
         userCSS += " --" + $(this).attr("id") + ": " + $(this).val();
         if ($(this).attr("id") == "headerBackground") {
             let alpha = 255 * Number($("#headerAlpha").val());
@@ -375,6 +368,16 @@ function constructUserCSS() {
         }
         userCSS += ";";
     });
+
+    // Check if the backgroundImage field is set, this indicates the user has set a new custom background.
+    if ($("#backgroundImage").val() == "") {
+        // Field is not set, so use same one they're already using.
+        userCSS += " --backgroundImage: " + styleVar("backgroundImage") + ";";
+    } else {
+        // Set the background image to the user's new one.
+        userCSS += " --backgroundImage: url(data:image/jpg;base64," + base64String + ");";
+    }
+
     userCSS += "}";
     // Return the completed string.
     return userCSS;

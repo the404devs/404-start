@@ -36,19 +36,19 @@ function checkForUpdate(manual) {
         const newestVer = data.replace("v", "").trim();
         const currentVer = config.VER.replace("v", "").trim();
         // We remove the 'v' from the version strings and remove any whitespace, for example "v1.0.0 " becomes "1.0.0"
-        console.log("Current version is: " + currentVer + ", newest one online is: " + newestVer);
+        console.log(`Current version is: ${currentVer}, newest one online is: ${newestVer}`);
 
         // Check if the current version is the newest version, and proceed accordingly.
         if (compareVersions(currentVer, newestVer)) {
             // Outdated version.
             console.log("%c404-Start is outdated!", "color:red;font-weight:bold;font-style:italic;");
-            if (confirm("404-Start: There is an update available!\n\nLatest version: " + newestVer + "\nCurrent version: " + currentVer + "\n\nPress OK to go to the Github page to get the update and see the changelog.\nYou can turn this message off in the ⚙ settings menu.")) {
+            if (confirm(`404-Start: There is an update available!\n\nLatest version: ${newestVer}\nCurrent version: ${currentVer}\n\nPress OK to go to the Github page to get the update and see the changelog.\nYou can turn this message off in the ⚙ settings menu.`)) {
                 location.href = "https://github.com/the404devs/404-start/releases/latest";
             }
         } else {
             // Up to date. If this is a manual check, we show a message to the user.
             if (manual) {
-                alert("404-Start is up to date!");
+                alert(`404-Start is up to date! \n\nLatest version: ${newestVer} \nCurrent version: ${currentVer}`);
             }
             console.log("%c404-Start is up to date!", "color:green;font-weight:bold;font-style:italic;");
         }

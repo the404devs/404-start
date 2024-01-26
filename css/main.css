@@ -28,11 +28,6 @@
 
 /* GENERAL RULES */
 
-*{
-    /* TODO: make this configurable in settings */
-    --shadow-color: #222;
-}
-
 html {
     filter: blur(25px);
     height: -webkit-fill-available;
