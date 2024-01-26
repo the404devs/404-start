@@ -3,11 +3,11 @@
         "newtab": "ext.html"
     },
     "description": "A custom new tab page.",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "404-Start",
     "offline_enabled": true,
     "permissions": ["storage"],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "icons": {
         "128": "img/icon128.png"
     }
