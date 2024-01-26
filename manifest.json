@@ -7,7 +7,7 @@
     "name": "404-Start",
     "offline_enabled": true,
     "permissions": ["storage"],
-    "version": "1.0.1",
+    "version": "2.0.9",
     "icons": {
         "128": "img/icon128.png"
     }
