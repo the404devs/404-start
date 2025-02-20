@@ -1,63 +1,68 @@
+let currentComic = 0;
+let maxComic = 0;
+
 async function fetchComic(n) {
-    let nStr = n == 0 ? "latest" : n.toString();
+    let nStr;
+    img = document.getElementById("x-img");
+    switch (n) {
+        case 0:
+            nStr = "latest";
+            break;
+        case 404:
+            img.src = "img/404-square-2.png";
+            img.alt = "404";
+            img.title = "Not Found";
+            document.getElementById("x-title").textContent = "Not Found";
+            break;
+        default:
+            if (n > maxComic) { 
+                nStr = maxComic.toString();
+            } else {
+                nStr = n.toString();
+            }
+            break;
+    }
+
     const response = await fetch(`https://xkcd.now.sh/?comic=${nStr}`);
     const comic = await response.json();
     console.log(comic);
+    document.getElementById("x-title").textContent = comic.title + " - " + pad(comic.month) + "/" + pad(comic.day) + "/" + comic.year;
+    document.getElementById("x-num").value = comic.num.toString();
+
+    currentComic = comic.num;
+    if (n == 0) { maxComic = comic.num };
+
+    img.src = comic.img;
+    img.alt = comic.title;
+    img.title = comic.alt;
 }
 
-
-
-function fill_page() {
-    var t, num = details.num,
-        url = "http://xkcd.com/" + num;
-    console.log(num);
-    console.log(details);
-
-    document.getElementById("x-title").innerHTML = details.title + " - " + pad(details.month) + "/" + pad(details.day) + "/" + details.year;
-    document.getElementById("x-num").innerHTML = num;
-
-
-    t = document.getElementById("x-img");
-    t.src = details.img;
-    t.alt = details.title;
-    t.title = details.alt;
-    // document.getElementById("date").innerHTML = details.day + "/" + details.month + "/" + details.year;
-
-
-
-    // document.getElementById("mouseover").innerHTML = details.alt;
-    // document.getElementById("transcript").innerHTML = format_transcript(details.transcript);
-
-    // t = document.getElementById("original")
-    // t.href = url;
-    // t.innerHTML = url;
-
-    if (hinum == undefined)
-        hinum = num;
-
-    t = document.getElementById("x-num");
-    if (t.value == '' || hinum == num)
-        t.value = num;
-
-    // window.scroll(0, document.body.scrollHeight);
+function pad(n) {
+    if (n < 10 && n > 0) {
+        return `0${n}`;
+    } else {
+        return n.toString();
+    }
 }
 
+function nextComic(i) {
+    currentComic += i;
+    if (currentComic > maxComic) { currentComic = 1 }
+    if (currentComic < 1) { currentComic = maxComic }
+    fetchComic(currentComic);
+}
 
 function random() {
-    var n, num = document.getElementById("x-num");
-
-    do n = Math.floor(1 + Math.random() * hinum);
-    while (valid_num(n) != '');
-    num.value = n;
-    build_script(num.value);
+    do r = Math.floor(1 + Math.random() * maxComic);
+    while (r == currentComic);
+    fetchComic(r);
 }
 
 document.getElementById("x-num").addEventListener("keyup", function(e) {
     if (e.key === "Enter") {
         e.preventDefault();
-        goto();
+        fetchComic(document.getElementById("x-num").value);
     }
 });
-
 
 fetchComic(0);
