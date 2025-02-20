@@ -13,7 +13,7 @@ A very customizable homepage (more soon).
 
 
 
-![alt text](img/screen3.png "screenshot 1")
+![alt text](img/screen4.png "screenshot 1")
 
 ## Setup (Normal)
 Just set https://start.the404.nl/ as your homepage in your browser.
