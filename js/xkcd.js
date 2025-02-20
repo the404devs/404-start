@@ -1,4 +1,5 @@
-var hinum, script, details = {},
+var baseURL = "https://xkcd.now.sh/?comic=",
+    hinum, script, details = {},
     head = document.getElementsByTagName('head')[0];
 
 function dataloaded(obj) {
@@ -14,7 +15,7 @@ function valid_num(n) {
 
     switch (true) {
         //The empty string is valid - it's the current comic.
-        case (n == ''):
+        case (n == 'latest'):
             break;
         case (parseInt(n, 10) != n || n < 1):
             msg = "'" + n + "' is not a positive integer";
@@ -49,8 +50,8 @@ function build_script(n) {
         head.removeChild(script);
     script = document.createElement('script');
     script.type = 'text/javascript';
-    // script.src = baseURL + n;
-    script.src = `https://xkcd.com/${n}/info.0.json?callback=dataloaded`
+    script.src = baseURL + n + "?callback=dataloaded";
+    // script.src = `https://xkcd.com/${n}/info.0.json`
     head.appendChild(script);
 }
 
@@ -150,7 +151,7 @@ document.getElementById("x-num").addEventListener("keyup", function(e) {
     }
 });
 
-build_script('');
+build_script('latest');
 window.scroll(0, 0);
 
 // var canvas = document.getElementById("xkcd");
