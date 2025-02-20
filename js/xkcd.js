@@ -14,7 +14,7 @@ function valid_num(n) {
 
     switch (true) {
         //The empty string is valid - it's the current comic.
-        case (n == 'latest'):
+        case (n == ''):
             break;
         case (parseInt(n, 10) != n || n < 1):
             msg = "'" + n + "' is not a positive integer";
