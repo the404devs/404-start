@@ -50,7 +50,7 @@ function build_script(n) {
     script = document.createElement('script');
     script.type = 'text/javascript';
     // script.src = baseURL + n;
-    script.src = `https://xkcd.com/${n}/info.0.json`
+    script.src = `https://xkcd.com/${n}/info.0.json?callback=dataloaded`
     head.appendChild(script);
 }
 
