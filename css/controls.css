@@ -192,6 +192,7 @@ label {
     position: absolute;
     text-align: center;
     width: 172px;
+    text-decoration: none;
 }
 
 #unsaved-indicator {
