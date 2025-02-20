@@ -98,12 +98,7 @@ body {
     color: var(--linkBoxForeground);
     font-family: "Roboto";
     font-size: 15px;
-    left: calc(50% - 85px);
     overflow: hidden;
-    position: absolute;
-    right: calc(50% - 85px);
-    text-align: center;
-    top: 500px;
     transition: 0.1s ease all;
     width: 170px;
 }
@@ -192,4 +187,125 @@ body {
     width: 32px;
     height: 32px;
     margin-right: 3px;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.group#links-todo-group {
+    /* left: calc(50% - 85px); */
+    /* overflow: hidden; */
+    position: absolute;
+    /* right: calc(50% - 85px); */
+    top: 500px;
+}
+
+/* TODO LIST */
+.todo-container {
+    background-color: var(--todoBackground);
+    border-radius: var(--borderRadius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-color) 0px 2px 10px, var(--shadow-color) 0px -2px 10px;
+    color: var(--todoForeground);
+    height: 182px;
+    width: 341px;
+    /* position: absolute; */
+    /* margin-top: 243px; */
+    text-align: left;
+    
+    width: 400px;
+    height: 270px;
+    margin-left: 30px;
+    display: flex;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+}
+
+.todo-header {
+    font-family: "Gilroy";
+    font-size: 30px;
+    border-bottom: 1px solid var(--border);
+    padding: 0 5px 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.todo-content {
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+
+.todo-content::-webkit-scrollbar {
+    width: 0;
+    visibility: hidden!important;
+    display: none!important;
+}
+
+.event {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.eventHead {
+    text-align: left;
+    font-size: 24px;
+    padding: 0 5px 0 5px;
+    font-family: "Gilroy";
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.eventDate, .eventBody {
+    text-align: left;
+    font-size: 16px;
+    font-family: "Roboto";
+    padding: 0 5px 0 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.eventBody {
+    font-style: italic;
+    font-family: "Gilroy Light";
+}
+
+.event-left, .event-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.event-left {
+    flex-basis: 95%;
+}
+
+.event-right {
+    flex-basis: 5%;
+}
+
+.eventDelete {
+    /* position: absolute; */
+    /* display: block; */
+    /* border: 1px solid var(--border); */
+    right: 0;
+    cursor: pointer;
+    transition: 0.25s all;
+}
+
+.eventDelete:hover {
+    color: #dd0000;
+}
+
+#eventDate,
+#eventTime {
+    width: auto;
 }

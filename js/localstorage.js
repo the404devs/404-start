@@ -1,8 +1,8 @@
-const dataVersion = 4; // Current theme data version
+const dataVersion = 5; // Current theme data version
 const minimumSupportedDataVersion = 0; // Minimum supported data version, used to determine if an imported theme is compatible with the current version
 let base64String = ""; // Will hold the base64 string of an uploaded image
 // All theme keys representing the background colour of various elements
-const backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground", "headerBackground"];
+const backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground", "headerBackground", "todoBackground"];
 let unsavedChanges = false; // Used to determine if the user has made any unsaved changes.
 
 const defaults = {
@@ -43,6 +43,9 @@ const defaults = {
             "name": "",
             "url": "",
         },
+    },
+    "todo": {
+        "show": true
     },
     "misc": {
         "updateCheck": false,
@@ -123,6 +126,9 @@ function saveToLS(reload) {
                 "url": $("#link-url-6").val()
             },
             "show": $("#show-link-box").prop("checked")
+        },
+        "todo": {
+            "show": $("#show-todo-list").prop("checked")
         },
         "misc": {
             "updateCheck": $("#update-toggle").prop("checked"),
@@ -214,6 +220,8 @@ function loadFromLS() {
     $("#show-search-bar").prop("checked", data.search.show);
     $("#focus-search-bar").prop("checked", data.search.focus);
 
+    $("#show-todo-list").prop("checked", data.todo.show);
+
     // Fill the link configuration keys with what's in local storage. Will be blank if unset, and that's ok.
     $("#link-name-1").val(data.links.link1.name);
     $("#link-url-1").val(data.links.link1.url);
@@ -254,12 +262,16 @@ function loadFromLS() {
     $("#time-format").val(timeFormatString);
 
     // If the user has the link box enabled, show it.
-    // Move the XKCD box up or down accordingly.
     if (data.links.show) {
         $(".link-box").css("display", "block");
-        $("#xkcd-zone").css("top", "850px");
     } else {
         $(".link-box").css("display", "none");
+    }
+    
+    // Move the XKCD box up or down accordingly.
+    if (data.links.show || data.todo.show) {
+        $("#xkcd-zone").css("top", "850px");
+    } else {
         $("#xkcd-zone").css("top", "500px");
     }
 
@@ -276,6 +288,15 @@ function loadFromLS() {
         console.log("%cSearch bar is hidden.", "color:red");
         $("#search-bar").css("display", "none");
         $(".link-box").css("top", "450px");
+    }
+
+    if (data.todo.show) {
+        console.log("%cTodo list is visible.", "color:green");
+        $("#todo").css("display", "flex");
+    } else {
+        console.log("%cTodo list is hidden.", "color:red");
+        $("#todo").css("display", "none");
+
     }
 
     // If the user has indicated to check for updates at startup, do so.
@@ -330,6 +351,7 @@ function loadFromLS() {
 
     // Time to get weather info.
     getWeatherInfo(data.weather.code1, data.weather.code2, data.weather.units);
+    icons.color = document.getElementById("weatherBoxForeground").value;
     // Show the first link group in the config menu by default.
     showLinkGroup(0);
 

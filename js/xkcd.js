@@ -23,7 +23,7 @@ async function fetchComic(n) {
             break;
     }
 
-    const response = await fetch(`https://xkcd.now.sh/?comic=${nStr}`);
+    const response = await fetch(`https://xkcd.vercel.app/?comic=${nStr}`);
     const comic = await response.json();
     console.log(comic);
     document.getElementById("x-title").textContent = comic.title + " - " + pad(comic.month) + "/" + pad(comic.day) + "/" + comic.year;

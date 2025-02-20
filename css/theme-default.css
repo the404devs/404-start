@@ -25,6 +25,9 @@
     /* LINKS */
     --linkBoxBackground: #11111180;
     --linkBoxForeground: #a7e7ff;
+    /* TODO LIST */
+    --todoBackground: #11111180;
+    --todoForeground: #a7e7ff;
     /* SHADOWS */
     --shadow-color : #222222;
 }

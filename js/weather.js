@@ -9,121 +9,55 @@ function getWeatherInfo(place1, place2, units) {
     // Construct the initial URLs for the first API calls.
     const weatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + place1 + "&appid=" + apiKeys[0] + "&units=" + units;
     const weatherURL2 = "https://api.openweathermap.org/data/2.5/weather?id=" + place2 + "&appid=" + apiKeys[1] + "&units=" + units;
+
+    const weatherBox1 = document.getElementById("weather-1");
+    const weatherBox2 = document.getElementById("weather-2");
     // Grab weather data for the two cities.
     // Comment out the following two lines to disable weather info (for debugging).
-    getOpenWeatherData(weatherURL1, "#weather-1", units);
-    getOpenWeatherData(weatherURL2, "#weather-2", units);
-
-    // getWttrWeatherData(place1, "#weather-1", units);
-    // getWttrWeatherData(place2, "#weather-2", units);
-
-    // console.log(weatherURL1);
-    // console.log(weatherURL2);
+    getOpenWeatherData(weatherURL1, weatherBox1, units);
+    getOpenWeatherData(weatherURL2, weatherBox2, units);
 }
-
-
-function getWttrWeatherData(location, boxID, units) {
-    const baseURL = "https://wttr.in/";
-    const requestFormat = {
-        "location": "%l",
-        "condition": "%C",
-        "icon": "%c",
-        "temperature": "%t",
-        "feels_like": "%f",
-        "wind": "%w",
-        "time": "%T"
-    }
-
-    const unitCode = units == 'metric' ? 'm' : 'u';
-
-    const requestURL = `${baseURL}${location.replaceAll(" ", "+")}?${unitCode}&format=${JSON.stringify(requestFormat).replaceAll('\"', '%22')}`;
-
-    console.log("%cCalling " + requestURL + "...", "color:yellow;font-weight:bold;font-style:italic;");
-
-
-    fetch(requestURL).then((response) => {return response.text()}).then(data => {
-        const weatherData = JSON.parse(data);
-        console.log(weatherData);
-
-        const iconID = boxID.replace('weather', 'weather-icon'); // We will need the ID of the weather icon for each weather box.
-        $(boxID + ' .weather-name').text(weatherData.location);
-        //todo: if wind +30kmh, add windy to desc
-
-        $(boxID + ' .temperature').html(weatherData.temperature.replaceAll('+', '')); // Fill in the temperature.
-        $(boxID + ' .feels-like').html("<b>Feels Like: </b>" + weatherData.feels_like.replaceAll('+', ''));
-        $(boxID + ' .conditions').html(weatherData.condition); // Fill in the conditions.
-        
-        const wind_speed = weatherData.wind.substring(1);
-        const wind_dir = weatherData.wind.substring(0,1);
-        
-        $(boxID + ' .wind').html(`<b>Wind: </b>${wind_speed} <b class='arrow'>${wind_dir}</b>`); // Fill in the wind speed and direction.
-        $(boxID + " .alert-button").hide();
-
-        // TODO: Nighttime icons
-        // if (weatherData.icon == "☀️")
-
-        setIcon(weatherData.icon, iconID);
-        icons.play();
-
-
-    });
-}
-
 
 // Makes the API calls and populates the weather info.
-function getOpenWeatherData(URL, boxID, units) {
-    let oneCallURL = ""; // Will be used once we construct the URL for our second API call.
+function getOpenWeatherData(URL, container, units) {
+    const temp = container.querySelector(".temperature");
+    const city = container.querySelector(".weather-name");
+    const cond = container.querySelector(".conditions");
+    const wind = container.querySelector(".wind");
+    const high = container.querySelector(".high");
+    const feel = container.querySelector(".feels-like");
+    const icon = container.querySelector(".weather-icon");
+    const alert_button = container.querySelector(".alert-button");
+
     let tempUnit = "°C"; // Temperature defaults to Celsius.
     let windUnit = "km/h" // Wind defaults to kilometers per hour.
     let windScale = 3.6; // OpenWeather gives wind speeds in metres per second, this is our multiplier to convert to km/h.
-    const alertModalID = boxID.replace('weather', 'alert-modal'); // We will need the ID of the alert modal for each weather box.
-    const iconID = boxID.replace('weather', 'weather-icon'); // We will need the ID of the weather icon for each weather box.
+
     if (units == "imperial") {
         // If the user has selected imperial units, we need to convert the temperature and wind speeds to imperial units.
         tempUnit = "°F";
         windUnit = "mph";
         windScale = 2.236936; // Change the wind speed multiplier to miles per hour (2.236936m/s == 1mph).
     }
-    $.getJSON(URL, function(data) {
-        console.log("%cGetting weather for " + data.name + "...", "color:yellow;font-weight:bold;font-style:italic;");
-        console.log(data)
-        // Fill in the city name in the weather box.
-        $(boxID + ' .weather-name').text(data.name);
-        // Reset the alert modals to their default state.
-        $(alertModalID + " .modal-header").text("Alerts for " + data.name);
-        $(alertModalID + " .modal-body").empty();
 
-        $(`${boxID} .temperature`).html(data.main.temp + tempUnit);
-        $(`${boxID} .conditions`).html(titleCase(data.weather[0].description));
-        $(`${boxID} .wind`).html("<b>Wind: </b>" + (data.wind.speed * windScale).toFixed(2) + windUnit + " <b class='arrow'>" + getDirection(data.wind.deg)+ "</b>");
-        $(`${boxID} .high`).html("<b>H/L: </b>" + data.main.temp_max.toFixed(1) + tempUnit + "/" + data.main.temp_min.toFixed(1) + tempUnit);
-
-        if (data.main.feels_like) {
-            $(`${boxID} .feels-like`).html("<b>Feels Like: </b>" + data.main.feels_like.toFixed(1) + tempUnit);
+    fetch(URL).then(response => { 
+        return response.json() ;
+    }).then(data => {
+            console.log("%cGetting weather for " + data.name + "...", "color:yellow;font-weight:bold;font-style:italic;");
+            console.log(data);
+            temp.textContent = data.main.temp + tempUnit;
+            city.textContent = data.name;
+            cond.textContent = titleCase(data.weather[0].description);
+            wind.innerHTML = "<b>Wind: </b>" + (data.wind.speed * windScale).toFixed(2) + windUnit + " <b class='arrow'>" + getDirection(data.wind.deg) + "</b>";
+            high.innerHTML = "<b>H/L: </b>" + data.main.temp_max.toFixed(1) + tempUnit + "/" + data.main.temp_min.toFixed(1) + tempUnit;
+            if (data.main.feels_like) {
+                feel.innerHTML = "<b>Feels Like: </b>" + data.main.feels_like.toFixed(1) + tempUnit;
+            }
+            setIcon(data.weather[0].icon, icon);
+            icons.play();
+            alert_button.style.display = "none";
         }
-
-        //TODO: Figure out if I can get alerts.
-        $(boxID + " .alert-button").hide();
-
-        setIcon(data.weather[0].icon, iconID);
-        icons.play();
-    });
-}
-
-// Used to run GET requests to the OpenWeather API.
-function getJSON(url, callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'json';
-    xhr.onload = function() {
-        let status = xhr.status;
-        if (status === 200) {
-            callback(null, xhr.response);
-        } else {
-            callback(status, xhr.response);
-        }
-    };
-    xhr.send();
+    );
 }
 
 // Takes the current wind bearing (in degrees) and returns an appropriate arrow.
@@ -161,9 +95,9 @@ function titleCase(str) {
 }
 
 // Used to determine the icon to use for the current conditions.
-function setIcon(icon, id) {
-    id = id.substring(1); // Remove the # from the ID.
-    switch (icon) {
+function setIcon(code, id) {
+    // id = id.substring(1); // Remove the # from the ID.
+    switch (code) {
         case "01d":
             icons.set(id, Skycons.CLEAR_DAY);
             break;

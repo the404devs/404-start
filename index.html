@@ -58,20 +58,35 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
-        <div class="link-box" id="link-box">
-            <a class="link" id="link1" href="https://www.example.com/">Text Here</a>
-            <br>
-            <a class="link" id="link2" href="https://www.example.com/">Text Here</a>
-            <br>
-            <a class="link" id="link3" href="https://www.example.com/">Text Here</a>
-            <br>
-            <a class="link" id="link4" href="https://www.example.com/">Text Here</a>
-            <br>
-            <a class="link" id="link5" href="https://www.example.com/">Text Here</a>
-            <br>
-            <a class="link" id="link6" href="https://www.example.com/">Text Here</a>
-            <br>
+        <div class="group" id="links-todo-group">
+            <div class="link-box" id="link-box">
+                <a class="link" id="link1" href="https://www.example.com/">Text Here</a>
+                <br>
+                <a class="link" id="link2" href="https://www.example.com/">Text Here</a>
+                <br>
+                <a class="link" id="link3" href="https://www.example.com/">Text Here</a>
+                <br>
+                <a class="link" id="link4" href="https://www.example.com/">Text Here</a>
+                <br>
+                <a class="link" id="link5" href="https://www.example.com/">Text Here</a>
+                <br>
+                <a class="link" id="link6" href="https://www.example.com/">Text Here</a>
+                <br>
+            </div>
+            <div class="todo-container" id="todo">
+                <div class="todo-header">
+                    <span>To-Do List</span>
+                    <span class="small-button" onclick="showModal('#todo-modal')" style="margin: 0;">
+                        <i class="fas fa-plus"></i> Add
+                    </span>
+                </div>
+                <div class="todo-content" id="todo-body">
+
+                </div>
+            </div>
         </div>
+        
+        
     </div>
 
     <div class="modal alert-modal" id="alert-modal-1" onclick="hideModal()">
@@ -211,6 +226,15 @@
                         <label title="Background colour of link box.">Background:</label>
                         <input class="theme-val config-value" type="color" id="linkBoxBackground">
                     </div>
+                    <div class="config-subgroup">
+                        <span class="subsection-head">To-Do List</span>
+                        <br>
+                        <label title="Text colour of todo list.">Foreground:</label>
+                        <input class="theme-val config-value" type="color" id="todoForeground">
+                        <br>
+                        <label title="Background colour of todo list.">Background:</label>
+                        <input class="theme-val config-value" type="color" id="todoBackground">
+                    </div>
                     <br>
                     <span class="config-small-text">New theme settings will be applied once you save.</span>
                 </div>
@@ -262,6 +286,13 @@
                         <option value="google">Google</option>
                         <option value="bing">Bing</option>
                     </select>
+                </div>
+                <hr>
+                <div class="config-section" id="todo-settings">
+                    <span class="section-head">To-Do List Settings</span>
+                    <br>
+                    <label>Show to-do list: </label>
+                    <input type="checkbox" id="show-todo-list" class="config-value" checked>
                 </div>
                 <hr>
                 <div class="config-section" id="link-settings">
@@ -360,6 +391,32 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="todo-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Add To-Do List Item</span>
+                <span id="close" onclick="hideModal('#eventModal')" title="Close">×</span>
+            </div>
+            <div class="modal-body">
+                <label>Name: </label>
+                <input type="text" id="eventName" required="">
+                <br>
+                <label>Date: </label>
+                <input type="date" id="eventDate" required="">
+                <br>
+                <label>Time: </label>
+                <input type="time" id="eventTime" required="">
+                <br>
+                <label style="vertical-align: top;">Description: </label>
+                <textarea id="eventBody" rows="5" cols="20"></textarea>
+            </div>
+            <div class="modal-footer">
+                <span class="button" onclick="addEvent()">
+					<i class="fa fa-plus" aria-hidden="true"></i> Add Event
+				</span>
+            </div>
+        </div>
+    </div>
 
     <div id="xkcd-zone">
         <h2 id="x-title"></h2>
@@ -376,6 +433,7 @@
 
     <script src="js/xkcd.js"></script>
     <script src="js/edit.js"></script>
+    <script src="js/todo.js"></script>
     <script src="js/time.js"></script>
     <script src="js/modal.js"></script>
     <script src="js/config.js"></script>

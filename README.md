@@ -41,6 +41,11 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
+### *2.0.11 (02/20/2025)*
+-------------------------
+- To-do list is back!
+    - Saved to local storage.
+- Bumped data version to 5, to reflect some added settings.
 
 ### *2.0.10 (02/19/2025)*
 -------------------------
