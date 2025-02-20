@@ -1,4 +1,4 @@
-var baseURL = "https://dynamic.xkcd.com/api-0/jsonp/comic/",
+var baseURL = "https://xkcd.vercel.app/?comic=",
     hinum, script, details = {},
     head = document.getElementsByTagName('head')[0];
 
@@ -15,7 +15,7 @@ function valid_num(n) {
 
     switch (true) {
         //The empty string is valid - it's the current comic.
-        case (n == ''):
+        case (n == 'latest'):
             break;
         case (parseInt(n, 10) != n || n < 1):
             msg = "'" + n + "' is not a positive integer";
@@ -50,7 +50,8 @@ function build_script(n) {
         head.removeChild(script);
     script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = baseURL + n + "?callback=dataloaded";
+    script.src = baseURL + n;
+    // script.src = `https://xkcd.com/${n}/info.0.json`
     head.appendChild(script);
 }
 
@@ -61,8 +62,8 @@ function pad(n) {
 function fill_page() {
     var t, num = details.num,
         url = "http://xkcd.com/" + num;
-    // console.log(num);
-    // console.log(details);
+    console.log(num);
+    console.log(details);
 
     document.getElementById("x-title").innerHTML = details.title + " - " + pad(details.month) + "/" + pad(details.day) + "/" + details.year;
     document.getElementById("x-num").innerHTML = num;
@@ -150,7 +151,7 @@ document.getElementById("x-num").addEventListener("keyup", function(e) {
     }
 });
 
-build_script('');
+build_script('latest');
 window.scroll(0, 0);
 
 // var canvas = document.getElementById("xkcd");

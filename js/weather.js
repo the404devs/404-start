@@ -4,16 +4,71 @@ const apiKeys = ["ac44343b90759cfe705813ff3a614fa5", "c974b8da946cbf11c238f30fff
 // If they start hitting limits, I'll just add more keys, lol.
 
 // Initial weather-getting function.
-function getWeatherInfo(code1, code2, units) {
+function getWeatherInfo(place1, place2, units) {
     // return; //for debugging
     // Construct the initial URLs for the first API calls.
-    const weatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + code1 + "&appid=" + apiKeys[0] + "&units=" + units;
-    const weatherURL2 = "https://api.openweathermap.org/data/2.5/weather?id=" + code2 + "&appid=" + apiKeys[1] + "&units=" + units;
+    const weatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + place1 + "&appid=" + apiKeys[0] + "&units=" + units;
+    const weatherURL2 = "https://api.openweathermap.org/data/2.5/weather?id=" + place2 + "&appid=" + apiKeys[1] + "&units=" + units;
     // Grab weather data for the two cities.
     // Comment out the following two lines to disable weather info (for debugging).
     getOpenWeatherData(weatherURL1, "#weather-1", units);
     getOpenWeatherData(weatherURL2, "#weather-2", units);
+
+    // getWttrWeatherData(place1, "#weather-1", units);
+    // getWttrWeatherData(place2, "#weather-2", units);
+
+    // console.log(weatherURL1);
+    // console.log(weatherURL2);
 }
+
+
+function getWttrWeatherData(location, boxID, units) {
+    const baseURL = "https://wttr.in/";
+    const requestFormat = {
+        "location": "%l",
+        "condition": "%C",
+        "icon": "%c",
+        "temperature": "%t",
+        "feels_like": "%f",
+        "wind": "%w",
+        "time": "%T"
+    }
+
+    const unitCode = units == 'metric' ? 'm' : 'u';
+
+    const requestURL = `${baseURL}${location.replaceAll(" ", "+")}?${unitCode}&format=${JSON.stringify(requestFormat).replaceAll('\"', '%22')}`;
+
+    console.log("%cCalling " + requestURL + "...", "color:yellow;font-weight:bold;font-style:italic;");
+
+
+    fetch(requestURL).then((response) => {return response.text()}).then(data => {
+        const weatherData = JSON.parse(data);
+        console.log(weatherData);
+
+        const iconID = boxID.replace('weather', 'weather-icon'); // We will need the ID of the weather icon for each weather box.
+        $(boxID + ' .weather-name').text(weatherData.location);
+        //todo: if wind +30kmh, add windy to desc
+
+        $(boxID + ' .temperature').html(weatherData.temperature.replaceAll('+', '')); // Fill in the temperature.
+        $(boxID + ' .feels-like').html("<b>Feels Like: </b>" + weatherData.feels_like.replaceAll('+', ''));
+        $(boxID + ' .conditions').html(weatherData.condition); // Fill in the conditions.
+        
+        const wind_speed = weatherData.wind.substring(1);
+        const wind_dir = weatherData.wind.substring(0,1);
+        
+        $(boxID + ' .wind').html(`<b>Wind: </b>${wind_speed} <b class='arrow'>${wind_dir}</b>`); // Fill in the wind speed and direction.
+        $(boxID + " .alert-button").hide();
+
+        // TODO: Nighttime icons
+        // if (weatherData.icon == "☀️")
+
+        setIcon(weatherData.icon, iconID);
+        icons.play();
+
+
+    });
+}
+
 
 // Makes the API calls and populates the weather info.
 function getOpenWeatherData(URL, boxID, units) {
@@ -30,82 +85,28 @@ function getOpenWeatherData(URL, boxID, units) {
         windScale = 2.236936; // Change the wind speed multiplier to miles per hour (2.236936m/s == 1mph).
     }
     $.getJSON(URL, function(data) {
-        // Yes, we call one API to get the lat/long of the city, and use that to call another API.
-        // Yes, its stupid as hell, but it works.
-        // Why have I brought this madness upon myself?
-        // Well, the OneCall API provides more detailed weather info, and is pretty much on-par with the old DarkSky API this used in the past.
-        // However, it can only be called with a latitude and longitude, and I doubt the user knows the lat/long of their city offhand.
-        // So, we call OpenWeather's basic weather API with a more easy-to-find city ID, and use the lat/long returned to call the OneCall API.
-        // I was very content with DarkSky, but Apple insists on making me miserable.
-        // I find it vaguely ironic that OpenWeather calls their DarkSky-equivalent API "OneCall", when this is the pain I have to endure.
-
-        // From our first call to OpenWeather, we will get the lat/long of the city, as well as it's name.
-        const long = data.coord.lon;
-        const lat = data.coord.lat;
-        const name = data.name;
-
-        console.log("%cGetting weather for " + name + "...", "color:yellow;font-weight:bold;font-style:italic;");
+        console.log("%cGetting weather for " + data.name + "...", "color:yellow;font-weight:bold;font-style:italic;");
+        console.log(data)
         // Fill in the city name in the weather box.
-        $(boxID + ' .weather-name').text(name);
+        $(boxID + ' .weather-name').text(data.name);
         // Reset the alert modals to their default state.
-        $(alertModalID + " .modal-header").text("Alerts for " + name);
+        $(alertModalID + " .modal-header").text("Alerts for " + data.name);
         $(alertModalID + " .modal-body").empty();
 
-        // Figure out which API key to use, the boxes use different ones to circumvent API key limits.
-        let apiKey = "";
-        if (boxID == "#weather-1") {
-            apiKey = apiKeys[0];
-        } else if (boxID == "#weather-2") {
-            apiKey = apiKeys[1];
+        $(`${boxID} .temperature`).html(data.main.temp + tempUnit);
+        $(`${boxID} .conditions`).html(titleCase(data.weather[0].description));
+        $(`${boxID} .wind`).html("<b>Wind: </b>" + (data.wind.speed * windScale).toFixed(2) + windUnit + " <b class='arrow'>" + getDirection(data.wind.deg)+ "</b>");
+        $(`${boxID} .high`).html("<b>H/L: </b>" + data.main.temp_max.toFixed(1) + tempUnit + "/" + data.main.temp_min.toFixed(1) + tempUnit);
+
+        if (data.main.feels_like) {
+            $(`${boxID} .feels-like`).html("<b>Feels Like: </b>" + data.main.feels_like.toFixed(1) + tempUnit);
         }
-        // Finally, construct the URL for the second API call.
-        oneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "6&appid=" + apiKey + "&exclude=minutely,hourly&units=" + units;
-        // console.log("%cCalling " + oneCallURL + "...", "color:yellow;font-weight:bold;font-style:italic;");
-    }).then(() => {
-        // Make the second API call once the first wave of nonsense has finished.
-        $.getJSON(oneCallURL, function(data) {
-            // Hacky workarounds for wind and sleet conditions
-            if (data.current.wind_speed > 8) {
-                // If the wind speed is greater than ~30km/h, set the icon to the windy one.
-                setIcon("w", iconID);
-                data.current.weather[0].description += " & Windy"; // Append "Windy" to the weather description.
-            } else if (data.current.weather[0].description.includes("sleet")) {
-                setIcon("s", iconID); // If the description contains "sleet", use the sleet icon
-            } else {
-                setIcon(data.current.weather[0].icon, iconID); //Set the icon to the one matching the current conditions.
-            }
-            icons.play(); // Begin the animation.
 
-            $(boxID + ' .temperature').html(data.current.temp + tempUnit); // Fill in the temperature.
-            $(boxID + ' .conditions').html(titleCase(data.current.weather[0].description)); // Fill in the conditions.
-            // Check for a "feels like" value (humidex, wind chill, etc), and fill it in if it exists.
-            if (data.current.feels_like) {
-                $(boxID + ' .feels-like').html("<b>Feels Like: </b>" + data.current.feels_like.toFixed(1) + tempUnit);
-            } else {
-                $(boxID + ' .feels-like').remove();
-            }
+        //TODO: Figure out if I can get alerts.
+        $(boxID + " .alert-button").hide();
 
-            $(boxID + ' .high').html("<b>H/L: </b>" + data.daily[0].temp.max.toFixed(1) + tempUnit + "/" + data.daily[0].temp.min.toFixed(1) + tempUnit); // Fill in the high/low.
-            $(boxID + ' .wind').html("<b>Wind: </b>" + (data.current.wind_speed * windScale).toFixed(2) + windUnit + " <b class='arrow'>" + getDirection(data.current.wind_deg)) + "</b>"; // Fill in the wind speed and direction.
-
-            // Check for any alerts for the city.
-            if (data.alerts) {
-                // Show the ! button that indicates there are alerts.
-                $(boxID + " .alert-button").show();
-                data.alerts.forEach((alert) => {
-                    // For each alert, add it to the alert modal.
-                    let start = new Date(alert.start * 1000);
-                    let end = new Date(alert.end * 1000);
-                    $(alertModalID + " .modal-body").append($("<h3>").html(titleCase(alert.event) + " Warning"));
-                    $(alertModalID + " .modal-body").append($("<p>").html("Issued: " + alertDateFormatter(start)));
-                    $(alertModalID + " .modal-body").append($("<p>").html("Ending: " + alertDateFormatter(end)));
-                    $(alertModalID + " .modal-body").append($("<p>").html(alert.description));
-                });
-            } else {
-                // If there are no alerts, hide the ! button.
-                $(boxID + " .alert-button").hide();
-            }
-        });
+        setIcon(data.weather[0].icon, iconID);
+        icons.play();
     });
 }
 
@@ -222,6 +223,39 @@ function setIcon(icon, id) {
             break;
         case "s":
             icons.set(id, Skycons.SLEET);
+            break;
+
+
+
+        case "☁️":
+            icons.set(id, Skycons.CLOUDY);
+            break;
+        case "🌧":
+            icons.set(id, Skycons.RAIN);
+            break;
+        case "❄️":
+            icons.set(id, Skycons.SNOW);
+            break;
+        case "🌨":
+            icons.set(id, Skycons.SNOW);
+            break;
+        case "🌫":
+            icons.set(id, Skycons.FOG);
+            break;
+        case "🌦":
+            icons.set(id, Skycons.RAIN);
+            break;
+        case "⛅️":
+            icons.set(id, Skycons.PARTLY_CLOUDY_DAY);
+            break;
+        case "☀️":
+            icons.set(id, Skycons.CLEAR_DAY);
+            break;
+        case "🌩":
+            icons.set(id, Skycons.THUNDER);
+            break;
+        case "⛈":
+            icons.set(id, Skycons.THUNDER);
             break;
         default:
             icons.set(id, Skycons.CLEAR_DAY);

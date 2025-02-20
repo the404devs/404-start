@@ -41,6 +41,13 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
+
+### *2.0.10 (02/19/2025)*
+-------------------------
+- Fixes for the weather system.
+    - Now using the OpenWeather standard API, instead of the Standard-to-OneCall weirdness I used to do.
+        - Don't know why that was even necessary, as the standard API gives all the data I need, plus OneCall costs money now.
+
 ### *2.0.9 (01/26/2024)*
 ------------------------
 - Shadow colour is now configurable.

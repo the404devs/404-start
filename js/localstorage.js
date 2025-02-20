@@ -7,8 +7,8 @@ let unsavedChanges = false; // Used to determine if the user has made any unsave
 
 const defaults = {
     "weather": {
-        "code1": 6167865,
-        "code2": 6077243,
+        "code1": "6167865",
+        "code2": "6077243",
         "units": "metric",
         "autoRefresh": false
     },
@@ -194,6 +194,7 @@ function loadFromLS() {
     });
 
     fillMissingValues(data); // Fill in any missing values in the config.
+    dataFixer(data);
 
     // Set the indicator labels for the slider-based inputs.
     $('#boxAlphaVal').html(($('#boxAlpha').val() * 100).toFixed(0) + '%');
@@ -496,6 +497,10 @@ function importConfig() {
     }
     reader.readAsText(file);
     $("#import-theme-button").val(""); // After importing, clear the file input.
+}
+
+function dataFixer(data) {
+    return;
 }
 
 // hacky fixes for some Firefox oddities
