@@ -1,5 +1,4 @@
-var baseURL = "https://xkcd.vercel.app/?comic=",
-    hinum, script, details = {},
+var hinum, script, details = {},
     head = document.getElementsByTagName('head')[0];
 
 function dataloaded(obj) {
@@ -50,8 +49,8 @@ function build_script(n) {
         head.removeChild(script);
     script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = baseURL + n;
-    // script.src = `https://xkcd.com/${n}/info.0.json`
+    // script.src = baseURL + n;
+    script.src = `https://xkcd.com/${n}/info.0.json`
     head.appendChild(script);
 }
 
@@ -151,7 +150,7 @@ document.getElementById("x-num").addEventListener("keyup", function(e) {
     }
 });
 
-build_script('latest');
+build_script('');
 window.scroll(0, 0);
 
 // var canvas = document.getElementById("xkcd");
