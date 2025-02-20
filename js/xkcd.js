@@ -1,6 +1,6 @@
 function fetchComic(n) {
     let nStr = n == 0 ? "latest" : n.toString();
-    fetch(`https://xkcd.now.sh/?comic=nStr`).then(response => {
+    fetch(`https://xkcd.now.sh/?comic=${nStr}`).then(response => {
         console.log(response.json());
     });
 }
