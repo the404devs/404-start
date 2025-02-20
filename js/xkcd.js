@@ -1,8 +1,8 @@
-function fetchComic(n) {
+async function fetchComic(n) {
     let nStr = n == 0 ? "latest" : n.toString();
-    fetch(`https://xkcd.now.sh/?comic=${nStr}`).then(response => {
-        console.log(response.json());
-    });
+    const response = await fetch(`https://xkcd.now.sh/?comic=${nStr}`);
+    const comic = response.json();
+    console.log(comic);
 }
 
 
