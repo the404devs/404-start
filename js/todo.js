@@ -10,16 +10,18 @@ function addEvent() {
     const body = document.getElementById("eventBody");
     const datetime = Date.parse(date.value + " " + time.value);
 
-    events.push({
-        "title": title.value,
-        "datetime": datetime,
-        "body": body.value
-    });
-
-    // console.log(events);
-    localStorage.setItem("404EVENTS", JSON.stringify(events));
-    renderEvents();
-    hideModal("#todo-modal");
+    if (!date.value || !time.value || !title.value) {
+        alert("Please provide a title, date, and time.");
+    } else {
+        events.push({
+            "title": title.value,
+            "datetime": datetime,
+            "body": body.value
+        });
+        localStorage.setItem("404EVENTS", JSON.stringify(events));
+        renderEvents();
+        hideModal("#todo-modal");
+    }
 }
 
 

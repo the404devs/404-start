@@ -229,9 +229,9 @@ body {
 
 .todo-header {
     font-family: "Gilroy";
-    font-size: 30px;
+    font-size: 24px;
     border-bottom: 1px solid var(--border);
-    padding: 0 5px 0 5px;
+    padding: 5px 5px 5px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -395,10 +395,12 @@ function constructUserCSS() {
     // Check if the backgroundImage field is set, this indicates the user has set a new custom background.
     if ($("#backgroundImage").val() == "") {
         // Field is not set, so use same one they're already using.
-        userCSS += " --backgroundImage: " + styleVar("backgroundImage") + ";";
+        userCSS += ` --backgroundImage: ${styleVar("backgroundImage")};`;
     } else {
         // Set the background image to the user's new one.
-        userCSS += " --backgroundImage: url(data:image/jpg;base64," + base64String + ");";
+        userCSS += ` --backgroundImage: url(${base64String});`;
+        console.log("Importing new bg!");
+        console.log(`${base64String}`);
     }
 
     userCSS += "}";
@@ -412,7 +414,7 @@ function imageUploaded() {
     const reader = new FileReader();
     reader.onload = function() {
         // Get the image data as a base64 string, assign it to the global variable.
-        base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+        base64String = reader.result;
     }
     reader.readAsDataURL(file);
 }
