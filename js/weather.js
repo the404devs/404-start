@@ -77,7 +77,7 @@ function getDirection(bearing) {
     let x = 0;
     let arrow = "";
     directions.forEach(function(dir) {
-        if (bearing >= dir[0] && bearing < dir[1]) {
+        if (bearing >= dir[0] && bearing <= dir[1]) {
             arrow = arrows[x];
         }
         x++;
@@ -87,9 +87,12 @@ function getDirection(bearing) {
 
 // Capitalizes the first letter of each word in a string.
 function titleCase(str) {
+    const dontCapitalize = ["and"];
     str = str.toLowerCase().split(' ');
     for (let i = 0; i < str.length; i++) {
-        str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+        if (!dontCapitalize.includes(str[i])) {
+            str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+        }
     }
     return str.join(' ');
 }
