@@ -436,6 +436,10 @@ function styleVar(key) {
     if (backgroundKeys.includes(key)) {
         // Special case for background colours, remove the last two digits of the hex code (alpha).
         return style.getPropertyValue("--" + key).trim().slice(0, 7);
+    } else if (key == "shadow-color") {
+        return style.getPropertyValue("--" + key).trim().slice(0, 7);
+    } else if (key == "border") {
+        return style.getPropertyValue("--" + key).trim().slice(0, 7);
     } else if (key == "borderRadius") {
         // Special case for border radius, remove the "px" at the end.
         return style.getPropertyValue("--" + key).trim().slice(0, -2);
