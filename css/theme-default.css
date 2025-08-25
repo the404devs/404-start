@@ -3,6 +3,8 @@
     --background: #11111180;
     --backgroundImage: url(../img/ducks.jpg);
     --border: #f5f5f5;
+    --borderIgnoreAlpha: #f5f5f5;
+    --bordAlpha: 1;
     --borderRadius: 5px;
     --boxAlpha: 0.5;
     --foreground: #f5f5f5;
@@ -30,4 +32,5 @@
     --todoForeground: #f5f5f5;
     /* SHADOWS */
     --shadow-color : #222222;
+    --shadAlpha: 1;
 }
