@@ -392,6 +392,8 @@ function constructUserCSS() {
         } else if ($(this).attr("id") == "border") {
             let alpha = 255 * Number($("#bordAlpha").val());
             userCSS += Math.round(alpha).toString(16);
+
+            userCSS += "; --borderIgnoreAlpha: " + $(this).val();
         } else if ($(this).attr("id") == "borderRadius") {
             userCSS += "px";
         } else if ($(this).attr("id") == "weatherBoxMargin") {
