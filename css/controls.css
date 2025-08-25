@@ -2,9 +2,7 @@
 
 .button {
     background-color: var(--buttonBackground);
-    border-color: var(--border);
-    border-style: solid;
-    border-width: 1px;
+    border: 1px solid var(--border);
     color: var(--buttonForeground);
     cursor: pointer;
     display: inline-block;
@@ -30,9 +28,7 @@
 
 .small-button {
     background-color: var(--buttonBackground);
-    border-color: var(--border);
-    border-style: solid;
-    border-width: 1px;
+    border: 1px solid var(--border);
     color: var(--buttonForeground);
     cursor: pointer;
     display: inline-block;
