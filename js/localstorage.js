@@ -204,6 +204,7 @@ function loadFromLS() {
 
     // Set the indicator labels for the slider-based inputs.
     $('#boxAlphaVal').html(($('#boxAlpha').val() * 100).toFixed(0) + '%');
+    $('#shadAlphaVal').html(($('#shadAlpha').val() * 100).toFixed(0) + '%');
     $('#headerAlphaVal').html(($('#headerAlpha').val() * 100).toFixed(0) + '%');
     $('#borderRadiusVal').html($('#borderRadius').val() + 'px');
     $('#weatherBoxMarginVal').html($('#weatherBoxMargin').val() + '%');
@@ -383,6 +384,9 @@ function constructUserCSS() {
             userCSS += Math.round(alpha).toString(16);
         } else if (backgroundKeys.includes($(this).attr("id"))) {
             let alpha = 255 * Number($("#boxAlpha").val());
+            userCSS += Math.round(alpha).toString(16);
+        } else if ($(this).attr("id") == "shadow-color") {
+            let alpha = 255 * Number($("#shadAlpha").val());
             userCSS += Math.round(alpha).toString(16);
         } else if ($(this).attr("id") == "borderRadius") {
             userCSS += "px";
