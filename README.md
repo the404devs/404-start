@@ -38,6 +38,12 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ## Changelog
 
+### *2.0.12 (08/25/2025)*
+-------------------------
+- Added opacity sliders for UI shadows and borders.
+- Bumped data version to 6 as a result.
+    - I don't know if that was necessary.
+
 ### *2.0.11 (02/20/2025)*
 -------------------------
 - To-do list is back!
