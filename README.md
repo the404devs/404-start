@@ -35,6 +35,10 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 
 ![alt text](img/owm2.png "OpenWeather URL, showing the city ID")
 
+## Todo list
+------------
+- Optimize CSS shadows
+- Refactor all JS to remove jQuery
 
 ## Changelog
 
