@@ -67,6 +67,10 @@ body {
     z-index: 100;
 }
 
+#header.no-shadow {
+    text-shadow: none;
+}
+
 #time {
     color: var(--headerForeground);
     font-family: "Gilroy";
