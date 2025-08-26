@@ -6,6 +6,9 @@ const backgroundKeys = ["background", "weatherBoxBackground", "modalBackground",
 let unsavedChanges = false; // Used to determine if the user has made any unsaved changes.
 
 const defaults = {
+    "theme": {
+        "headerShadow": true
+    },
     "weather": {
         "code1": "6167865",
         "code2": "6077243",
@@ -87,7 +90,8 @@ function saveToLS(reload) {
     // Construct a JSON object containing all the current config values.
     const data = {
         "theme": {
-            "colours": userCSS
+            "colours": userCSS,
+            "headerShadow": $("#headerShadow").prop("checked")
         },
         "weather": {
             "code1": $("#weather-code-1").val(),
@@ -223,6 +227,7 @@ function loadFromLS() {
     $("#focus-search-bar").prop("checked", data.search.focus);
 
     $("#show-todo-list").prop("checked", data.todo.show);
+    $("#headerShadow").prop("checked", data.theme.headerShadow);
 
     // Fill the link configuration keys with what's in local storage. Will be blank if unset, and that's ok.
     $("#link-name-1").val(data.links.link1.name);
@@ -344,6 +349,10 @@ function loadFromLS() {
         setCustomLayout(currentCustomLayout);
     } else {
         $("#edit-toggle").css("display", "none");
+    }
+
+    if (!data.theme.headerShadow) {
+        document.querySelector("div#header").classList.add("no-shadow");
     }
 
     // If we should be saving config because this is the first time, do so.
