@@ -4,7 +4,7 @@
     background-color: var(--background);
     border-radius: var(--borderRadius);
     border: 1px solid var(--border);
-    box-shadow: black 0px 2px 10px, black 0px -2px 10px;
+    box-shadow: var(--shadow);
     display: none;
     font-family: "Gilroy";
     height: auto;
