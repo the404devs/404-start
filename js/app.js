@@ -20,3 +20,23 @@ function fadeIn(elem, duration = 400, display = 'block') {
   }
   requestAnimationFrame(animate);
 }
+
+function fadeOut(elem, duration = 400, display = 'block') {
+  elem.style.opacity = 1;
+
+  let start = null;
+  function animate(timestamp) {
+    if (!start) start = timestamp;
+    let progress = (timestamp - start) / duration;
+    if (progress > 1) progress = 1;
+
+    elem.style.opacity = 1 - progress;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      elem.style.display = 'none';
+    }
+  }
+  requestAnimationFrame(animate);
+}
