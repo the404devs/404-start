@@ -11,9 +11,9 @@ function showModal(id) {
     
     // Show the modal
     const modal = $(id);
-    modal.style.display = 'block'; 
     modal.style.filter = 'none'
     modal.style.backdropFilter = 'blur(10px)';
+    fadeIn(modal);
     currentModal = id;
 }
 
@@ -26,7 +26,7 @@ function hideModal() {
     $('#xkcd-zone').style.filter = 'none';
     // Unshow the modals. All of them.
     $$('.modal').forEach(modal => {
-       modal.style.display = 'none'; 
+       fadeOut(modal);
     });
     currentModal = null;
 }
