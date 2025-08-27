@@ -282,8 +282,8 @@ function loadFromLS() {
     indShadAlpha.innerHTML = (generalShadowAlpha.value * 100).toFixed(0) + '%';
     indBordAlpha.innerHTML = (generalBorderAlpha.value * 100).toFixed(0) + '%';
     indHeadAlpha.innerHTML = (headerAlpha.value * 100).toFixed(0) + '%';
-    indBordRad.innerHTML = (generalBorderRadius.value * 100).toFixed(0) + '%';
-    indWeatherMargin.innerHTML = (weatherMargin.value * 100).toFixed(0) + '%';
+    indBordRad.innerHTML = generalBorderRadius.value+ 'px';
+    indWeatherMargin.innerHTML = weatherMargin.value + '%';
     
 
     // Fill the weather configuration keys with what's in local storage, or the default if unavailable.
@@ -350,8 +350,10 @@ function loadFromLS() {
     // If the user has the link box enabled, show it.
     if (data.links.show) {
         linkBox.style.display = 'block';
+        todoList.style.marginLeft = '30px';
     } else {
         linkBox.style.display = 'none';
+        todoList.style.marginLeft = '0';
     }
     
     // Move the XKCD box up or down accordingly.
@@ -439,11 +441,6 @@ function loadFromLS() {
     showLinkGroup(0);
 
     $('body').style.backgroundImage = 'var(--backgroundImage)';
-    // And smoothly fade in.
-    function unblur() {
-        // $('body').style.filter = 'none';
-    }
-    // setTimeout(unblur, 150);
 }
 
 // Used to determine which link group to show in the config menu.

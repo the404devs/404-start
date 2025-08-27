@@ -27,14 +27,9 @@
 
 
 /* GENERAL RULES */
-
-html {
-    height: -webkit-fill-available;
-    overflow-x: hidden;
-}
-
 body {
     /* filter: blur(25px); */
+    overflow-x: hidden;
     transition: 1s filter ease;
     background-attachment: fixed;
     /* background-image: var(--backgroundImage); */
@@ -45,6 +40,7 @@ body {
     height: -webkit-fill-available;
     margin: 0;
     text-align: center;
+    text-rendering: geometricPrecision;
 }
 
 #main {

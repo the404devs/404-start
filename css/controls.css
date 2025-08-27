@@ -137,7 +137,7 @@
 
 hr {
     border: none;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--modalForeground);
     height: 0;
 }
 
