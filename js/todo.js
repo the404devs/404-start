@@ -20,7 +20,7 @@ function addEvent() {
         });
         localStorage.setItem("404EVENTS", JSON.stringify(events));
         renderEvents();
-        hideModal("#todo-modal");
+        hideModal();
 
         title.value = "";
         date.value = "";

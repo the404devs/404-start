@@ -2,16 +2,12 @@ setInterval(timer, 1000); // Update the time every second
 let dateFormatString = ""; // These will hold the user's preferred date/time formats,
 let timeFormatString = ""; // and are set in localstorage.js
 
-let pause = false; // Used to stop updating the timer by edit.js
-
 function timer() {
     const d = new Date();
     const userFormattedDate = dateFormatter(d); // Get the date and time in the user's preferred formats
     const userFormattedTime = timeFormatter(d);
-    if (!pause) {
-        $('#date').html(userFormattedDate); // Fill the date and time in the DOM
-        $('#time').html(userFormattedTime);
-    }
+    $('#date').textContent = userFormattedDate; // Fill the date and time in the DOM
+    $('#time').textContent = userFormattedTime;
 }
 
 function dateFormatter(d) {
@@ -68,11 +64,11 @@ function timeFormatter(d) {
 // There's a thing in the config that shows/hides the date/time keys and what they represent.
 // This function controls that thing. Wow.
 function toggleTimeDocs() {
-    if ($('#time-docs').css('display') == 'none') {
-        $('#time-docs').css('display', 'block');
-        $('#time-docs-clickable').html('Hide Format Documentation');
+    if ($('#time-docs').style.display == 'none') {
+        $('#time-docs').style.display = 'block';
+        $('#time-docs-clickable').textContent = 'Hide Format Documentation';
     } else {
-        $('#time-docs').css('display', 'none');
-        $('#time-docs-clickable').html('Show Format Documentation');
+        $('#time-docs').style.display = 'none';
+        $('#time-docs-clickable').textContent = 'Show Format Documentation';
     }
 }
