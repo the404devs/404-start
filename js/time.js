@@ -64,11 +64,11 @@ function timeFormatter(d) {
 // There's a thing in the config that shows/hides the date/time keys and what they represent.
 // This function controls that thing. Wow.
 function toggleTimeDocs() {
-    if ($('#time-docs').css('display') == 'none') {
-        $('#time-docs').css('display', 'block');
-        $('#time-docs-clickable').html('Hide Format Documentation');
+    if ($('#time-docs').style.display == 'none') {
+        $('#time-docs').style.display = 'block';
+        $('#time-docs-clickable').textContent = 'Hide Format Documentation';
     } else {
-        $('#time-docs').css('display', 'none');
-        $('#time-docs-clickable').html('Show Format Documentation');
+        $('#time-docs').style.display = 'none';
+        $('#time-docs-clickable').textContent = 'Show Format Documentation';
     }
 }
