@@ -282,7 +282,7 @@ function loadFromLS() {
     indShadAlpha.innerHTML = (generalShadowAlpha.value * 100).toFixed(0) + '%';
     indBordAlpha.innerHTML = (generalBorderAlpha.value * 100).toFixed(0) + '%';
     indHeadAlpha.innerHTML = (headerAlpha.value * 100).toFixed(0) + '%';
-    indBordRadius.innerHTML = (generalBorderRadius.value * 100).toFixed(0) + '%';
+    indBordRad.innerHTML = (generalBorderRadius.value * 100).toFixed(0) + '%';
     indWeatherMargin.innerHTML = (weatherMargin.value * 100).toFixed(0) + '%';
     
 
