@@ -2,7 +2,7 @@
 
 .modal {
     display: none;
-    filter: blur(5px);
+    backdrop-filter: blur(10px);
     height: 100%;
     left: 0;
     overflow: hidden;
