@@ -65,12 +65,12 @@ document.getElementById("x-num").addEventListener("keyup", function(e) {
     }
 });
 
-if ($("showXKCD").checked) {
+if ($("xkcd-toggle").checked) {
     fetchComic(0);    
 }
 
-$("showXKCD").addEventListener('change', function() {
-    if ($("showXKCD").checked) {
+$("xkcd-toggle").addEventListener('change', function() {
+    if ($("xkcd-toggle").checked) {
         fetchComic(0);    
     }
 });
