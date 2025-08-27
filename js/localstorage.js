@@ -433,7 +433,7 @@ function loadFromLS() {
 
     // Time to get weather info.
     getWeatherInfo(data.weather.code1, data.weather.code2, data.weather.units);
-    icons.color = document.getElementById("weatherBoxForeground").value;
+    icons.color = weatherForeground.value;
     // Show the first link group in the config menu by default.
     showLinkGroup(0);
 
