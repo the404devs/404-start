@@ -166,7 +166,7 @@ function saveToLS(reload) {
         "weather": {
             "code1": weatherCode1.value,
             "code2": weatherCode2.value,
-            "units": weatherUnit.value,
+            "units": weatherUnits.value,
             "autoRefresh": weatherAutoRefresh.checked
         },
         "search": {
