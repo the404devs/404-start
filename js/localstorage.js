@@ -235,7 +235,7 @@ function saveToLS(reload) {
         if (reload) {
             loadFromLS();
         }
-        hideModal();
+        hideAllModals();
     }
 };
 
@@ -604,7 +604,7 @@ function importConfig() {
             // Overwrite the current theme with the incoming theme in local storage.
             localStorage.setItem("404CONFIG", JSON.stringify(data));
             loadFromLS(); // Reload
-            hideModal(); // Hide the modal.
+            hideModal($('#config-window')); // Hide the modal.
             console.log("%c" + "Successfully imported " + file.name, "color:green");
         } catch (e) {
             // Something went horribly wrong, such as the user uploading JSON that isn't an actual theme, or just plain garbage.
@@ -643,13 +643,13 @@ function warnUnsavedChanges() {
         if (answer) {
             // save, then hide modal
             saveToLS();
-            hideModal();
+            hideModal($('#config-window'));
         } else {
             //discard changes, hide modal
-            hideModal();
+            hideModal($('#config-window'));
         }
     } else {
-        hideModal();
+        hideModal($('#config-window'));
     }
 }
 
