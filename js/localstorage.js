@@ -1,9 +1,68 @@
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
 const dataVersion = 5; // Current theme data version
 const minimumSupportedDataVersion = 0; // Minimum supported data version, used to determine if an imported theme is compatible with the current version
 let base64String = ""; // Will hold the base64 string of an uploaded image
 // All theme keys representing the background colour of various elements
 const backgroundKeys = ["background", "weatherBoxBackground", "modalBackground", "linkBoxBackground", "buttonBackground", "headerBackground", "todoBackground"];
 let unsavedChanges = false; // Used to determine if the user has made any unsaved changes.
+
+const weatherCode1 = $('#weather-code-1');
+const weatherCode2 = $('#weather-code-2');
+const weatherUnits = $('#unit-selector');
+const weatherAutoRefresh = $('#weather-auto-refresh');
+
+const generalBackground = $('#background');
+const generalForeground = $('#foreground');
+const generalHighlight = $('#highlight');
+const generalShadow = $('#shadow-color');
+const generalShadowAlpha = $('#shadAlpha');
+const generalBorder = $('#border');
+const generalBorderAlpha = $('#bordAlpha');
+const generalBorderRadius = $('#borderRadius');
+const generalBackgroundAlpha = $('#boxAlpha');
+const generalImage = $('#backgroundImage');
+
+const headerForeground = $('#headerForeground');
+const headerBackground = $('#headerBackground');
+const headerAlpha = $('#headerAlpha');
+const headerShadow = $('#headerShadow');
+
+const weatherForeground = $('#weatherBoxForeground');
+const weatherBackground = $('#weatherBoxBackground');
+const weatherMargin = $('#weatherBoxMargin');
+
+const modalForeground = $('#modalForeground');
+const modalBackground = $('#modalBackground');
+
+const buttonForeground = $('#buttonForeground');
+const buttonBackground = $('#buttonBackground');
+const buttonHighlight = $('#buttonHighlight');
+
+const linkBoxForeground = $('#linkBoxForeground');
+const linkBoxBackground = $('#linkBoxBackground');
+
+const todoForeground = $('#todoForeground');
+const todoBackground = $('#todoBackground');
+
+const dateFormat = $('#date-format');
+const timeFormat = $('#time-format');
+
+const showSearchBar = $('#show-search-bar');
+const focusSearchBar = $('#focus-search-bar');
+const preferredSearchEngine = $('#search-engine-selector');
+
+const showTodoList = $('#show-todo-list');
+
+
+const indShadAlpha = $('#shadAlphaVal');
+const indBordAlpha = $('#bordAlphaVal');
+const indBordRad = $('#borderRadiusVal');
+const indBoxAlpha = $('#boxAlphaVal');
+const indHeadAlpha = $('#headerAlphaVal');
+const indWeatherMargin = $('#weatherBoxMarginVal');
+
 
 const defaults = {
     "theme": {
@@ -91,18 +150,18 @@ function saveToLS(reload) {
     const data = {
         "theme": {
             "colours": userCSS,
-            "headerShadow": $("#headerShadow").prop("checked")
+            "headerShadow": headerShadow.checked
         },
         "weather": {
-            "code1": $("#weather-code-1").val(),
-            "code2": $("#weather-code-2").val(),
-            "units": $("#unit-selector").val(),
-            "autoRefresh": $("#weather-auto-refresh").prop("checked")
+            "code1": weatherCode1.value,
+            "code2": weatherCode2.value,
+            "units": weatherUnit.value,
+            "autoRefresh": weatherAutoRefresh.checked
         },
         "search": {
-            "engine": $("#search-engine-selector").val(),
-            "show": $("#show-search-bar").prop("checked"),
-            "focus": $("#focus-search-bar").prop("checked")
+            "engine": preferredSearchEngine.value,
+            "show": showSearchBar.checked,
+            "focus": focusSearchBar.checked
         },
         "links": {
             "link1": {
@@ -132,14 +191,14 @@ function saveToLS(reload) {
             "show": $("#show-link-box").prop("checked")
         },
         "todo": {
-            "show": $("#show-todo-list").prop("checked")
+            "show": showTodoList.checked
         },
         "misc": {
             "updateCheck": $("#update-toggle").prop("checked"),
             "showXKCD": $("#xkcd-toggle").prop("checked"),
             "invertXKCD": $("#invert-toggle").prop("checked"),
-            "dateFormat": $("#date-format").val(),
-            "timeFormat": $("#time-format").val(),
+            "dateFormat": dateFormat.value,
+            "timeFormat": timeFormat.value,
             "useCustomPositioning": $("#custom-position-toggle").prop("checked")
         },
         "customLayout": currentCustomLayout,
@@ -183,8 +242,8 @@ function loadFromLS() {
     if (!data) {
         console.log("%cNo config found, setting defaults.", "color:red");
         // Fill the theme config section with the default values.
-        $(".theme-val").each(function() {
-            $(this).val(styleVar($(this).attr("id")));
+        $$(".theme-val").forEach(setting => {
+            setting.value = styleVar(setting.id);
         });
         saveAfterLoad = true; // Indicate that we should save after loading.
         saveToLS(false); // Save without reloading to set the default CSS values, we will save properly later.
@@ -192,42 +251,47 @@ function loadFromLS() {
     }
 
     // Remove any existing style tags, such as ones containing the old CSS after the user makes a change to the theme.
-    $("head").children("#USER-STYLE").each(function() {
-        $(this).remove();
-    });
+    $$("#USER-STYLE").forEach(style => {
+        style.remove();
+    })
     // Pop in a new style tag with the current theme CSS.
-    $("head").append($("<style>").attr("id", "USER-STYLE").html(data.theme.colours));
+    const userStyle = document.createElement('style');
+    userStyle.id = "USER-STYLE";
+    userStyle.innerHTML = data.theme.colours;
+    $("head").appendChild(userStyle);
 
     // Fill all the theme config inputs (colours, etc) with the values of the current theme.
-    $(".theme-val").each(function() {
-        $(this).val(styleVar($(this).attr("id")));
+    $$(".theme-val").forEach(setting => {
+        setting.value = styleVar(setting.id);
     });
 
     fillMissingValues(data); // Fill in any missing values in the config.
     dataFixer(data);
 
     // Set the indicator labels for the slider-based inputs.
-    $('#boxAlphaVal').html(($('#boxAlpha').val() * 100).toFixed(0) + '%');
-    $('#shadAlphaVal').html(($('#shadAlpha').val() * 100).toFixed(0) + '%');
-    $('#bordAlphaVal').html(($('#bordAlpha').val() * 100).toFixed(0) + '%');
-    $('#headerAlphaVal').html(($('#headerAlpha').val() * 100).toFixed(0) + '%');
-    $('#borderRadiusVal').html($('#borderRadius').val() + 'px');
-    $('#weatherBoxMarginVal').html($('#weatherBoxMargin').val() + '%');
+    indBoxAlpha.innerHTML = (generalBackgroundAlpha.value * 100).toFixed(0) + '%';
+    indShadAlpha.innerHTML = (generalShadowAlpha.value * 100).toFixed(0) + '%';
+    indBordAlpha.innerHTML = (generalBorderAlpha.value * 100).toFixed(0) + '%';
+    indHeadAlpha.innerHTML = (headerAlpha.value * 100).toFixed(0) + '%';
+    indBordRadius.innerHTML = (borderRadius.value * 100).toFixed(0) + '%';
+    indWeatherMargin.innerHTML = (weatherMargin.value * 100).toFixed(0) + '%';
+    
 
     // Fill the weather configuration keys with what's in local storage, or the default if unavailable.
-    $("#weather-code-1").val(data.weather.code1);
-    $("#weather-code-2").val(data.weather.code2);
-    $("#unit-selector").val(data.weather.units);
-    $("#weather-auto-refresh").prop("checked", data.weather.autoRefresh);
+    weatherCode1.value = data.weather.code1;
+    weatherCode2.value = data.weather.code2;
+    weatherUnits.value = data.weather.units;
+    weatherAutoRefresh.checked = data.weather.autoRefresh;
 
     // Fill the search engine selector with the current value, or the default if unavailable.
-    $("#search-engine-selector").val(data.search.engine);
+    preferredSearchEngine.value = data.search.engine;
     // Set the search bar to be visible or not, depending on the current value.
-    $("#show-search-bar").prop("checked", data.search.show);
-    $("#focus-search-bar").prop("checked", data.search.focus);
+    showSearchBar.checked = data.search.show;
+    focusSearchBar.checked = data.search.focus;
 
-    $("#show-todo-list").prop("checked", data.todo.show);
-    $("#headerShadow").prop("checked", data.theme.headerShadow);
+    
+    showTodoList.checked = data.todo.show;
+    headerShadow.checked = data.theme.headerShadow;
 
     // Fill the link configuration keys with what's in local storage. Will be blank if unset, and that's ok.
     $("#link-name-1").val(data.links.link1.name);
@@ -265,8 +329,8 @@ function loadFromLS() {
     // We set the global format strings in the process, used in time.js.   
     dateFormatString = data.misc.dateFormat;
     timeFormatString = data.misc.timeFormat;
-    $("#date-format").val(dateFormatString);
-    $("#time-format").val(timeFormatString);
+    dateFormat.value = dateFormatString;
+    timeFormat.value = timeFormatString;
 
     // If the user has the link box enabled, show it.
     if (data.links.show) {
