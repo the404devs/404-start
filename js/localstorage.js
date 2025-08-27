@@ -235,7 +235,7 @@ function saveToLS(reload) {
         if (reload) {
             loadFromLS();
         }
-        // hideModal();
+        hideModal();
     }
 };
 
