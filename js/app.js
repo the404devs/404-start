@@ -2,7 +2,7 @@ const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
 
-function fadeIn(elem, duration = 400, display = 'block') {
+function fadeIn(elem, duration = 250, display = 'block') {
   elem.style.opacity = 0;
   elem.style.display = 'block';
 
@@ -21,7 +21,7 @@ function fadeIn(elem, duration = 400, display = 'block') {
   requestAnimationFrame(animate);
 }
 
-function fadeOut(elem, duration = 400, display = 'block') {
+function fadeOut(elem, duration = 250, display = 'block') {
   elem.style.opacity = 1;
 
   let start = null;
