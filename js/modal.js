@@ -25,7 +25,6 @@ function hideModal() {
     $('#xkcd-zone').style.backdropFilter = 'blur(10px)';
     $('#xkcd-zone').style.filter = 'none';
     // Unshow the modals. All of them.
-    $(".modal").fadeOut();
     $$('.modal').forEach(modal => {
        modal.style.display = 'none'; 
     });
