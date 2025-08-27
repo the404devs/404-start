@@ -446,7 +446,7 @@ function loadFromLS() {
 
 // Used to determine which link group to show in the config menu.
 function showLinkGroup() {
-    const x = parseInt($("#link-selector").val());
+    const x = parseInt($("#link-selector").value);
     $$(".link-group").forEach(lg => {
         lg.style.display = 'none';
     })
