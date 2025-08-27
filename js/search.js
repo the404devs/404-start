@@ -5,16 +5,16 @@ const engineURLS = {
 };
 
 function search() {
-    const query = $('#search-input').val();
-    const engine = $('#search-engine-selector').val();
+    const query = $('#search-input').value;
+    const engine = $('#search-engine-selector').value;
     const url = engineURLS[engine] + query;
     if (query && query.replace(/\s+/g, '')) {
         window.open(url);
-        $('#search-input').val('');
+        $('#search-input').value = '';
     }
 }
 
-$('#search-input').keypress(function(e) {
+$('#search-input').addEventListener('keydown', function(e) {
     if (e.which == 13) {
         search();
     }
