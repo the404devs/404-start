@@ -5,11 +5,11 @@ function checkIfLocal() {
     // There are a few config options that aren't necessary, when used online, so we hide those.
     if (document.location.href.startsWith("file://")) {
         console.log("%c404-Start is running as a local file.", "color:magenta;font-weight:bold;font-style:italic;");
-        $("#local-settings").show();
+        $("#local-settings").style.display = 'block';
         LOCAL = true;
     } else {
         console.log("%c404-Start is running online at start.the404.nl ", "color:magenta;font-weight:bold;font-style:italic;");
-        $("#local-settings").hide();
+        $("#local-settings").style.display = 'none';
     }
 }
 
