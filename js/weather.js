@@ -10,8 +10,8 @@ function getWeatherInfo(place1, place2, units) {
     const weatherURL1 = "https://api.openweathermap.org/data/2.5/weather?id=" + place1 + "&appid=" + apiKeys[0] + "&units=" + units;
     const weatherURL2 = "https://api.openweathermap.org/data/2.5/weather?id=" + place2 + "&appid=" + apiKeys[1] + "&units=" + units;
 
-    const weatherBox1 = document.getElementById("weather-1");
-    const weatherBox2 = document.getElementById("weather-2");
+    const weatherBox1 = $("#weather-1");
+    const weatherBox2 = $("#weather-2");
     // Grab weather data for the two cities.
     // Comment out the following two lines to disable weather info (for debugging).
     getOpenWeatherData(weatherURL1, weatherBox1, units);
