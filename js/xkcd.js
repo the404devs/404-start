@@ -65,4 +65,12 @@ document.getElementById("x-num").addEventListener("keyup", function(e) {
     }
 });
 
-fetchComic(0);
+if ($("showXKCD").checked) {
+    fetchComic(0);    
+}
+
+$("showXKCD").addEventListener('change', function() {
+    if ($("showXKCD").checked) {
+        fetchComic(0);    
+    }
+});
