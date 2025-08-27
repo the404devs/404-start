@@ -29,13 +29,13 @@
 /* GENERAL RULES */
 
 html {
-    filter: blur(25px);
     height: -webkit-fill-available;
     transition: 1s filter ease;
     overflow-x: hidden;
 }
 
 body {
+    filter: blur(25px);
     background-attachment: fixed;
     background-image: var(--backgroundImage);
     background-position-x: center;
