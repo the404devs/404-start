@@ -1,6 +1,3 @@
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-
 const dataVersion = 5; // Current theme data version
 const minimumSupportedDataVersion = 0; // Minimum supported data version, used to determine if an imported theme is compatible with the current version
 let base64String = ""; // Will hold the base64 string of an uploaded image
