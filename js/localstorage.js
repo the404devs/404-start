@@ -408,6 +408,7 @@ function loadFromLS() {
 
     // If the user has indicated to show the XKCD comic, do so.
     if (data.misc.showXKCD) {
+        // fetchComic(0);
         xkcdZone.style.display = 'flex';
     } else {
         console.log("%cXKCD disabled", "color:lightblue");
@@ -437,11 +438,12 @@ function loadFromLS() {
     // Show the first link group in the config menu by default.
     showLinkGroup(0);
 
+    $('body').style.backgroundImage = 'var(--backgroundImage)';
     // And smoothly fade in.
     function unblur() {
-        $('body').style.filter = 'none';
+        // $('body').style.filter = 'none';
     }
-    setTimeout(unblur, 250);
+    // setTimeout(unblur, 150);
 }
 
 // Used to determine which link group to show in the config menu.

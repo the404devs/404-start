@@ -30,14 +30,16 @@
 
 html {
     height: -webkit-fill-available;
-    transition: 1s filter ease;
     overflow-x: hidden;
 }
 
 body {
-    filter: blur(25px);
+    /* filter: blur(25px); */
+    transition: 1s filter ease;
     background-attachment: fixed;
-    background-image: var(--backgroundImage);
+    /* background-image: var(--backgroundImage); */
+    background-image: none;
+    background-color: var(--background);
     background-position-x: center;
     background-size: cover;
     height: -webkit-fill-available;
