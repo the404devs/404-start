@@ -203,8 +203,6 @@
                         <label title="Adjust the position of the weather boxes. (0%: Boxes at the sides, 50%: Boxes in the centre.)">Margin:</label>
                         <input class="theme-val config-value" type="range" step=1 min=0 max=50 id="weatherBoxMargin" oninput="$('#weatherBoxMarginVal').html($('#weatherBoxMargin').val()+'%');">
                         <span id="weatherBoxMarginVal"></span>
-                        <br>
-                        <span class="config-small-text" id="wbMarginDisableWarning">This setting is disabled when Custom Layout is active</span>
                     </div>
                     <div class="config-subgroup">
                         <span class="subsection-head">Modal Dialogs</span>
@@ -371,11 +369,6 @@
                     <label>Invert XKCD: </label>
                     <input type="checkbox" id="invert-toggle" class="config-value">
                     <br>
-                    <br>
-                    <label>UI Customization: </label>
-                    <input type="checkbox" id="custom-position-toggle" class="config-value">
-                    <br>
-                    <span class="config-small-text">When enabled, click the <i class="fa-solid fa-pen-ruler" title="Edit Layout"></i> button in the top left to customize the position of the different UI elements. This is an experimental feature.</span>
                     <br>
                     <div id="local-settings">
                         <label style="width: 140px!important;">Update check on start:</label>
