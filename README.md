@@ -44,6 +44,7 @@ You'll find the ID at the end of the page's URL. This is the value you need to p
 - Initial JS refactoring to remove jQuery and replace with vanilla equivalents.
 - Optimize css text/box shadows, no longer duplicating them.
 - Optimize css blur effects.
+- Removed the UI Customization feature.
 
 ### *2.0.12 (08/25/2025)*
 -------------------------
