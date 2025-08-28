@@ -1,4 +1,4 @@
-const dataVersion = 5; // Current theme data version
+const dataVersion = 6; // Current theme data version
 const minimumSupportedDataVersion = 0; // Minimum supported data version, used to determine if an imported theme is compatible with the current version
 let base64String = ""; // Will hold the base64 string of an uploaded image
 // All theme keys representing the background colour of various elements
